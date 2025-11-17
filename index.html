@@ -35,7 +35,60 @@
   .top-buttons {
     margin-bottom: 26px;
   }
+  /* Time display under language buttons */
+  .time-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: -10px;
+    margin-bottom: 10px;
+  }
 
+  .time-item {
+    min-width: 135px;
+    max-width: 160px;
+    font-size: 0.8rem;
+    color: #555555;
+  }
+
+  .time-label {
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .time-value {
+    font-weight: 600;
+  }
+
+  /* Banking details section */
+  .bank-section {
+    margin-top: 32px;
+  }
+
+  .bank-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .bank-col {
+    flex: 1 1 220px;
+    max-width: 260px;
+  }
+
+  .bank-label {
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+
+  .bank-img {
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+  }
+    
   h1 {
     font-size: 1.9rem;
     letter-spacing: 0.15em;
@@ -275,8 +328,25 @@
     // front: slightly larger, faster
     createSnowLayer('snow-front', 50, 5, 8, 12, 20, 0.15);
   }
+  /* ---------- Timezones: San Jose & Korea ---------- */
+  function updateTimes() {
+    const sjEl = document.getElementById('time-sj');
+    const krEl = document.getElementById('time-kr');
+    if (!sjEl || !krEl) return;
 
+    const now = new Date();
+    const opts = { hour: '2-digit', minute: '2-digit', hour12: false };
+
+    const sj = now.toLocaleTimeString('en-US', { ...opts, timeZone: 'America/Los_Angeles' });
+    const kr = now.toLocaleTimeString('en-US', { ...opts, timeZone: 'Asia/Seoul' });
+
+    sjEl.textContent = sj;
+    krEl.textContent = kr;
+  }
   document.addEventListener('DOMContentLoaded', () => {
+    updateTimes();
+    setInterval(updateTimes, 60000); // update every minute
+
     createSnow();
 
     // sparkles + "piles" on touch/click
@@ -333,6 +403,25 @@
     <button id="bgmBtn" class="btn" onclick="toggleBGM()">♪ Play BGM</button>
   </div>
 
+  <div class="time-row">
+    <div class="time-item">
+      <span class="time-label"
+            data-en="San Jose time"
+            data-ko="샌호세 시간">
+        San Jose time
+      </span>
+      <span class="time-value" id="time-sj">--:--</span>
+    </div>
+    <div class="time-item">
+      <span class="time-label"
+            data-en="Korea time"
+            data-ko="한국 시간">
+        Korea time
+      </span>
+      <span class="time-value" id="time-kr">--:--</span>
+    </div>
+  </div>
+    
   <h1>WEDDING INVITATION</h1>
   <h2>김유석 🤍 신혜수</h2>
 
@@ -407,7 +496,37 @@
     <li>The Lord’s Prayer</li>
     <li>Dinner</li>
   </ul>
+<div class="bank-section">
+    <div class="section-title"
+         data-en="Wedding Gifts & Blessing"
+         data-ko="축의 및 계좌 안내">
+         Wedding Gifts & Blessing
+    </div>
 
+    <div class="bank-row">
+      <div class="bank-col">
+        <div class="bank-label"
+             data-en="Groom"
+             data-ko="신랑">
+             신랑
+        </div>
+        <img src="DavidZelle.jpg"
+             alt="Groom account information"
+             class="bank-img">
+      </div>
+
+      <div class="bank-col">
+        <div class="bank-label"
+             data-en="Bride"
+             data-ko="신부">
+             신부
+        </div>
+        <img src="HyesooBank.jpg"
+             alt="Bride account information"
+             class="bank-img">
+      </div>
+    </div>
+  </div>
 </div>
 
 </body>
