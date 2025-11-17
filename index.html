@@ -110,42 +110,102 @@
     margin: 10px 0 0;
   }
 
-  /* ---------- Snow overlay ---------- */
+ /* ---------- Snow overlay with depth ---------- */
 
-  .snow-container {
-    pointer-events: none;   /* don’t block clicks */
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
-    z-index: 999;           /* above everything */
+.snow-container {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* depth by z-index and subtle opacity differences */
+.snow-back {
+  z-index: -3;
+}
+
+.snow-mid {
+  z-index: -2;
+}
+
+.snow-front {
+  z-index: -1;
+}
+
+/* base snowflake style */
+.snowflake {
+  position: absolute;
+  top: -10px;
+  color: rgba(185, 210, 255, 0.75); /* light blue */
+  text-shadow: 0 0 4px rgba(140, 170, 220, 0.25);
+  font-size: 6px; /* base, will be overridden per layer */
+  will-change: transform, opacity;
+  animation-name: snow-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes snow-fall {
+  0% {
+    transform: translate3d(0, -10px, 0);
+    opacity: 0;
   }
-
-  .snowflake {
-    position: absolute;
-    top: -10px;
-    color: rgba(255,255,255,0.9);   /* slightly off-white */
-    text-shadow: 0 0 4px rgba(0,0,0,0.15);
-    font-size: 12px;
-    will-change: transform, opacity;
-    animation-name: snow-fall;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
+  15% {
+    opacity: 1;
   }
-
-  @keyframes snow-fall {
-    0% {
-      transform: translate3d(0, -10px, 0);
-      opacity: 0;
-    }
-    15% {
-      opacity: 1;
-    }
-    100% {
-      transform: translate3d(var(--drift, 0px), 110vh, 0);
-      opacity: 0;
-    }
+  100% {
+    transform: translate3d(var(--drift, 0px), 110vh, 0);
+    opacity: 0;
   }
+}
 
+/* sparkles on touch */
+.spark {
+  pointer-events: none;
+  position: fixed;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 240, 180, 1) 0%, rgba(255, 240, 180, 0) 60%);
+  opacity: 0.9;
+  transform: translate(-50%, -50%) scale(0.2);
+  animation: spark-fade 0.6s ease-out forwards;
+  z-index: 2;
+}
+
+@keyframes spark-fade {
+  0% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(0.2);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.4);
+  }
+}
+
+/* simple snow "piles" near bottom where user touches */
+.snow-piles {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: -1; /* behind content, like snow on the ground */
+}
+
+.snow-pile {
+  position: absolute;
+  bottom: 0;
+  width: 36px;
+  height: 14px;
+  background: radial-gradient(ellipse at top, rgba(235, 245, 255, 0.9) 0%, rgba(235, 245, 255, 0) 70%);
+  transform: translateX(-50%);
+  opacity: 0.8;
+}
+    
 </style>
 
 <script>
@@ -177,41 +237,93 @@
     }
   }
 
-  /* ---------- Snow creation ---------- */
-  function createSnow() {
-    const container = document.getElementById('snow');
+  /* ---------- Snow creation with depth ---------- */
+  function createSnowLayer(containerId, numFlakes, sizeMin, sizeMax, durationMin, durationMax, opacityBoost) {
+    const container = document.getElementById(containerId);
     if (!container) return;
-    const NUM_FLAKES = 70;  // adjust intensity
 
-    for (let i = 0; i < NUM_FLAKES; i++) {
+    for (let i = 0; i < numFlakes; i++) {
       const flake = document.createElement('div');
       flake.className = 'snowflake';
       flake.textContent = '❄';
 
-      const size = 8 + Math.random() * 10;        // px
-      const left = Math.random() * 100;           // vw
-      const delay = Math.random() * 10;           // s
-      const duration = 12 + Math.random() * 14;   // s
-      const drift = -40 + Math.random() * 80;     // px sideways
+      const size = sizeMin + Math.random() * (sizeMax - sizeMin);       // px
+      const left = Math.random() * 100;                                 // vw
+      const delay = Math.random() * 12;                                 // s
+      const duration = durationMin + Math.random() * (durationMax - durationMin);
+      const drift = -40 + Math.random() * 80;                           // px sideways
+      const opacity = 0.4 + Math.random() * 0.4 + (opacityBoost || 0);  // subtle variation
 
       flake.style.left = left + 'vw';
       flake.style.fontSize = size + 'px';
       flake.style.animationDuration = duration + 's';
       flake.style.animationDelay = delay + 's';
       flake.style.setProperty('--drift', drift + 'px');
+      flake.style.opacity = opacity;
 
       container.appendChild(flake);
     }
   }
 
-  document.addEventListener('DOMContentLoaded', createSnow);
+  function createSnow() {
+    // back: smaller, slower, fewer
+    createSnowLayer('snow-back', 40, 3, 6, 20, 30, 0);
+
+    // mid: medium
+    createSnowLayer('snow-mid', 60, 4, 7, 16, 24, 0.1);
+
+    // front: slightly larger, faster
+    createSnowLayer('snow-front', 50, 5, 8, 12, 20, 0.15);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    createSnow();
+
+    // sparkles + "piles" on touch/click
+    const pilesContainer = document.getElementById('snow-piles');
+
+    document.addEventListener('pointerdown', (e) => {
+      const x = e.clientX;
+      const y = e.clientY;
+
+      // yellow twinkle spark
+      const spark = document.createElement('div');
+      spark.className = 'spark';
+      spark.style.left = x + 'px';
+      spark.style.top = y + 'px';
+      document.body.appendChild(spark);
+
+      // remove spark after animation
+      setTimeout(() => {
+        spark.remove();
+      }, 650);
+
+      // simple "pile" near bottom if touch/click is in lower half
+      if (pilesContainer && y > window.innerHeight * 0.55) {
+        const pile = document.createElement('div');
+        pile.className = 'snow-pile';
+        pile.style.left = x + 'px';
+        pilesContainer.appendChild(pile);
+
+        // keep DOM tidy: delete oldest piles after some time
+        setTimeout(() => {
+          if (pile.parentNode) pile.parentNode.removeChild(pile);
+        }, 20000); // 20 seconds, adjust if you want piles to last longer
+      }
+    }, false);
+  });
 </script>
 
 </head>
 <body>
 
-<!-- Snow overlay -->
-<div class="snow-container" id="snow"></div>
+<!-- Snow overlays (back, mid, front) -->
+<div class="snow-container snow-back" id="snow-back"></div>
+<div class="snow-container snow-mid"  id="snow-mid"></div>
+<div class="snow-container snow-front" id="snow-front"></div>
+
+<!-- Snow piles / sparkles layer -->
+<div class="snow-piles" id="snow-piles"></div>
 
 <div class="container">
 
