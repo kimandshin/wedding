@@ -2,180 +2,432 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Wedding Invitation – Bride & Groom</title>
+  <title>Wedding Invitation – 김유석 🤍 신혜수</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
+    :root {
+      --bg: #f7f5f2;
+      --card: #ffffff;
+      --accent: #c9a27c;
+      --text-main: #333333;
+      --text-muted: #777777;
+      --border-soft: #e6dfd5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       margin: 0;
       padding: 0;
       line-height: 1.6;
-      background-color: #f7f7f7;
-      color: #333;
+      background-color: var(--bg);
+      color: var(--text-main);
     }
-    .page {
-      max-width: 720px;
+
+    .layout {
+      max-width: 860px;
       margin: 0 auto;
-      padding: 24px 20px 40px;
-      background: #ffffff;
+      padding: 24px 18px 40px;
     }
+
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+      padding: 24px 22px 32px;
+    }
+
     header {
-      text-align: center;
-      padding: 24px 0 8px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-soft);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
     }
-    h1, h2, h3 {
-      margin: 0.4em 0;
+
+    .title-block {
+      text-align: left;
     }
+
+    .title-top {
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
     h1 {
-      font-size: 1.8rem;
-      letter-spacing: 0.08em;
+      margin: 6px 0 4px;
+      font-size: 1.7rem;
+      letter-spacing: 0.06em;
     }
-    h2 {
-      font-size: 1.3rem;
-      margin-top: 1.5em;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 0.3em;
+
+    .names-line {
+      font-weight: 500;
     }
-    .names {
-      font-size: 1.5rem;
-      margin-top: 8px;
-    }
-    .date-place {
-      margin-top: 12px;
-      font-size: 0.95rem;
-    }
-    .divider {
-      text-align: center;
-      margin: 24px 0;
-      color: #aaa;
+
+    .meta-line {
       font-size: 0.9rem;
+      color: var(--text-muted);
     }
-    .tagline {
-      text-align: center;
-      font-style: italic;
-      margin-top: 8px;
-      font-size: 0.95rem;
+
+    .lang-toggle {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      white-space: nowrap;
     }
-    ul {
-      padding-left: 1.2rem;
+
+    .lang-toggle button {
+      border-radius: 14px;
+      border: 1px solid var(--border-soft);
+      padding: 5px 10px;
+      font-size: 0.75rem;
+      background: #faf7f3;
+      cursor: pointer;
+      color: var(--text-muted);
     }
-    .small {
-      font-size: 0.9rem;
-    }
-    .button {
-      display: inline-block;
-      padding: 10px 16px;
-      margin: 6px 6px 0 0;
-      border-radius: 6px;
-      border: 1px solid #ddd;
-      font-size: 0.9rem;
-      text-decoration: none;
-    }
-    .button-primary {
-      border-color: #222;
+
+    .lang-toggle button.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: #fff8ef;
       font-weight: 600;
     }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 24px;
+      align-items: center;
+      margin-bottom: 18px;
+      margin-top: 8px;
+    }
+
+    .hero-text p {
+      margin: 4px 0;
+      font-size: 0.95rem;
+    }
+
+    .hero-text .tagline {
+      margin-top: 10px;
+      font-style: italic;
+      color: var(--text-muted);
+    }
+
+    .hero-text .map-links {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      background: #faf7f3;
+    }
+
+    .map-button {
+      display: inline-block;
+      font-size: 0.8rem;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      text-decoration: none;
+      background: #fffaf4;
+    }
+
+    .hero-image {
+      text-align: center;
+    }
+
+    .hero-image img {
+      max-width: 100%;
+      border-radius: 18px;
+      display: block;
+      margin: 0 auto;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+    }
+
+    .section {
+      margin-top: 22px;
+    }
+
+    .section h2 {
+      font-size: 1.1rem;
+      margin: 0 0 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .section p {
+      margin: 4px 0;
+      font-size: 0.93rem;
+    }
+
+    .section ul {
+      margin: 6px 0;
+      padding-left: 1.2rem;
+      font-size: 0.93rem;
+    }
+
+    .small-text {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
     footer {
       text-align: center;
       font-size: 0.8rem;
-      color: #999;
-      margin-top: 32px;
+      color: var(--text-muted);
+      margin-top: 26px;
     }
+
     .center {
       text-align: center;
+    }
+
+    .lang-section {
+      display: none;
+    }
+
+    .lang-section.active {
+      display: block;
+    }
+
+    .controls-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 8px;
+    }
+
+    .bgm-button {
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: #faf7f3;
+      padding: 5px 10px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .bgm-button span {
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 720px) {
+      .card {
+        padding: 18px 16px 26px;
+      }
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .lang-toggle {
+        align-self: flex-end;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Welcome Section -->
-  <div class="page" id="welcome">
+<div class="layout">
+  <div class="card">
     <header>
-      <div>WEDDING INVITATION</div>
-      <div class="names">BRIDE & GROOM</div>
-      <div class="date-place">
-        February XX, 2025 • Location Name
+      <div class="title-block">
+        <div class="title-top">WEDDING INVITATION</div>
+        <h1 class="names-line">김유석 🤍 신혜수</h1>
+        <div class="meta-line">
+          February 7, 2025 · 5:00 PM · Asador, Haeundae, Busan
+        </div>
       </div>
-      <p class="tagline">
-        We invite you to celebrate our special day.
-      </p>
+
+      <div class="lang-toggle">
+        <button type="button" data-lang="en" class="active">ENG</button>
+        <button type="button" data-lang="ko">KOR</button>
+      </div>
     </header>
 
-    <div class="divider">⋯</div>
-
-    <div class="center small">
-      Scroll down to view the vows, order of service, hymns, and registry.
+    <div class="controls-row">
+      <!-- BGM: upload bgm.mp3 to your repo and keep the same filename -->
+      <button type="button" class="bgm-button" id="bgm-toggle">
+        <span>♪</span> <span id="bgm-label">Play BGM</span>
+      </button>
+      <audio id="bgm" src="bgm.mp3" loop></audio>
     </div>
-  </div>
 
-  <!-- Vows + Order -->
-  <div class="page" id="order">
-    <h2>Our Vows</h2>
-    <p class="small">
-      (Insert your own vow text here)
-    </p>
+    <!-- ENGLISH CONTENT -->
+    <div class="lang-section active" data-lang="en" id="content-en">
+      <section class="hero">
+        <div class="hero-text">
+          <p>We invite you to celebrate our special day.</p>
+          <p class="small-text">
+            Asador (4F), 9, Haeundaehaebyeon-ro 298beon-gil, Haeundae-gu, Busan, South Korea
+          </p>
+          <div class="map-links">
+            <!-- Replace the # with your actual Google Maps share link -->
+            <a class="map-button" href="#" target="_blank" rel="noopener">Open in Google Maps</a>
+            <span class="chip">Dress code: semi-formal</span>
+          </div>
+          <p class="tagline">
+            “Two are better than one, because they have a good return for their labor.” – Ecclesiastes 4:9
+          </p>
+        </div>
 
-    <h2>Order of Ceremony</h2>
-    <ul>
-      <li>Apostles’ Creed</li>
-      <li>Praise: 완전한 사랑 (+1 song)</li>
-      <li>Blessings
+        <div class="hero-image">
+          <!-- Make sure hyesoo_david.png is in the same folder as this HTML file -->
+          <img src="hyesoo_david.png" alt="Wedding illustration of Yuseok and Hyesoo">
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Our Vows</h2>
+        <p>
+          Today, before God, our families, and friends, we promise to walk together in faith and love.
+          We will encourage one another, forgive quickly, and choose grace over pride.
+        </p>
+        <p>
+          In seasons of joy and in seasons of weakness, we will seek God first, listen deeply,
+          and protect this covenant with patience and honesty. With God’s help, we will build
+          a home filled with warmth, prayer, and laughter.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Order of Ceremony</h2>
         <ul>
-          <li>Bride’s Father (2–3 mins)</li>
-          <li>Groom’s Father (2–3 mins)</li>
+          <li>Apostles’ Creed</li>
+          <li>Praise: 완전한 사랑 (+1 song)</li>
+          <li>Blessings
+            <ul>
+              <li>Bride’s Father (2–3 mins)</li>
+              <li>Groom’s Father (2–3 mins)</li>
+            </ul>
+          </li>
+          <li>Vows</li>
+          <li>Groom’s Father Prayer</li>
+          <li>The Lord’s Prayer</li>
+          <li>Dinner</li>
         </ul>
-      </li>
-      <li>Vows</li>
-      <li>Prayer</li>
-      <li>The Lord’s Prayer</li>
-    </ul>
-  </div>
+      </section>
+    </div>
 
-  <!-- Hymns -->
-  <div class="page" id="hymns">
-    <h2>Praise</h2>
+    <!-- KOREAN CONTENT -->
+    <div class="lang-section" data-lang="ko" id="content-ko">
+      <section class="hero">
+        <div class="hero-text">
+          <p>저희의 결혼 예식에 함께해 주시면 감사하겠습니다.</p>
+          <p class="small-text">
+            아사도(Asador) 4층 · 부산광역시 해운대구 해운대해변로298번길 9
+          </p>
+          <div class="map-links">
+            <!-- Replace the # with your actual Naver Map share link -->
+            <a class="map-button" href="#" target="_blank" rel="noopener">네이버 지도에서 보기</a>
+            <span class="chip">드레스코드: 세미 포멀</span>
+          </div>
+          <p class="tagline">
+            “두 사람이 한 사람보다 나음은 그들이 수고함으로 좋은 상을 얻을 것임이라” (전도서 4:9)
+          </p>
+        </div>
 
-    <h3>완전한 사랑</h3>
-    <p class="small">(Insert lyrics here)</p>
+        <div class="hero-image">
+          <img src="hyesoo_david.png" alt="유석 · 혜수 웨딩 일러스트">
+        </div>
+      </section>
 
-    <h3>Second Song</h3>
-    <p class="small">(Insert lyrics here)</p>
-  </div>
+      <section class="section">
+        <h2>서약</h2>
+        <p>
+          오늘 하나님과 가족, 그리고 사랑하는 지인들 앞에서
+          저희는 서로를 존중하고 사랑하며 평생 동행할 것을 약속합니다.
+        </p>
+        <p>
+          기쁠 때나 연약할 때나 먼저 하나님을 바라보고,
+          서로의 마음을 끝까지 들어주며, 용서와 은혜로 가정을 지켜나가겠습니다.
+          기도와 웃음이 넘치는 집을 함께 세워가겠습니다.
+        </p>
+      </section>
 
-  <!-- Registry -->
-  <div class="page" id="registry">
-    <h2>Registry & Wedding Gifts</h2>
-    <p>
-      Your presence is our biggest blessing.  
-      If you wish to send a gift, here are some options.
-    </p>
-
-    <h3>Wishlists</h3>
-    <ul class="small">
-      <li><a href="#">Amazon Wishlist</a></li>
-      <li><a href="#">Coupang Wishlist</a></li>
-    </ul>
-
-    <h3>Gift / Support</h3>
-    <p class="small">
-      <strong>From the U.S.</strong><br>
-      Zelle, PayPal, Venmo, etc.
-    </p>
-
-    <p class="small">
-      <strong>From Korea</strong><br>
-      Bank account info
-    </p>
-
-    <div class="center">
-      <a class="button button-primary" href="#welcome">Back to Top</a>
+      <section class="section">
+        <h2>예식 순서</h2>
+        <ul>
+          <li>사도신경</li>
+          <li>찬양: 완전한 사랑 (+1곡)</li>
+          <li>축사
+            <ul>
+              <li>신부 아버지 축사 (2–3분)</li>
+              <li>신랑 아버지 축사 (2–3분)</li>
+            </ul>
+          </li>
+          <li>신랑 · 신부 서약</li>
+          <li>신랑 아버지 대표기도</li>
+          <li>주기도문</li>
+          <li>만찬</li>
+        </ul>
+      </section>
     </div>
 
     <footer>
-      © 2025 Bride & Groom · TheySDK
+      © 2025 김유석 🤍 신혜수 · TheySDK
     </footer>
   </div>
+</div>
+
+<script>
+  // Language toggle
+  const langButtons = document.querySelectorAll('.lang-toggle button');
+  const langSections = document.querySelectorAll('.lang-section');
+
+  langButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const lang = button.dataset.lang;
+
+      langButtons.forEach(b => b.classList.toggle('active', b === button));
+      langSections.forEach(section => {
+        section.classList.toggle('active', section.dataset.lang === lang);
+      });
+
+      // Update <html lang="...">
+      document.documentElement.lang = lang === 'ko' ? 'ko' : 'en';
+    });
+  });
+
+  // BGM play/pause
+  const bgm = document.getElementById('bgm');
+  const bgmToggle = document.getElementById('bgm-toggle');
+  const bgmLabel = document.getElementById('bgm-label');
+
+  bgmToggle.addEventListener('click', () => {
+    if (bgm.paused) {
+      bgm.play().catch(() => {
+        // Some browsers need direct user interaction; if it fails, do nothing.
+      });
+      bgmLabel.textContent = 'Pause BGM';
+    } else {
+      bgm.pause();
+      bgmLabel.textContent = 'Play BGM';
+    }
+  });
+</script>
 
 </body>
 </html>
