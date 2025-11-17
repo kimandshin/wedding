@@ -499,7 +499,7 @@ let activeFlowers = 0;
 
 function spawnFlower() {
   // cap at 10 flowers on screen
-  if (activeFlowers >= 10) return;
+  if (activeFlowers >= 5) return;
 
   const flower = document.createElement('span');
   flower.className = 'floating-flower';
@@ -539,7 +539,7 @@ function spawnFlower() {
 
   // if the flower survives 2 seconds, spawn another one (up to 10)
   setTimeout(() => {
-    if (!removed && activeFlowers < 10) {
+    if (!removed && activeFlowers < 5) {
       spawnFlower();
     }
   }, 2000);
