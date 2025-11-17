@@ -6,93 +6,38 @@
 <title>Wedding Invitation – 김유석 🤍 신혜수</title>
 
 <style>
-
-  /* Snow overlay */
-.snow-container {
-  pointer-events: none;       /* don’t block clicks */
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-  z-index: 999;               /* above content, below any modal */
-}
-
-.snowflake {
-  position: absolute;
-  top: -10px;
-  color: #ffffff;
-  opacity: 0.8;
-  font-size: 10px;
-  will-change: transform;
-  animation-name: snow-fall;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-@keyframes snow-fall {
-  0% {
-    transform: translate3d(0, -10px, 0);
-    opacity: 0;
-  }
-  10% {
-    opacity: 0.9;
-  }
-  100% {
-    transform: translate3d(0, 110vh, 0);
-    opacity: 0;
-  }
-}
-
-  <div class="snow-container" id="snow"></div>
-
-<script>
-  (function createSnow() {
-    const container = document.getElementById('snow');
-    const NUM_FLAKES = 60; // increase/decrease intensity
-
-    for (let i = 0; i < NUM_FLAKES; i++) {
-      const flake = document.createElement('div');
-      flake.className = 'snowflake';
-      flake.textContent = '✦'; // you can try '✻', '❄', '•'
-
-      const size = 8 + Math.random() * 8; // px
-      const left = Math.random() * 100;   // vw
-      const delay = Math.random() * 10;   // s
-      const duration = 10 + Math.random() * 12; // s
-      const drift = -20 + Math.random() * 40;   // px side drift
-
-      flake.style.left = left + 'vw';
-      flake.style.fontSize = size + 'px';
-      flake.style.animationDuration = duration + 's';
-      flake.style.animationDelay = delay + 's';
-      flake.style.setProperty('--drift', drift + 'px');
-
-      container.appendChild(flake);
-    }
-  })();
-</script>
-  
+  /* ---------- Base layout ---------- */
   body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     margin: 0;
-    padding: 0;
-    background: #f9f6f2;
+    padding: 40px 10px 60px;
+    background: #f5f2ee;
     color: #333;
     text-align: center;
   }
 
   .container {
-    max-width: 750px;
-    margin: auto;
+    max-width: 760px;
+    margin: 0 auto;
     background: #ffffff;
     padding: 40px 26px 60px;
     border-radius: 18px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  }
+
+  .top-buttons {
+    margin-bottom: 26px;
   }
 
   h1 {
     font-size: 1.9rem;
-    letter-spacing: 0.05em;
-    margin-bottom: 4px;
+    letter-spacing: 0.15em;
+    margin: 0 0 10px;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    margin: 0 0 8px;
   }
 
   .subtext {
@@ -104,7 +49,7 @@
   img.wedding-img {
     width: 90%;
     max-width: 420px;
-    border-radius: 10px;
+    border-radius: 12px;
     margin: 30px auto;
     display: block;
   }
@@ -112,16 +57,18 @@
   .btn {
     display: inline-block;
     padding: 9px 16px;
-    margin: 8px 6px;
+    margin: 6px 6px;
     border-radius: 20px;
     border: 1px solid #ddd;
     font-size: 0.85rem;
     text-decoration: none;
+    color: #333;
+    background: #fafafa;
     transition: 0.2s;
   }
 
   .btn:hover {
-    background: #fafafa;
+    background: #f0f0f0;
   }
 
   .btn-primary {
@@ -138,9 +85,14 @@
   }
 
   .section-title {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     margin: 32px 0 10px;
     font-weight: 600;
+  }
+
+  p {
+    margin: 6px 0;
+    line-height: 1.7;
   }
 
   ul {
@@ -148,97 +100,177 @@
     padding-left: 0;
     font-size: 1rem;
     line-height: 1.8;
+    margin: 10px 0 0;
   }
 
-  .lang-btns {
-    margin-bottom: 26px;
+  /* ---------- Snow overlay ---------- */
+
+  .snow-container {
+    pointer-events: none;   /* don’t block clicks */
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: 999;           /* above everything */
   }
 
-  .bgm-btn {
-    font-size: 0.85rem;
-    margin-top: 10px;
+  .snowflake {
+    position: absolute;
+    top: -10px;
+    color: rgba(255,255,255,0.9);   /* slightly off-white */
+    text-shadow: 0 0 4px rgba(0,0,0,0.15);
+    font-size: 12px;
+    will-change: transform, opacity;
+    animation-name: snow-fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
   }
+
+  @keyframes snow-fall {
+    0% {
+      transform: translate3d(0, -10px, 0);
+      opacity: 0;
+    }
+    15% {
+      opacity: 1;
+    }
+    100% {
+      transform: translate3d(var(--drift, 0px), 110vh, 0);
+      opacity: 0;
+    }
+  }
+
 </style>
 
 <script>
-function switchLang(lang) {
-  const elements = document.querySelectorAll("[data-en], [data-ko]");
-  elements.forEach(el => {
-    el.innerHTML = lang === "ko" ? el.getAttribute("data-ko") : el.getAttribute("data-en");
-  });
-}
-
-let bgm;
-function toggleBGM() {
-  if (!bgm) {
-    bgm = new Audio("bgm.mp3");  // Upload your bgm.mp3 to repo
-    bgm.loop = true;
-    bgm.play();
-    document.getElementById("bgmBtn").innerText = "♪ Pause BGM";
-  } else if (bgm.paused) {
-    bgm.play();
-    document.getElementById("bgmBtn").innerText = "♪ Pause BGM";
-  } else {
-    bgm.pause();
-    document.getElementById("bgmBtn").innerText = "♪ Play BGM";
+  /* ---------- Language toggle ---------- */
+  function switchLang(lang) {
+    const elements = document.querySelectorAll("[data-en][data-ko]");
+    elements.forEach(el => {
+      el.innerHTML = (lang === "ko")
+        ? el.getAttribute("data-ko")
+        : el.getAttribute("data-en");
+    });
+    document.documentElement.lang = (lang === "ko") ? "ko" : "en";
   }
-}
+
+  /* ---------- BGM ---------- */
+  let bgm;
+  function toggleBGM() {
+    if (!bgm) {
+      bgm = new Audio("bgm.mp3");   // make sure bgm.mp3 is uploaded
+      bgm.loop = true;
+      bgm.play().catch(() => {});
+      document.getElementById("bgmBtn").innerText = "♪ Pause BGM";
+    } else if (bgm.paused) {
+      bgm.play().catch(() => {});
+      document.getElementById("bgmBtn").innerText = "♪ Pause BGM";
+    } else {
+      bgm.pause();
+      document.getElementById("bgmBtn").innerText = "♪ Play BGM";
+    }
+  }
+
+  /* ---------- Snow creation ---------- */
+  function createSnow() {
+    const container = document.getElementById('snow');
+    if (!container) return;
+    const NUM_FLAKES = 70;  // adjust intensity
+
+    for (let i = 0; i < NUM_FLAKES; i++) {
+      const flake = document.createElement('div');
+      flake.className = 'snowflake';
+      flake.textContent = '❄';
+
+      const size = 8 + Math.random() * 10;        // px
+      const left = Math.random() * 100;           // vw
+      const delay = Math.random() * 10;           // s
+      const duration = 12 + Math.random() * 14;   // s
+      const drift = -40 + Math.random() * 80;     // px sideways
+
+      flake.style.left = left + 'vw';
+      flake.style.fontSize = size + 'px';
+      flake.style.animationDuration = duration + 's';
+      flake.style.animationDelay = delay + 's';
+      flake.style.setProperty('--drift', drift + 'px');
+
+      container.appendChild(flake);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', createSnow);
 </script>
 
 </head>
 <body>
 
+<!-- Snow overlay -->
+<div class="snow-container" id="snow"></div>
+
 <div class="container">
 
-  <div class="lang-btns">
+  <div class="top-buttons">
     <button class="btn" onclick="switchLang('en')">ENG</button>
     <button class="btn" onclick="switchLang('ko')">KOR</button>
-    <button id="bgmBtn" class="btn bgm-btn" onclick="toggleBGM()">♪ Play BGM</button>
+    <button id="bgmBtn" class="btn" onclick="toggleBGM()">♪ Play BGM</button>
   </div>
 
-  <h1 data-en="WEDDING INVITATION" data-ko="결혼식 초대">WEDDING INVITATION</h1>
-  <h2 style="margin:8px 0 4px; font-size:1.8rem;">김유석 🤍 신혜수</h2>
+  <h1>WEDDING INVITATION</h1>
+  <h2>김유석 🤍 신혜수</h2>
 
   <div class="subtext">
     February 7, 2025 · 5:00 PM · Asador, Haeundae, Busan
   </div>
 
-  <img src="hyesoo_david.png" class="wedding-img">
+  <img src="hyesoo_david.png" alt="Wedding illustration" class="wedding-img">
 
   <p data-en="We invite you to celebrate our special day."
      data-ko="저희의 특별한 날에 함께해주시길 부탁드립니다.">
      We invite you to celebrate our special day.
   </p>
 
-  <p style="line-height:1.6;">
+  <p style="max-width:600px; margin:8px auto 0;">
     Asador (4F), 9 Haeundaehaebyeon-ro 298beon-gil,<br>
     Haeundae-gu, Busan, South Korea
   </p>
 
-  <a class="btn btn-primary" href="https://maps.google.com/?q=Asador+Busan" target="_blank">Google Maps</a>
-  <a class="btn" href="https://naver.me/xXK2LyNK" target="_blank">Naver Map</a>
+  <div style="margin-top:14px;">
+    <!-- Replace # with real links when ready -->
+    <a class="btn btn-primary" href="#" target="_blank">Google Maps</a>
+    <a class="btn" href="#" target="_blank">Naver Map</a>
+  </div>
 
   <hr>
 
-  <div class="section-title">Our Vows</div>
+  <div class="section-title"
+       data-en="Our Vows"
+       data-ko="서약">
+       Our Vows
+  </div>
 
-  <p style="max-width:600px; margin:auto; line-height:1.7;">
-    Today, before God, our families, and friends,  
-    we promise to walk together in faith and love.  
-    We will support, forgive, and cherish one another—  
-    choosing grace over pride, patience over anger,  
-    and understanding over assumptions.  
+  <p style="max-width:620px; margin:auto;">
+    Today, before God, our families, and friends, we promise to walk together in faith and love.
+    We will support one another, forgive quickly, and choose grace over pride.
+  </p>
+  <p style="max-width:620px; margin:10px auto 0;">
+    In seasons of joy and in seasons of hardship, we will seek God first, listen deeply,
+    and protect this covenant with patience and honesty. With God’s help, we will build a
+    home filled with warmth, prayer, and laughter.
   </p>
 
   <hr>
 
-  <div class="section-title">Order of Ceremony</div>
+  <div class="section-title"
+       data-en="Order of Ceremony"
+       data-ko="예식 순서">
+       Order of Ceremony
+  </div>
+
   <ul>
     <li>Apostles’ Creed</li>
     <li>Praise: 완전한 사랑 (+1 song)</li>
     <li>Blessings</li>
-    <li>• Bride’s Father (2–3 mins)</li>
-    <li>• Groom’s Father (2–3 mins)</li>
+    <li>· Bride’s Father (2–3 mins)</li>
+    <li>· Groom’s Father (2–3 mins)</li>
     <li>Vows</li>
     <li>Groom’s Father Prayer</li>
     <li>The Lord’s Prayer</li>
