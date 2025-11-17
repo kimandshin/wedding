@@ -6,13 +6,13 @@
 <title>Wedding Invitation – 김유석 🤍 신혜수</title>
 
 <style>
-
-    @font-face {
+  @font-face {
     font-family: 'Samanco';
     src: url('BinggraeSamanco.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
   }
+
   /* ---------- Base layout ---------- */
   body {
     font-family: 'Samanco', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -35,6 +35,7 @@
   .top-buttons {
     margin-bottom: 26px;
   }
+
   /* Time display under language buttons */
   .time-row {
     display: flex;
@@ -83,12 +84,24 @@
     margin-bottom: 6px;
   }
 
-  .bank-img {
+  .bank-toggle {
     width: 100%;
+    max-width: 200px;
+  }
+
+  .qr-wrapper {
+    display: none;
+    margin-top: 10px;
+  }
+
+  .qr-img {
+    width: 70%;
+    max-width: 170px;
     border-radius: 12px;
     display: block;
+    margin: 0 auto;
   }
-    
+
   h1 {
     font-size: 1.9rem;
     letter-spacing: 0.15em;
@@ -112,6 +125,14 @@
     border-radius: 12px;
     margin: 30px auto;
     display: block;
+  }
+
+  .hymn-img {
+    width: 80%;
+    max-width: 480px;
+    margin: 20px auto;
+    display: block;
+    border-radius: 12px;
   }
 
   .btn {
@@ -163,102 +184,113 @@
     margin: 10px 0 0;
   }
 
- /* ---------- Snow overlay with depth ---------- */
-
-.snow-container {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-}
-
-/* depth by z-index and subtle opacity differences */
-.snow-back {
-  z-index: -3;
-}
-
-.snow-mid {
-  z-index: -2;
-}
-
-.snow-front {
-  z-index: -1;
-}
-
-/* base snowflake style */
-.snowflake {
-  position: absolute;
-  top: -10px;
-  color: rgba(185, 210, 255, 0.75); /* light blue */
-  text-shadow: 0 0 4px rgba(140, 170, 220, 0.25);
-  font-size: 6px; /* base, will be overridden per layer */
-  will-change: transform, opacity;
-  animation-name: snow-fall;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-@keyframes snow-fall {
-  0% {
-    transform: translate3d(0, -10px, 0);
-    opacity: 0;
+  details {
+    max-width: 620px;
+    margin: 10px auto 0;
+    text-align: left;
+    font-size: 0.95rem;
   }
-  15% {
-    opacity: 1;
-  }
-  100% {
-    transform: translate3d(var(--drift, 0px), 110vh, 0);
-    opacity: 0;
-  }
-}
 
-/* sparkles on touch */
-.spark {
-  pointer-events: none;
-  position: fixed;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 240, 180, 1) 0%, rgba(255, 240, 180, 0) 60%);
-  opacity: 0.9;
-  transform: translate(-50%, -50%) scale(0.2);
-  animation: spark-fade 0.6s ease-out forwards;
-  z-index: 2;
-}
+  details summary {
+    cursor: pointer;
+    outline: none;
+  }
 
-@keyframes spark-fade {
-  0% {
+  /* ---------- Snow overlay with depth ---------- */
+
+  .snow-container {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  /* depth by z-index and subtle opacity differences */
+  .snow-back {
+    z-index: -3;
+  }
+
+  .snow-mid {
+    z-index: -2;
+  }
+
+  .snow-front {
+    z-index: -1;
+  }
+
+  /* base snowflake style */
+  .snowflake {
+    position: absolute;
+    top: -10px;
+    color: rgba(185, 210, 255, 0.75); /* light blue */
+    text-shadow: 0 0 4px rgba(140, 170, 220, 0.25);
+    font-size: 6px; /* base, will be overridden per layer */
+    will-change: transform, opacity;
+    animation-name: snow-fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes snow-fall {
+    0% {
+      transform: translate3d(0, -10px, 0);
+      opacity: 0;
+    }
+    15% {
+      opacity: 1;
+    }
+    100% {
+      transform: translate3d(var(--drift, 0px), 110vh, 0);
+      opacity: 0;
+    }
+  }
+
+  /* sparkles on touch */
+  .spark {
+    pointer-events: none;
+    position: fixed;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 240, 180, 1) 0%, rgba(255, 240, 180, 0) 60%);
     opacity: 0.9;
     transform: translate(-50%, -50%) scale(0.2);
+    animation: spark-fade 0.6s ease-out forwards;
+    z-index: 2;
   }
-  50% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(1.4);
-  }
-}
 
-/* simple snow "piles" near bottom where user touches */
-.snow-piles {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: -1; /* behind content, like snow on the ground */
-}
+  @keyframes spark-fade {
+    0% {
+      opacity: 0.9;
+      transform: translate(-50%, -50%) scale(0.2);
+    }
+    50% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(1.4);
+    }
+  }
 
-.snow-pile {
-  position: absolute;
-  bottom: 0;
-  width: 36px;
-  height: 14px;
-  background: radial-gradient(ellipse at top, rgba(235, 245, 255, 0.9) 0%, rgba(235, 245, 255, 0) 70%);
-  transform: translateX(-50%);
-  opacity: 0.8;
-}
-    
+  /* simple snow "piles" near bottom where user touches */
+  .snow-piles {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: -1; /* behind content, like snow on the ground */
+  }
+
+  .snow-pile {
+    position: absolute;
+    bottom: 0;
+    width: 36px;
+    height: 14px;
+    background: radial-gradient(ellipse at top, rgba(235, 245, 255, 0.9) 0%, rgba(235, 245, 255, 0) 70%);
+    transform: translateX(-50%);
+    opacity: 0.8;
+  }
 </style>
 
 <script>
@@ -328,6 +360,7 @@
     // front: slightly larger, faster
     createSnowLayer('snow-front', 50, 5, 8, 12, 20, 0.15);
   }
+
   /* ---------- Timezones: San Jose & Korea ---------- */
   function updateTimes() {
     const sjEl = document.getElementById('time-sj');
@@ -343,6 +376,15 @@
     sjEl.textContent = sj;
     krEl.textContent = kr;
   }
+
+  /* ---------- QR show/hide ---------- */
+  function toggleQR(which) {
+    const el = document.getElementById(which + '-qr');
+    if (!el) return;
+    const isHidden = el.style.display === 'none' || !el.style.display;
+    el.style.display = isHidden ? 'block' : 'none';
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     updateTimes();
     setInterval(updateTimes, 60000); // update every minute
@@ -378,7 +420,7 @@
         // keep DOM tidy: delete oldest piles after some time
         setTimeout(() => {
           if (pile.parentNode) pile.parentNode.removeChild(pile);
-        }, 20000); // 20 seconds, adjust if you want piles to last longer
+        }, 20000); // 20 seconds
       }
     }, false);
   });
@@ -474,9 +516,34 @@
 
   <img src="hymn.png"
        alt="Hymn: 완전한 사랑"
-       style="width:90%; max-width:600px; margin:20px auto; display:block; border-radius:12px;">
+       class="hymn-img">
 
-  
+  <!-- Collapsible English lyrics (O Perfect Love) -->
+  <details>
+    <summary data-en="Show English lyrics"
+             data-ko="영문 가사 보기">
+      Show English lyrics
+    </summary>
+    <p>
+      O perfect Love, all human thought transcending,<br>
+      Lowly we kneel in prayer before thy throne,<br>
+      That theirs may be the love which knows no ending,<br>
+      Whom thou forevermore dost join in one.
+    </p>
+    <p>
+      O perfect Life, be thou their full assurance<br>
+      Of tender charity and steadfast faith,<br>
+      Of patient hope, and quiet, brave endurance,<br>
+      With childlike trust that fears nor pain nor death.
+    </p>
+    <p>
+      Grant them the joy which brightens earthly sorrow;<br>
+      Grant them the peace which calms all earthly strife;<br>
+      And to life's day the glorious unknown morrow<br>
+      That dawns upon eternal love and life.
+    </p>
+  </details>
+
   <hr>
 
   <div class="section-title"
@@ -496,7 +563,9 @@
     <li>The Lord’s Prayer</li>
     <li>Dinner</li>
   </ul>
-<div class="bank-section">
+
+  <!-- Banking / Gifts Section -->
+  <div class="bank-section">
     <div class="section-title"
          data-en="Wedding Gifts & Blessing"
          data-ko="축의 및 계좌 안내">
@@ -510,9 +579,17 @@
              data-ko="신랑">
              신랑
         </div>
-        <img src="DavidZelle.png"
-             alt="Groom account information"
-             class="bank-img">
+        <button class="btn bank-toggle"
+                onclick="toggleQR('groom')"
+                data-en="Show Groom QR"
+                data-ko="신랑 QR 보기">
+          Show Groom QR
+        </button>
+        <div class="qr-wrapper" id="groom-qr">
+          <img src="DavidZelle.png"
+               alt="Groom account QR"
+               class="qr-img">
+        </div>
       </div>
 
       <div class="bank-col">
@@ -521,12 +598,21 @@
              data-ko="신부">
              신부
         </div>
-        <img src="HyesooBank.jpg"
-             alt="Bride account information"
-             class="bank-img">
+        <button class="btn bank-toggle"
+                onclick="toggleQR('bride')"
+                data-en="Show Bride Account"
+                data-ko="신부 계좌 보기">
+          Show Bride Account
+        </button>
+        <div class="qr-wrapper" id="bride-qr">
+          <img src="HyesooBank.jpg"
+               alt="Bride account information"
+               class="qr-img">
+        </div>
       </div>
     </div>
   </div>
+
 </div>
 
 </body>
