@@ -184,16 +184,42 @@
     margin: 10px 0 0;
   }
 
+  /* Collapsible English lyrics */
   details {
     max-width: 620px;
     margin: 10px auto 0;
-    text-align: left;
+    text-align: center;
     font-size: 0.95rem;
   }
 
   details summary {
     cursor: pointer;
     outline: none;
+    list-style: none;
+  }
+
+  details p {
+    text-align: left;
+  }
+
+  /* Emoji bursts on names */
+  .emoji-burst {
+    position: fixed;
+    font-size: 20px;
+    pointer-events: none;
+    animation: emoji-pop 800ms ease-out forwards;
+    z-index: 3;
+  }
+
+  @keyframes emoji-pop {
+    0% {
+      transform: translate(-50%, -50%) scale(0.5);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-50%, -120%) scale(1.2);
+      opacity: 0;
+    }
   }
 
   /* ---------- Snow overlay with depth ---------- */
@@ -205,7 +231,6 @@
     overflow: hidden;
   }
 
-  /* depth by z-index and subtle opacity differences */
   .snow-back {
     z-index: -3;
   }
@@ -218,13 +243,12 @@
     z-index: -1;
   }
 
-  /* base snowflake style */
   .snowflake {
     position: absolute;
     top: -10px;
-    color: rgba(185, 210, 255, 0.75); /* light blue */
+    color: rgba(185, 210, 255, 0.75);
     text-shadow: 0 0 4px rgba(140, 170, 220, 0.25);
-    font-size: 6px; /* base, will be overridden per layer */
+    font-size: 6px;
     will-change: transform, opacity;
     animation-name: snow-fall;
     animation-timing-function: linear;
@@ -245,7 +269,6 @@
     }
   }
 
-  /* sparkles on touch */
   .spark {
     pointer-events: none;
     position: fixed;
@@ -274,12 +297,11 @@
     }
   }
 
-  /* simple snow "piles" near bottom where user touches */
   .snow-piles {
     pointer-events: none;
     position: fixed;
     inset: 0;
-    z-index: -1; /* behind content, like snow on the ground */
+    z-index: -1;
   }
 
   .snow-pile {
@@ -309,7 +331,7 @@
   let bgm;
   function toggleBGM() {
     if (!bgm) {
-      bgm = new Audio("hymn.mp3");   // make sure .mp3 is uploaded
+      bgm = new Audio("KaraLaudon_AllMyLife.mp3");
       bgm.loop = true;
       bgm.play().catch(() => {});
       document.getElementById("bgmBtn").innerText = "♪ Pause BGM";
@@ -332,12 +354,12 @@
       flake.className = 'snowflake';
       flake.textContent = '❄';
 
-      const size = sizeMin + Math.random() * (sizeMax - sizeMin);       // px
-      const left = Math.random() * 100;                                 // vw
-      const delay = Math.random() * 12;                                 // s
+      const size = sizeMin + Math.random() * (sizeMax - sizeMin);
+      const left = Math.random() * 100;
+      const delay = Math.random() * 12;
       const duration = durationMin + Math.random() * (durationMax - durationMin);
-      const drift = -40 + Math.random() * 80;                           // px sideways
-      const opacity = 0.4 + Math.random() * 0.4 + (opacityBoost || 0);  // subtle variation
+      const drift = -40 + Math.random() * 80;
+      const opacity = 0.4 + Math.random() * 0.4 + (opacityBoost || 0);
 
       flake.style.left = left + 'vw';
       flake.style.fontSize = size + 'px';
@@ -351,13 +373,8 @@
   }
 
   function createSnow() {
-    // back: smaller, slower, fewer
     createSnowLayer('snow-back', 40, 3, 6, 20, 30, 0);
-
-    // mid: medium
     createSnowLayer('snow-mid', 60, 4, 7, 16, 24, 0.1);
-
-    // front: slightly larger, faster
     createSnowLayer('snow-front', 50, 5, 8, 12, 20, 0.15);
   }
 
@@ -385,44 +402,71 @@
     el.style.display = isHidden ? 'block' : 'none';
   }
 
+  /* ---------- Emoji bursts ---------- */
+  function burstEmojis(x, y, emojiList) {
+    for (let i = 0; i < 10; i++) {
+      const span = document.createElement('span');
+      span.className = 'emoji-burst';
+      span.textContent = emojiList[Math.floor(Math.random() * emojiList.length)];
+      const offsetX = -30 + Math.random() * 60;
+      const offsetY = -10 + Math.random() * 20;
+      span.style.left = (x + offsetX) + 'px';
+      span.style.top = (y + offsetY) + 'px';
+      document.body.appendChild(span);
+      setTimeout(() => span.remove(), 800);
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     updateTimes();
-    setInterval(updateTimes, 60000); // update every minute
+    setInterval(updateTimes, 60000);
 
     createSnow();
 
-    // sparkles + "piles" on touch/click
+    // sparkles + snow piles
     const pilesContainer = document.getElementById('snow-piles');
 
     document.addEventListener('pointerdown', (e) => {
       const x = e.clientX;
       const y = e.clientY;
 
-      // yellow twinkle spark
       const spark = document.createElement('div');
       spark.className = 'spark';
       spark.style.left = x + 'px';
       spark.style.top = y + 'px';
       document.body.appendChild(spark);
 
-      // remove spark after animation
       setTimeout(() => {
         spark.remove();
       }, 650);
 
-      // simple "pile" near bottom if touch/click is in lower half
       if (pilesContainer && y > window.innerHeight * 0.55) {
         const pile = document.createElement('div');
         pile.className = 'snow-pile';
         pile.style.left = x + 'px';
         pilesContainer.appendChild(pile);
 
-        // keep DOM tidy: delete oldest piles after some time
         setTimeout(() => {
           if (pile.parentNode) pile.parentNode.removeChild(pile);
-        }, 20000); // 20 seconds
+        }, 20000);
       }
     }, false);
+
+    // emoji listeners for names
+    const groomEl = document.getElementById('groom-name');
+    const brideEl = document.getElementById('bride-name');
+
+    if (groomEl) {
+      groomEl.addEventListener('click', (e) => {
+        burstEmojis(e.clientX, e.clientY, ['😄','😊','😁','🥰','🤍','😆']);
+      });
+    }
+
+    if (brideEl) {
+      brideEl.addEventListener('click', (e) => {
+        burstEmojis(e.clientX, e.clientY, ['🌸','🌷','🌹','🌼','💐','🌻']);
+      });
+    }
   });
 </script>
 
@@ -465,7 +509,9 @@
   </div>
     
   <h1>WEDDING INVITATION</h1>
-  <h2>김유석 🤍 신혜수</h2>
+  <h2>
+    <span id="groom-name">김유석</span> 🤍 <span id="bride-name">신혜수</span>
+  </h2>
 
   <div class="subtext">
     February 7, 2025 · 5:00 PM · Asador, Haeundae, Busan
@@ -478,15 +524,28 @@
      We invite you to celebrate our special day.
   </p>
 
-  <p style="max-width:600px; margin:8px auto 0;">
+  <p style="max-width:600px; margin:8px auto 0;"
+     data-en="Asador (4F), 9 Haeundaehaebyeon-ro 298beon-gil,<br>Haeundae-gu, Busan, South Korea"
+     data-ko="아사도 (4층), 부산 해운대구 해운대해변로298번길 9">
     Asador (4F), 9 Haeundaehaebyeon-ro 298beon-gil,<br>
     Haeundae-gu, Busan, South Korea
   </p>
 
   <div style="margin-top:14px;">
-    <!-- Replace # with real links when ready -->
-    <a class="btn btn-primary" href="#" target="_blank">Google Maps</a>
-    <a class="btn" href="#" target="_blank">Naver Map</a>
+    <a class="btn btn-primary"
+       href="https://maps.app.goo.gl/"
+       data-en="Google Maps"
+       data-ko="구글 지도"
+       target="_blank">
+      Google Maps
+    </a>
+    <a class="btn"
+       href="https://map.naver.com/p/search/%EB%B6%80%EC%82%B0%20%ED%95%B4%EC%9A%B4%EB%8C%80%EA%B5%AC%20%ED%95%B4%EC%9A%B4%EB%8C%80%ED%95%B4%EB%B3%80%EB%A1%9C298%EB%B2%88%EA%B8%B8%209%204F"
+       data-en="Naver Map"
+       data-ko="네이버 지도"
+       target="_blank">
+      Naver Map
+    </a>
   </div>
 
   <hr>
@@ -497,11 +556,12 @@
        Our Vows
   </div>
 
-  <p style="max-width:620px; margin:auto;">
+  <p id="vows-text"
+     style="max-width:620px; margin:auto;"
+     data-en="Today, before God, our families, and friends, we promise to walk together in faith and love. We will support one another, forgive quickly, and choose grace over pride. In seasons of joy and in seasons of hardship, we will seek God first, listen deeply, and protect this covenant with patience and honesty. With God’s help, we will build a home filled with warmth, prayer, and laughter."
+     data-ko="오늘, 하나님과 양가 가족, 그리고 소중한 친구들 앞에서 우리는 믿음과 사랑으로 함께 걸어갈 것을 약속합니다. 서로를 지지하고, 빨리 용서하며, 자존심보다 은혜를 선택하겠습니다. 기쁨의 순간에도, 어려움의 순간에도 우리는 하나님을 먼저 구하고, 깊이 귀 기울이며, 인내와 진실함으로 이 언약을 지켜 나가겠습니다. 하나님의 도우심으로 우리의 가정이 따뜻함과 기도, 그리고 웃음으로 가득한 집이 되길 소망합니다.">
     Today, before God, our families, and friends, we promise to walk together in faith and love.
     We will support one another, forgive quickly, and choose grace over pride.
-  </p>
-  <p style="max-width:620px; margin:10px auto 0;">
     In seasons of joy and in seasons of hardship, we will seek God first, listen deeply,
     and protect this covenant with patience and honesty. With God’s help, we will build a
     home filled with warmth, prayer, and laughter.
@@ -547,29 +607,29 @@
   <hr>
 
   <div class="section-title"
-       data-en="Order of Ceremony"
-       data-ko="예식 순서">
-       Order of Ceremony
+       data-en="Order of Ceremony (Wedding Service)"
+       data-ko="결혼식 순서">
+       Order of Ceremony (Wedding Service)
   </div>
 
   <ul>
-    <li>Apostles’ Creed</li>
-    <li>Praise: 완전한 사랑 (+1 song)</li>
-    <li>Blessings</li>
-    <li>· Bride’s Father (2–3 mins)</li>
-    <li>· Groom’s Father (2–3 mins)</li>
-    <li>Vows</li>
-    <li>Groom’s Father Prayer</li>
-    <li>The Lord’s Prayer</li>
-    <li>Dinner</li>
+    <li>Apostles’ Creed (사도신경)</li>
+    <li>Song: Love Forever (완전한 사랑)</li>
+    <li>Blessings (축사)</li>
+    <li>· Bride’s Father (신부쪽 아버지, 2–3 mins)</li>
+    <li>· Groom’s Father (신랑쪽 아버지, 2–3 mins)</li>
+    <li>Vows (결혼 서약)</li>
+    <li>Groom’s Father Prayer (신랑쪽 아버지 기도)</li>
+    <li>The Lord’s Prayer (주기도문)</li>
+    <li>Dinner (저녁식사)</li>
   </ul>
 
   <!-- Banking / Gifts Section -->
   <div class="bank-section">
     <div class="section-title"
-         data-en="Wedding Gifts & Blessing"
-         data-ko="축의 및 계좌 안내">
-         Wedding Gifts & Blessing
+         data-en="Wedding Gifts &amp; Blessing"
+         data-ko="결혼 선물과 축복의 마음">
+         Wedding Gifts &amp; Blessing (결혼 선물과 축복의 마음)
     </div>
 
     <div class="bank-row">
