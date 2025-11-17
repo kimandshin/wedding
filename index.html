@@ -6,6 +6,71 @@
 <title>Wedding Invitation – 김유석 🤍 신혜수</title>
 
 <style>
+
+  /* Snow overlay */
+.snow-container {
+  pointer-events: none;       /* don’t block clicks */
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 999;               /* above content, below any modal */
+}
+
+.snowflake {
+  position: absolute;
+  top: -10px;
+  color: #ffffff;
+  opacity: 0.8;
+  font-size: 10px;
+  will-change: transform;
+  animation-name: snow-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes snow-fall {
+  0% {
+    transform: translate3d(0, -10px, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate3d(0, 110vh, 0);
+    opacity: 0;
+  }
+}
+
+  <div class="snow-container" id="snow"></div>
+
+<script>
+  (function createSnow() {
+    const container = document.getElementById('snow');
+    const NUM_FLAKES = 60; // increase/decrease intensity
+
+    for (let i = 0; i < NUM_FLAKES; i++) {
+      const flake = document.createElement('div');
+      flake.className = 'snowflake';
+      flake.textContent = '✦'; // you can try '✻', '❄', '•'
+
+      const size = 8 + Math.random() * 8; // px
+      const left = Math.random() * 100;   // vw
+      const delay = Math.random() * 10;   // s
+      const duration = 10 + Math.random() * 12; // s
+      const drift = -20 + Math.random() * 40;   // px side drift
+
+      flake.style.left = left + 'vw';
+      flake.style.fontSize = size + 'px';
+      flake.style.animationDuration = duration + 's';
+      flake.style.animationDelay = delay + 's';
+      flake.style.setProperty('--drift', drift + 'px');
+
+      container.appendChild(flake);
+    }
+  })();
+</script>
+  
   body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     margin: 0;
