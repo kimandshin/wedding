@@ -199,8 +199,12 @@
   }
 
   details p {
-    text-align: left;
+    text-align: center;
   }
+
+  /* Language blocks */
+  .lang-en { display: block; }
+  .lang-ko { display: none; }
 
   /* Emoji bursts on names */
   .emoji-burst {
@@ -231,17 +235,9 @@
     overflow: hidden;
   }
 
-  .snow-back {
-    z-index: -3;
-  }
-
-  .snow-mid {
-    z-index: -2;
-  }
-
-  .snow-front {
-    z-index: -1;
-  }
+  .snow-back { z-index: -3; }
+  .snow-mid  { z-index: -2; }
+  .snow-front{ z-index: -1; }
 
   .snowflake {
     position: absolute;
@@ -371,6 +367,7 @@
 <script>
   /* ---------- Language toggle ---------- */
   function switchLang(lang) {
+    // swap text for small elements with data-en / data-ko
     const elements = document.querySelectorAll("[data-en][data-ko]");
     elements.forEach(el => {
       el.innerHTML = (lang === "ko")
@@ -378,6 +375,13 @@
         : el.getAttribute("data-en");
     });
     document.documentElement.lang = (lang === "ko") ? "ko" : "en";
+
+    // show/hide larger language blocks
+    const enBlocks = document.querySelectorAll('.lang-en');
+    const koBlocks = document.querySelectorAll('.lang-ko');
+
+    enBlocks.forEach(el => { el.style.display = (lang === 'en') ? 'block' : 'none'; });
+    koBlocks.forEach(el => { el.style.display = (lang === 'ko') ? 'block' : 'none'; });
   }
 
   /* ---------- BGM ---------- */
@@ -478,8 +482,8 @@
     flower.className = 'floating-flower';
     flower.textContent = '💜';
 
-    const left = 5 + Math.random() * 90;   // vw
-    const top  = 15 + Math.random() * 60;  // vh
+    const left = 5 + Math.random() * 90;
+    const top  = 15 + Math.random() * 60;
     flower.style.left = left + 'vw';
     flower.style.top  = top + 'vh';
 
@@ -500,7 +504,6 @@
       }
     });
 
-    // auto-remove after 20s if untouched
     setTimeout(() => {
       if (flower.parentNode) flower.parentNode.removeChild(flower);
     }, 20000);
@@ -550,7 +553,6 @@
       return scores;
     }
 
-    // sort by flowers desc
     scores.sort((a, b) => b.flowers - a.flowers);
 
     scores.forEach((s, idx) => {
@@ -568,7 +570,6 @@
 
     createSnow();
 
-    // sparkles + snow piles
     const pilesContainer = document.getElementById('snow-piles');
 
     document.addEventListener('pointerdown', (e) => {
@@ -597,7 +598,6 @@
       }
     }, false);
 
-    // emoji listeners for names
     const groomEl = document.getElementById('groom-name');
     const brideEl = document.getElementById('bride-name');
 
@@ -613,21 +613,21 @@
       });
     }
 
-    // flower status click → toggle scoreboard
     const statusEl = document.getElementById('flower-status');
     if (statusEl) {
       statusEl.addEventListener('click', toggleFlowerScoreboard);
     }
 
-    // form submit handler for scoreboard
     const form = document.getElementById('flower-form');
     if (form) {
       form.addEventListener('submit', saveFlowerScore);
     }
 
-    // start spawning flowers every 9 seconds
     spawnFlower();
     setInterval(spawnFlower, 9000);
+
+    // ensure initial language is English
+    switchLang('en');
   });
 </script>
 
@@ -680,16 +680,19 @@
 
   <img src="hyesoo_david.png" alt="Wedding illustration" class="wedding-img">
 
-  <p data-en="We invite you to celebrate our special day."
-     data-ko="저희의 특별한 날에 함께해주시길 부탁드립니다.">
-     We invite you to celebrate our special day.
+  <p class="lang-en">
+    We invite you to celebrate our special day.
+  </p>
+  <p class="lang-ko">
+    저희의 특별한 날에 함께해주시길 부탁드립니다.
   </p>
 
-  <p style="max-width:600px; margin:8px auto 0;"
-     data-en="Asador (4F), 9 Haeundaehaebyeon-ro 298beon-gil,<br>Haeundae-gu, Busan, South Korea"
-     data-ko="아사도 (4층), 부산 해운대구 해운대해변로298번길 9">
+  <p class="lang-en" style="max-width:600px; margin:8px auto 0;">
     Asador (4F), 9 Haeundaehaebyeon-ro 298beon-gil,<br>
     Haeundae-gu, Busan, South Korea
+  </p>
+  <p class="lang-ko" style="max-width:600px; margin:8px auto 0;">
+    아사도 (4층), 부산 해운대구 해운대해변로298번길 9
   </p>
 
   <div style="margin-top:14px;">
@@ -711,28 +714,46 @@
 
   <hr>
 
-  <div class="section-title"
-       data-en="Our Vows"
-       data-ko="서약">
-       Our Vows
+  <div class="section-title lang-en">
+    Our Vows
+  </div>
+  <div class="section-title lang-ko">
+    서약
   </div>
 
-  <p id="vows-text"
-     style="max-width:620px; margin:auto;"
-     data-en="Today, before God, our families, and friends, we promise to walk together in faith and love. We will support one another, forgive quickly, and choose grace over pride. In seasons of joy and in seasons of hardship, we will seek God first, listen deeply, and protect this covenant with patience and honesty. With God’s help, we will build a home filled with warmth, prayer, and laughter."
-     data-ko="오늘, 하나님과 양가 가족, 그리고 소중한 친구들 앞에서 우리는 믿음과 사랑으로 함께 걸어갈 것을 약속합니다. 서로를 지지하고, 빨리 용서하며, 자존심보다 은혜를 선택하겠습니다. 기쁨의 순간에도, 어려움의 순간에도 우리는 하나님을 먼저 구하고, 깊이 귀 기울이며, 인내와 진실함으로 이 언약을 지켜 나가겠습니다. 하나님의 도우심으로 우리의 가정이 따뜻함과 기도, 그리고 웃음으로 가득한 집이 되길 소망합니다.">
+  <!-- Vows EN -->
+  <p class="lang-en" style="max-width:620px; margin:auto;">
     Today, before God, our families, and friends, we promise to walk together in faith and love.
     We will support one another, forgive quickly, and choose grace over pride.
+  </p>
+  <p class="lang-en" style="max-width:620px; margin:10px auto 0;">
     In seasons of joy and in seasons of hardship, we will seek God first, listen deeply,
     and protect this covenant with patience and honesty. With God’s help, we will build a
     home filled with warmth, prayer, and laughter.
   </p>
 
+  <!-- Vows KO -->
+  <p class="lang-ko" style="max-width:620px; margin:auto;">
+    오늘, 하나님과 양가 가족, 그리고 소중한 친구들 앞에서
+    우리는 믿음과 사랑으로 함께 걸어갈 것을 약속합니다.
+    서로를 지지하고, 빨리 용서하며, 자존심보다 은혜를 선택하겠습니다.
+  </p>
+  <p class="lang-ko" style="max-width:620px; margin:10px auto 0;">
+    기쁨의 순간에도, 어려움의 순간에도
+    우리는 하나님을 먼저 구하고, 깊이 귀 기울이며,
+    인내와 진실함으로 이 언약을 지켜 나가겠습니다.
+  </p>
+  <p class="lang-ko" style="max-width:620px; margin:10px auto 0;">
+    하나님의 도우심으로
+    우리의 가정이 따뜻함과 기도, 그리고 웃음으로 가득한 집이 되길 소망합니다.
+  </p>
+
   <!-- Hymn Section -->
-  <div class="section-title"
-       data-en="Hymn"
-       data-ko="찬송가">
-       Hymn
+  <div class="section-title lang-en">
+    Hymn
+  </div>
+  <div class="section-title lang-ko">
+    찬송가
   </div>
 
   <img src="hymn.png"
@@ -767,22 +788,36 @@
 
   <hr>
 
-  <div class="section-title"
-       data-en="Order of Ceremony (Wedding Service)"
-       data-ko="결혼식 순서">
-       Order of Ceremony (Wedding Service)
+  <!-- Order of Ceremony EN -->
+  <div class="section-title lang-en">
+    Order of Ceremony (Wedding Service)
   </div>
+  <ul class="lang-en">
+    <li>Apostles’ Creed</li>
+    <li>Song: Love Forever</li>
+    <li>Blessings</li>
+    <li>· Bride’s Father</li>
+    <li>· Groom’s Father</li>
+    <li>Vows</li>
+    <li>Groom’s Father Prayer</li>
+    <li>The Lord’s Prayer</li>
+    <li>Dinner</li>
+  </ul>
 
-  <ul>
-    <li>Apostles’ Creed (사도신경)</li>
-    <li>Song: Love Forever (완전한 사랑)</li>
-    <li>Blessings (축사)</li>
-    <li>· Bride’s Father (신부쪽 아버지, 2–3 mins)</li>
-    <li>· Groom’s Father (신랑쪽 아버지, 2–3 mins)</li>
-    <li>Vows (결혼 서약)</li>
-    <li>Groom’s Father Prayer (신랑쪽 아버지 기도)</li>
-    <li>The Lord’s Prayer (주기도문)</li>
-    <li>Dinner (저녁식사)</li>
+  <!-- Order of Ceremony KO -->
+  <div class="section-title lang-ko">
+    결혼식 순서
+  </div>
+  <ul class="lang-ko">
+    <li>사도신경</li>
+    <li>찬양: 완전한 사랑</li>
+    <li>축사</li>
+    <li>· 신부쪽 아버지</li>
+    <li>· 신랑쪽 아버지</li>
+    <li>결혼 서약</li>
+    <li>신랑쪽 아버지 기도</li>
+    <li>주기도문</li>
+    <li>저녁식사</li>
   </ul>
 
   <!-- Banking / Gifts Section -->
@@ -790,7 +825,7 @@
     <div class="section-title"
          data-en="Wedding Gifts &amp; Blessing"
          data-ko="결혼 선물과 축복의 마음">
-         Wedding Gifts &amp; Blessing (결혼 선물과 축복의 마음)
+      Wedding Gifts &amp; Blessing
     </div>
 
     <div class="bank-row">
@@ -798,7 +833,7 @@
         <div class="bank-label"
              data-en="Groom"
              data-ko="신랑">
-             신랑
+          Groom
         </div>
         <button class="btn bank-toggle"
                 onclick="toggleQR('groom')"
@@ -817,7 +852,7 @@
         <div class="bank-label"
              data-en="Bride"
              data-ko="신부">
-             신부
+          Bride
         </div>
         <button class="btn bank-toggle"
                 onclick="toggleQR('bride')"
