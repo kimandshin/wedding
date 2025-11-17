@@ -313,6 +313,59 @@
     transform: translateX(-50%);
     opacity: 0.8;
   }
+
+  /* ---------- Floating collectible flowers ---------- */
+  .floating-flower {
+    position: fixed;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 4;
+    animation: floaty 10s linear infinite alternate;
+  }
+
+  @keyframes floaty {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+  }
+
+  #flower-status {
+    margin-top: 32px;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  #flower-status.pulse {
+    animation: pulse 0.8s ease-out;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+
+  #flower-scoreboard {
+    margin-top: 12px;
+    font-size: 0.9rem;
+  }
+
+  #flower-scoreboard form {
+    margin-bottom: 8px;
+  }
+
+  #flower-scoreboard input {
+    padding: 6px 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-family: inherit;
+    font-size: 0.85rem;
+  }
+
+  #flower-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 6px 0 0;
+  }
 </style>
 
 <script>
@@ -417,6 +470,98 @@
     }
   }
 
+  /* ---------- Collectible flowers mini-game ---------- */
+  let flowerCount = 0;
+
+  function spawnFlower() {
+    const flower = document.createElement('span');
+    flower.className = 'floating-flower';
+    flower.textContent = '💜';
+
+    const left = 5 + Math.random() * 90;   // vw
+    const top  = 15 + Math.random() * 60;  // vh
+    flower.style.left = left + 'vw';
+    flower.style.top  = top + 'vh';
+
+    document.body.appendChild(flower);
+
+    flower.addEventListener('click', () => {
+      flowerCount++;
+      flower.remove();
+
+      const status = document.getElementById('flower-status');
+      if (!status) return;
+
+      status.innerHTML = `You collected <strong>${flowerCount}</strong> flowers. Tap here to open the scoreboard.`;
+      if (flowerCount % 5 === 0) {
+        status.style.display = 'block';
+        status.classList.add('pulse');
+        setTimeout(() => status.classList.remove('pulse'), 800);
+      }
+    });
+
+    // auto-remove after 20s if untouched
+    setTimeout(() => {
+      if (flower.parentNode) flower.parentNode.removeChild(flower);
+    }, 20000);
+  }
+
+  function toggleFlowerScoreboard() {
+    const board = document.getElementById('flower-scoreboard');
+    if (!board) return;
+    const visible = board.style.display === 'block';
+    board.style.display = visible ? 'none' : 'block';
+    if (!visible) {
+      loadFlowerScores();
+    }
+  }
+
+  function saveFlowerScore(event) {
+    event.preventDefault();
+    const nameInput = document.getElementById('flower-name');
+    if (!nameInput) return;
+    const name = nameInput.value.trim() || 'Guest';
+    const scores = loadFlowerScores(true);
+    scores.push({ name, flowers: flowerCount });
+    localStorage.setItem('weddingFlowerScores', JSON.stringify(scores));
+    nameInput.value = '';
+    loadFlowerScores();
+  }
+
+  function loadFlowerScores(returnOnly) {
+    const listEl = document.getElementById('flower-list');
+    let scores = [];
+    try {
+      const raw = localStorage.getItem('weddingFlowerScores');
+      if (raw) scores = JSON.parse(raw);
+    } catch (e) {
+      scores = [];
+    }
+
+    if (returnOnly) return scores;
+
+    if (!listEl) return scores;
+    listEl.innerHTML = '';
+
+    if (scores.length === 0) {
+      const li = document.createElement('li');
+      li.textContent = 'No scores yet – be the first!';
+      listEl.appendChild(li);
+      return scores;
+    }
+
+    // sort by flowers desc
+    scores.sort((a, b) => b.flowers - a.flowers);
+
+    scores.forEach((s, idx) => {
+      const li = document.createElement('li');
+      li.textContent = `${idx + 1}. ${s.name} – ${s.flowers} flowers`;
+      listEl.appendChild(li);
+    });
+
+    return scores;
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     updateTimes();
     setInterval(updateTimes, 60000);
@@ -467,6 +612,22 @@
         burstEmojis(e.clientX, e.clientY, ['🌸','🌷','🌹','🌼','💐','🌻']);
       });
     }
+
+    // flower status click → toggle scoreboard
+    const statusEl = document.getElementById('flower-status');
+    if (statusEl) {
+      statusEl.addEventListener('click', toggleFlowerScoreboard);
+    }
+
+    // form submit handler for scoreboard
+    const form = document.getElementById('flower-form');
+    if (form) {
+      form.addEventListener('submit', saveFlowerScore);
+    }
+
+    // start spawning flowers every 9 seconds
+    spawnFlower();
+    setInterval(spawnFlower, 9000);
   });
 </script>
 
@@ -671,6 +832,20 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Flower game status + scoreboard -->
+  <div id="flower-status" style="display:none;">
+    <!-- filled by JS -->
+  </div>
+
+  <div id="flower-scoreboard" style="display:none;">
+    <div style="font-weight:600; margin-bottom:4px;">Flower Catch Scoreboard</div>
+    <form id="flower-form">
+      <input id="flower-name" type="text" placeholder="Your name">
+      <button type="submit" class="btn" style="margin-top:4px;">Save score</button>
+    </form>
+    <ul id="flower-list"></ul>
   </div>
 
 </div>
