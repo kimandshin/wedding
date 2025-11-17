@@ -13,6 +13,25 @@
     font-style: normal;
   }
 
+  .name-click {
+  cursor: pointer;
+  outline: none;
+}
+
+.name-click:focus,
+.name-click:active {
+  outline: none;
+}
+
+.floating-flower {
+  outline: none;
+}
+
+.floating-flower:focus,
+.floating-flower:active {
+  outline: none;
+}
+
   /* ---------- Base layout ---------- */
   body {
     font-family: 'Samanco', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -474,41 +493,62 @@
     }
   }
 
-  /* ---------- Collectible flowers mini-game ---------- */
-  let flowerCount = 0;
+/* ---------- Collectible flowers mini-game ---------- */
+let flowerCount = 0;
+let activeFlowers = 0;
 
-  function spawnFlower() {
-    const flower = document.createElement('span');
-    flower.className = 'floating-flower';
-    flower.textContent = '💜';
+function spawnFlower() {
+  // cap at 10 flowers on screen
+  if (activeFlowers >= 10) return;
 
-    const left = 5 + Math.random() * 90;
-    const top  = 15 + Math.random() * 60;
-    flower.style.left = left + 'vw';
-    flower.style.top  = top + 'vh';
+  const flower = document.createElement('span');
+  flower.className = 'floating-flower';
+  flower.textContent = '🪻'; // purple flower instead of heart
 
-    document.body.appendChild(flower);
+  const left = 5 + Math.random() * 90;
+  const top  = 15 + Math.random() * 60;
+  flower.style.left = left + 'vw';
+  flower.style.top  = top + 'vh';
 
-    flower.addEventListener('click', () => {
-      flowerCount++;
-      flower.remove();
+  document.body.appendChild(flower);
+  activeFlowers++;
 
-      const status = document.getElementById('flower-status');
-      if (!status) return;
-
-      status.innerHTML = `You collected <strong>${flowerCount}</strong> flowers. Tap here to open the scoreboard.`;
-      if (flowerCount % 5 === 0) {
-        status.style.display = 'block';
-        status.classList.add('pulse');
-        setTimeout(() => status.classList.remove('pulse'), 800);
-      }
-    });
-
-    setTimeout(() => {
-      if (flower.parentNode) flower.parentNode.removeChild(flower);
-    }, 20000);
+  let removed = false;
+  function removeFlower() {
+    if (removed) return;
+    removed = true;
+    if (flower.parentNode) flower.parentNode.removeChild(flower);
+    activeFlowers = Math.max(0, activeFlowers - 1);
   }
 
+  flower.addEventListener('click', () => {
+    flowerCount++;
+    removeFlower();
+
+    const status = document.getElementById('flower-status');
+    if (!status) return;
+
+    status.innerHTML =
+      `You collected <strong>${flowerCount}</strong> flowers. Tap here to open the scoreboard.`;
+    if (flowerCount % 5 === 0) {
+      status.style.display = 'block';
+      status.classList.add('pulse');
+      setTimeout(() => status.classList.remove('pulse'), 800);
+    }
+  });
+
+  // if the flower survives 2 seconds, spawn another one (up to 10)
+  setTimeout(() => {
+    if (!removed && activeFlowers < 10) {
+      spawnFlower();
+    }
+  }, 2000);
+
+  // auto-remove after 20 seconds so it doesn’t live forever
+  setTimeout(() => {
+    removeFlower();
+  }, 20000);
+}
   function toggleFlowerScoreboard() {
     const board = document.getElementById('flower-scoreboard');
     if (!board) return;
@@ -670,9 +710,10 @@
   </div>
     
   <h1>WEDDING INVITATION</h1>
-  <h2>
-    <span id="groom-name">김유석</span> 🤍 <span id="bride-name">신혜수</span>
-  </h2>
+<h2>
+  <span id="groom-name" class="name-click">김유석</span> 🤍
+  <span id="bride-name" class="name-click">신혜수</span>
+</h2>
 
   <div class="subtext">
     February 7, 2025 · 5:00 PM · Asador, Haeundae, Busan
