@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wedding Invitation – 김유석 🤍 신혜수</title>
 
-<!-- ============ CUSTOM FONT ============ -->
 <style>
 @font-face {
   font-family: 'Samanco';
@@ -14,7 +13,7 @@
   font-style: normal;
 }
 
-/* ============ BASE ============ */
+/* BASE */
 body {
   font-family: 'Samanco', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   margin: 0;
@@ -33,9 +32,11 @@ body {
   box-shadow: 0 10px 24px rgba(0,0,0,0.08);
 }
 
-.top-buttons { margin-bottom: 26px; }
+.top-buttons {
+  margin-bottom: 26px;
+}
 
-/* ============ TIME ROW FIXED ============ */
+/* TIME ROW */
 .time-row {
   display: flex;
   justify-content: center;
@@ -44,32 +45,41 @@ body {
   margin-top: -10px;
   margin-bottom: 10px;
 }
-
 .time-item {
   min-width: 150px;
   font-size: 0.9rem;
   color: #555;
-  text-align: center;
+}
+.time-label {
+  display: block;
+  margin-bottom: 4px;
+}
+.time-value {
+  font-weight: 600;
+  font-size: 1.05rem;
 }
 
-.time-label { display: block; margin-bottom: 4px; }
-.time-value { font-weight: 600; font-size: 1.05rem; }
-
-/* ============ TITLES ============ */
+/* TITLES & TEXT */
 h1 {
   font-size: 1.9rem;
   letter-spacing: 0.15em;
   margin: 0 0 10px;
 }
-h2 { font-size: 1.8rem; margin: 0 0 8px; }
-
+h2 {
+  font-size: 1.8rem;
+  margin: 0 0 8px;
+}
 .subtext {
   font-size: 0.95rem;
   margin-bottom: 24px;
   color: #666;
 }
+p {
+  margin: 6px 0;
+  line-height: 1.7;
+}
 
-/* Fix main image size */
+/* MAIN IMAGE */
 img.wedding-img {
   width: 80%;
   max-width: 340px;
@@ -78,7 +88,7 @@ img.wedding-img {
   display: block;
 }
 
-/* ============ BUTTONS ============ */
+/* BUTTONS */
 .btn {
   display: inline-block;
   padding: 9px 16px;
@@ -91,12 +101,15 @@ img.wedding-img {
   background: #fafafa;
   transition: 0.2s;
 }
-.btn:hover { background: #f0f0f0; }
+.btn:hover {
+  background: #f0f0f0;
+}
 .btn-primary {
   border-color: #000;
   font-weight: 600;
 }
 
+/* HR */
 hr {
   margin: 30px auto;
   border: none;
@@ -105,39 +118,49 @@ hr {
   background: #e5e5e5;
 }
 
-/* ============ SECTION TITLES ============ */
+/* SECTION TITLES */
 .section-title {
   font-size: 1.25rem;
   margin: 32px 0 10px;
   font-weight: 600;
 }
 
-p { margin: 6px 0; line-height: 1.7; }
+/* LISTS (no bullets) */
+ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 10px 0 0;
+}
+ul li {
+  margin: 6px 0;
+  line-height: 1.8;
+}
 
-/* ============ HYMN COLLAPSIBLE ============ */
+/* COLLAPSIBLES (Hymn + Scoreboard) */
 .collapsible {
-    background: #fafafa;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 10px 14px;
-    cursor: pointer;
-    width: 240px;
-    margin: 10px auto;
-    text-align: center;
-    font-size: 0.9rem;
-    transition: background 0.2s;
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  width: 240px;
+  margin: 10px auto;
+  text-align: center;
+  font-size: 0.9rem;
+  transition: background 0.2s;
 }
-.collapsible.active { background: #f0f0f0; }
-
+.collapsible.active {
+  background: #f0f0f0;
+}
 .collapsible-content {
-    overflow: hidden;
-    max-height: 0;
-    padding: 0;
-    transition: max-height 0.3s ease, padding 0.3s ease;
-    margin-bottom: 10px;
+  overflow: hidden;
+  max-height: 0;
+  padding: 0;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  margin-bottom: 10px;
 }
 
-/* ============ MESSAGE CARDS ============ */
+/* MESSAGE CARDS */
 .message-card {
   min-width: 180px;
   max-width: 220px;
@@ -150,7 +173,7 @@ p { margin: 6px 0; line-height: 1.7; }
   text-align: center;
 }
 
-/* ============ TROPHY BUTTON ============ */
+/* TROPHY & SCOREBOARD */
 #trophyBtn {
   font-size: 26px;
   background: none;
@@ -158,46 +181,56 @@ p { margin: 6px 0; line-height: 1.7; }
   cursor: pointer;
   margin-top: 14px;
 }
-
-/* ============ SCOREBOARD WRAPPER ============ */
 #scoreboardWrapper {
-  display:none;
-  margin-top:20px;
+  display: none;
+  margin-top: 20px;
 }
 
-/* ============ FIX BULLET POINTS ============ */
-ul { list-style: none; padding-left: 0; }
-ul li { margin: 6px 0; }
-</style>
+/* FLOWER GAME */
+.flower {
+  position: fixed;
+  font-size: 26px;
+  cursor: pointer;
+  user-select: none;
+  z-index: 10;
+  transition: transform 0.2s;
+}
+.flower:hover {
+  transform: scale(1.25);
+}
 
-<!-- ============ JS: LANG + TIME ============ -->
-<script>
-function switchLang(lang) {
-  const enTexts = document.querySelectorAll('.en-text');
-  const koTexts = document.querySelectorAll('.ko-text');
-
-  if (lang === "ko") {
-    enTexts.forEach(el => el.style.display = "none");
-    koTexts.forEach(el => el.style.display = "block");
-  } else {
-    enTexts.forEach(el => el.style.display = "block");
-    koTexts.forEach(el => el.style.display = "none");
+/* SNOW */
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: #ffffff;
+  text-shadow: 0 0 4px rgba(255,255,255,0.7);
+  font-size: 8px;
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 5;
+  animation: snow-fall linear infinite;
+}
+@keyframes snow-fall {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh);
+    opacity: 0;
   }
 }
 
-
-function updateTimes() {
-  const sj = document.getElementById("time-sj");
-  const kr = document.getElementById("time-kr");
-  if (!sj || !kr) return;
-  const now = new Date();
-  sj.textContent = now.toLocaleTimeString("en-US", {hour:"2-digit",minute:"2-digit",timeZone:"America/Los_Angeles"});
-  kr.textContent = now.toLocaleTimeString("en-US", {hour:"2-digit",minute:"2-digit",timeZone:"Asia/Seoul"});
-}
-</script>
+/* LANG GROUPS */
+.en-text { display: block; }
+.ko-text { display: none; }
+</style>
 </head>
-
- <body>
+<body>
 
 <div class="container">
 
@@ -211,11 +244,15 @@ function updateTimes() {
   <!-- TIME ROW -->
   <div class="time-row">
     <div class="time-item">
-      <span class="time-label" data-en="San Jose Time" data-ko="샌호세 시간">San Jose Time</span>
+      <span class="time-label" data-en="San Jose Time" data-ko="샌호세 시간">
+        San Jose Time
+      </span>
       <span class="time-value" id="time-sj">--:--</span>
     </div>
     <div class="time-item">
-      <span class="time-label" data-en="Korea Time" data-ko="한국 시간">Korea Time</span>
+      <span class="time-label" data-en="Korea Time" data-ko="한국 시간">
+        Korea Time
+      </span>
       <span class="time-value" id="time-kr">--:--</span>
     </div>
   </div>
@@ -228,12 +265,15 @@ function updateTimes() {
     <span onclick="popEmojis('bride')" style="cursor:pointer;">신혜수</span>
   </h2>
 
-  <div class="subtext">February 7, 2025 · 5:00 PM · Asador, Haeundae, Busan</div>
+  <div class="subtext">
+    February 7, 2025 · 5:00 PM · Asador, Haeundae, Busan
+  </div>
 
   <!-- MAIN IMAGE -->
-  <img src="hyesoo_david.png" class="wedding-img" alt="Wedding Image">
+  <img src="hyesoo_david.png" class="wedding-img" alt="Wedding Illustration">
 
-  <p data-en="We invite you to celebrate our special day." data-ko="저희의 특별한 날에 함께해주시길 부탁드립니다.">
+  <p data-en="We invite you to celebrate our special day."
+     data-ko="저희의 특별한 날에 함께해주시길 부탁드립니다.">
     We invite you to celebrate our special day.
   </p>
 
@@ -241,13 +281,19 @@ function updateTimes() {
     Asador (4F), 부산 해운대구 해운대해변로298번길 9
   </p>
 
-  <!-- MAP BUTTONS (STYLE FIXED: NO BLUE UNDERLINES) -->
+  <!-- MAP BUTTONS -->
   <div style="margin-top:14px;">
-    <a class="btn btn-primary" href="https://maps.app.goo.gl/JHUsDcZcbDqTpjZQ6" target="_blank" style="color:#333; text-decoration:none;">
+    <a class="btn btn-primary"
+       href="https://maps.app.goo.gl/JHUsDcZcbDqTpjZQ6"
+       target="_blank"
+       style="color:#333; text-decoration:none;">
       Google Maps
     </a>
 
-    <a class="btn" href="https://naver.me/5T4nAinf" target="_blank" style="color:#333; text-decoration:none;">
+    <a class="btn"
+       href="https://naver.me/5T4nAinf"
+       target="_blank"
+       style="color:#333; text-decoration:none;">
       Naver Map
     </a>
   </div>
@@ -268,8 +314,7 @@ function updateTimes() {
     home filled with warmth, prayer, and laughter.
   </p>
 
-  <!-- KOREAN VOWS -->
-  <div class="ko-text" style="display:none; max-width:620px; margin:auto;">
+  <div class="ko-text" style="max-width:620px; margin:auto;">
     <p>
       오늘, 하나님과 양가 가족, 그리고 소중한 친구들 앞에서<br>
       우리는 믿음과 사랑으로 함께 걸어갈 것을 약속합니다.<br>
@@ -291,31 +336,48 @@ function updateTimes() {
   <!-- HYMN -->
   <div class="section-title" data-en="Hymn" data-ko="찬송가">Hymn</div>
 
-  <img src="hymn.png" alt="Hymn" style="width:90%; max-width:600px; border-radius:12px; margin:20px auto; display:block;">
+  <img src="hymn.png"
+       alt="Hymn: 완전한 사랑"
+       style="width:90%; max-width:600px; margin:20px auto; display:block; border-radius:12px;">
 
   <!-- HYMN TRANSLATION COLLAPSIBLE -->
-  <button class="collapsible" data-en="Show English translation" data-ko="영문 번역 보기">
+  <button class="collapsible"
+          data-en="Show English translation"
+          data-ko="영문 번역 보기">
     Show English translation
   </button>
 
   <div class="collapsible-content">
-    <p style="max-width:620px; margin:auto;">
+    <p style="max-width:620px; margin:auto; text-align:center;">
       <strong>Love Forever – English Translation</strong><br><br>
-      1.<br>Your perfect love, unchanging love<br>Fills my heart again today<br>
-      Even if I walk through darkness<br>You are with me, holding me<br><br>
-      2.<br>Your endless grace, amazing grace<br>Covers all my brokenness<br>
-      When I fall and lose my strength<br>You lift me up again<br><br>
-      3.<br>Forever more, forever Lord<br>My life belongs to You alone<br>
-      Lead me by Your faithful hand<br>In Your love forever
+      1.<br>
+      Your perfect love, unchanging love<br>
+      Fills my heart again today<br>
+      Even if I walk through darkness<br>
+      You are with me, holding me<br><br>
+      2.<br>
+      Your endless grace, amazing grace<br>
+      Covers all my brokenness<br>
+      When I fall and lose my strength<br>
+      You lift me up again<br><br>
+      3.<br>
+      Forever more, forever Lord<br>
+      My life belongs to You alone<br>
+      Lead me by Your faithful hand<br>
+      In Your love forever
     </p>
   </div>
 
   <hr>
 
   <!-- ORDER OF CEREMONY -->
-  <div class="section-title" data-en="Order of Ceremony" data-ko="결혼식 순서">Order of Ceremony</div>
+  <div class="section-title"
+       data-en="Order of Ceremony"
+       data-ko="결혼식 순서">
+    Order of Ceremony
+  </div>
 
-  <ul class="en-text">
+  <ul class="en-text" style="text-align:center;">
     <li>Apostles’ Creed</li>
     <li>Song: Love Forever</li>
     <li>Blessings</li>
@@ -327,7 +389,7 @@ function updateTimes() {
     <li>Dinner</li>
   </ul>
 
-  <ul class="ko-text" style="display:none;">
+  <ul class="ko-text" style="text-align:center;">
     <li>사도신경</li>
     <li>찬양: 완전한 사랑</li>
     <li>축사</li>
@@ -342,135 +404,215 @@ function updateTimes() {
   <hr>
 
   <!-- GIFTS -->
-  <div class="section-title" data-en="Wedding Gifts & Blessing" data-ko="결혼 선물과 축복의 마음">
+  <div class="section-title"
+       data-en="Wedding Gifts & Blessing"
+       data-ko="결혼 선물과 축복의 마음">
     Wedding Gifts & Blessing
   </div>
 
-  <button class="btn" onclick="toggleQR('groomQR')" data-en="Groom" data-ko="신랑">Groom</button>
-  <button class="btn" onclick="toggleQR('brideQR')" data-en="Bride" data-ko="신부">Bride</button>
+  <div style="margin-bottom:18px;">
+    <button class="btn"
+            onclick="toggleQR('groomQR')"
+            data-en="Groom"
+            data-ko="신랑">
+      Groom
+    </button>
+
+    <button class="btn"
+            onclick="toggleQR('brideQR')"
+            data-en="Bride"
+            data-ko="신부">
+      Bride
+    </button>
+  </div>
 
   <div id="groomQR" style="display:none;">
-    <img src="DavidZelle.png" style="width:60%; max-width:260px; border-radius:12px; margin:14px auto; display:block;">
+    <img src="DavidZelle.png"
+         alt="Groom QR"
+         style="width:65%; max-width:260px; border-radius:12px; margin:10px auto; display:block;">
   </div>
 
   <div id="brideQR" style="display:none;">
-    <img src="HyesooBank.jpg" style="width:60%; max-width:260px; border-radius:12px; margin:14px auto; display:block;">
+    <img src="HyesooBank.jpg"
+         alt="Bride Bank QR"
+         style="width:65%; max-width:260px; border-radius:12px; margin:10px auto; display:block;">
   </div>
 
   <hr>
 
   <!-- GUEST MESSAGE SECTION -->
-  <div class="section-title" data-en="Leave a Message" data-ko="축하 메시지 남겨주세요">
+  <div class="section-title"
+       data-en="Leave a Message"
+       data-ko="축하 메시지 남겨주세요">
     Leave a Message
   </div>
 
   <div style="max-width:620px; margin:auto;">
-    <input id="guestName" maxlength="30" placeholder="Your Name" data-en="Your Name" data-ko="이름"
-           style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc; margin-bottom:10px;">
+    <input id="guestName"
+           maxlength="30"
+           placeholder="Your Name"
+           data-en="Your Name"
+           data-ko="이름"
+           style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px;
+                  border:1px solid #ccc; font-size:0.95rem; text-align:center;">
 
-    <textarea id="guestMsg" maxlength="200"
+    <textarea id="guestMsg"
+              maxlength="200"
               placeholder="Write your message (200 characters)"
               data-en="Write your message (200 characters)"
               data-ko="축하 메시지를 작성해주세요 (200자)"
-              style="width:100%; height:90px; padding:10px; border-radius:8px; border:1px solid #ccc;"></textarea>
+              style="width:100%; height:90px; padding:10px; border-radius:8px;
+                     border:1px solid #ccc; resize:none; font-size:0.95rem; text-align:center;"></textarea>
 
-    <button type="button" class="btn btn-primary" onclick="submitMessage()">Submit</button>
+    <button type="button"
+            class="btn btn-primary"
+            onclick="submitMessage()"
+            data-en="Submit"
+            data-ko="보내기">
+      Submit
+    </button>
   </div>
 
-  <div id="msgStatus" style="margin-top:10px; font-size:0.9rem;"></div>
+  <div id="msgStatus"
+       style="margin-top:10px; font-size:0.9rem; color:#444;"></div>
 
   <hr>
 
-  <div class="section-title" data-en="Messages" data-ko="메시지 보기">Messages</div>
-
-  <div id="messageCarousel"
-    style="display:flex; overflow-x:auto; gap:16px; padding:10px 5px; scroll-snap-type:x mandatory; justify-content:center;">
+  <!-- MESSAGE VIEWER -->
+  <div class="section-title"
+       data-en="Messages"
+       data-ko="메시지 보기">
+    Messages
   </div>
 
-  <!-- TROPHY BUTTON -->
+  <div id="messageCarousel"
+       style="display:flex; overflow-x:auto; gap:16px; padding:10px 5px;
+              scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+              justify-content:center;">
+  </div>
+
+  <!-- TROPHY BUTTON / SCOREBOARD -->
   <button id="trophyBtn" onclick="toggleScoreboard()">🏆</button>
 
-  <!-- SCOREBOARD WRAPPER -->
   <div id="scoreboardWrapper">
-
-    <div style="font-size:0.95rem; margin-top:14px;">
-      <span data-en="Flowers collected:" data-ko="모은 꽃 수:">Flowers collected:</span>
+    <div style="margin-top:14px; font-size:0.95rem;">
+      <span data-en="Flowers collected:" data-ko="모은 꽃 수:">
+        Flowers collected:
+      </span>
       <strong id="flowerCounter">0</strong>
     </div>
 
-    <button class="collapsible" data-en="See Scoreboard" data-ko="스코어보드 보기">
+    <button class="collapsible"
+            data-en="See Scoreboard"
+            data-ko="스코어보드 보기">
       See Scoreboard
     </button>
 
     <div class="collapsible-content" id="scoreboardArea">
-      <p style="font-size:0.9rem; color:#555;">Loading scoreboard...</p>
+      <p style="font-size:0.9rem; color:#555;">
+        Loading scoreboard...
+      </p>
     </div>
 
-    <div style="max-width:620px; margin:auto;">
-      <input id="scoreName" placeholder="Your Name"
-             style="width:200px; padding:10px; border-radius:8px; border:1px solid #ccc; margin:10px auto; text-align:center; display:block;">
+    <div style="max-width:620px; margin:20px auto 0;">
+      <input id="scoreName"
+             maxlength="30"
+             placeholder="Your Name"
+             data-en="Your Name"
+             data-ko="이름"
+             style="width:200px; padding:10px; border-radius:8px;
+                    border:1px solid #ccc; text-align:center; margin:0 auto 10px auto; display:block;">
 
-      <button type="button" class="btn btn-primary" onclick="submitScore()">Submit Score</button>
+      <button type="button"
+              class="btn btn-primary"
+              onclick="submitScore()"
+              data-en="Submit Score"
+              data-ko="점수 제출">
+        Submit Score
+      </button>
 
-      <div id="scoreStatus" style="margin-top:10px; font-size:0.9rem; color:#444;"></div>
+      <div id="scoreStatus"
+           style="margin-top:10px; font-size:0.9rem; color:#444;"></div>
     </div>
   </div>
 
- <!-- ============================= -->
-<!--       JAVASCRIPT SECTION      -->
-<!-- ============================= -->
+</div> <!-- /container -->
 
-<script>
-/* ------------------------------
-   LANGUAGE SWITCH
------------------------------- */
+  <script>
+// =============================
+// CONFIG
+// =============================
+const WEBAPP = "https://script.google.com/macros/s/AKfycbx6rTcXAYVXu7V4_eaTjPSFvvzKRIXwaVgnlug3MWG2O4a395rGAZE8saJdr08hJzAl/exec";
+
+// =============================
+// LANGUAGE SWITCH
+// =============================
 function switchLang(lang) {
+  // Elements with data-en / data-ko
   document.querySelectorAll("[data-en][data-ko]").forEach(el => {
-    el.innerHTML = (lang === "ko") ? el.dataset.ko : el.dataset.en;
+    el.innerHTML = (lang === "ko") ? el.getAttribute("data-ko") : el.getAttribute("data-en");
   });
-}
 
-/* ------------------------------
-   BACKGROUND MUSIC
------------------------------- */
-let bgm;
-function toggleBGM() {
-  if (!bgm) {
-    bgm = new Audio("hymn.mp3");
-    bgm.loop = true;
-    bgm.play();
-    document.getElementById("bgmBtn").innerText = "♪ Pause BGM";
-  } else if (bgm.paused) {
-    bgm.play();
-    document.getElementById("bgmBtn").innerText = "♪ Pause BGM";
+  // English / Korean grouped blocks
+  const enBlocks = document.querySelectorAll(".en-text");
+  const koBlocks = document.querySelectorAll(".ko-text");
+
+  if (lang === "ko") {
+    enBlocks.forEach(el => el.style.display = "none");
+    koBlocks.forEach(el => el.style.display = "block");
   } else {
-    bgm.pause();
-    document.getElementById("bgmBtn").innerText = "♪ Play BGM";
+    enBlocks.forEach(el => el.style.display = "block");
+    koBlocks.forEach(el => el.style.display = "none");
   }
 }
 
-/* ------------------------------
-   TIME ZONES
------------------------------- */
+// =============================
+// BGM
+// =============================
+let bgm;
+function toggleBGM() {
+  const btn = document.getElementById("bgmBtn");
+  if (!bgm) {
+    bgm = new Audio("hymn.mp3");
+    bgm.loop = true;
+    bgm.play().then(() => {
+      btn.innerText = "♪ Pause BGM";
+    }).catch(() => {
+      // autoplay blocked; keep text as is
+    });
+  } else if (bgm.paused) {
+    bgm.play();
+    btn.innerText = "♪ Pause BGM";
+  } else {
+    bgm.pause();
+    btn.innerText = "♪ Play BGM";
+  }
+}
+
+// =============================
+// TIME ZONES
+// =============================
 function updateTimes() {
+  const sj = document.getElementById("time-sj");
+  const kr = document.getElementById("time-kr");
+  if (!sj || !kr) return;
+
   const now = new Date();
   const opt = { hour: "2-digit", minute: "2-digit", hour12: false };
 
-  document.getElementById("time-sj").textContent =
-    now.toLocaleTimeString("en-US", { ...opt, timeZone: "America/Los_Angeles" });
-
-  document.getElementById("time-kr").textContent =
-    now.toLocaleTimeString("en-US", { ...opt, timeZone: "Asia/Seoul" });
+  sj.textContent = now.toLocaleTimeString("en-US", { ...opt, timeZone: "America/Los_Angeles" });
+  kr.textContent = now.toLocaleTimeString("en-US", { ...opt, timeZone: "Asia/Seoul" });
 }
 
-/* ------------------------------
-   COLLAPSIBLE LOGIC
------------------------------- */
-document.addEventListener("DOMContentLoaded", () => {
+// =============================
+// COLLAPSIBLES (Hymn + Scoreboard)
+// =============================
+function initCollapsibles() {
   document.querySelectorAll(".collapsible").forEach(btn => {
     btn.addEventListener("click", () => {
       btn.classList.toggle("active");
       const content = btn.nextElementSibling;
+      if (!content) return;
 
       if (content.style.maxHeight) {
         content.style.maxHeight = null;
@@ -481,95 +623,36 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
-});
+}
 
-/* ------------------------------
-   TOGGLE QR CODES
------------------------------- */
+// =============================
+// QR TOGGLE
+// =============================
 function toggleQR(id) {
   const el = document.getElementById(id);
-  el.style.display = (el.style.display === "none") ? "block" : "none";
+  if (!el) return;
+  el.style.display = (el.style.display === "none" || !el.style.display) ? "block" : "none";
 }
-  
-<hr>
 
-<div class="section-title"
-     data-en="Leave a Message"
-     data-ko="축하 메시지 남겨주세요">
-  Leave a Message
-</div>
-
-<!-- Input Form -->
-<div style="max-width:620px; margin:auto;">
-
-  <input id="guestName"
-         maxlength="30"
-         placeholder="Your Name"
-         data-en="Your Name"
-         data-ko="이름"
-         style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc;
-                font-size:0.95rem; text-align:center;">
-
-  <textarea id="guestMsg"
-            maxlength="200"
-            placeholder="Write your message (200 characters)"
-            data-en="Write your message (200 characters)"
-            data-ko="축하 메시지를 작성해주세요 (200자)"
-            style="width:100%; height:90px; padding:10px; border-radius:8px; border:1px solid #ccc;
-                   resize:none; font-size:0.95rem; text-align:center;"></textarea>
-
-  <button type="button" class="btn btn-primary"
-          onclick="submitMessage()"
-          data-en="Submit"
-          data-ko="보내기">
-    Submit
-  </button>
-
-</div>
-
-<!-- Submission Status -->
-<div id="msgStatus"
-     style="margin-top:10px; font-size:0.9rem; color:#444;">
-</div>
-
-<hr>
-
-<!-- Message Viewer Title -->
-<div class="section-title"
-     data-en="Messages"
-     data-ko="메시지 보기">
-  Messages
-</div>
-
-<hr>
-
-<!-- Message Viewer -->
-<div id="messageCarousel"
-     style="display:flex; overflow-x:auto; gap:16px; padding:10px 5px;
-            scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
-            justify-content:center;">
-</div>
-
-
-/* ------------------------------
-   EMOJI POP
------------------------------- */
+// =============================
+// EMOJI POP ON NAMES
+// =============================
 function popEmojis(target) {
-  const arr = target === "groom"
+  const set = (target === "groom")
     ? ["😄","😁","😎","🤍","✨"]
     : ["🌸","🌺","💐","🌷","🌼"];
 
   for (let i = 0; i < 6; i++) {
     setTimeout(() => {
       const e = document.createElement("div");
-      e.textContent = arr[Math.floor(Math.random() * arr.length)];
+      e.textContent = set[Math.floor(Math.random() * set.length)];
       e.style.position = "fixed";
-      e.style.left = window.innerWidth/2 + (Math.random()*120-60) + "px";
-      e.style.top  = window.innerHeight/2 + (Math.random()*70-35) + "px";
+      e.style.left = (window.innerWidth / 2 + (Math.random()*120 - 60)) + "px";
+      e.style.top  = (window.innerHeight / 2 + (Math.random()*80 - 40)) + "px";
       e.style.fontSize = "28px";
       e.style.opacity = "1";
-      e.style.transition = "1.2s";
-      e.style.zIndex = 999999;
+      e.style.transition = "1.2s ease-out";
+      e.style.zIndex = 9999;
       document.body.appendChild(e);
 
       setTimeout(() => {
@@ -578,47 +661,32 @@ function popEmojis(target) {
       }, 50);
 
       setTimeout(() => e.remove(), 1300);
-    }, i*120);
+    }, i * 120);
   }
 }
 
-/* ------------------------------
-   SNOW EFFECT
------------------------------- */
+// =============================
+// SNOW EFFECT (WHITE ONLY)
+// =============================
 function createSnow() {
-  for (let i = 0; i < 60; i++) {
+  const FLAKES = 80;
+  for (let i = 0; i < FLAKES; i++) {
     const flake = document.createElement("div");
+    flake.className = "snowflake";
     flake.textContent = "❄";
-    flake.style.position = "fixed";
-    flake.style.left = Math.random()*100 + "vw";
-    flake.style.top  = "-10px";
-    flake.style.fontSize = (6 + Math.random()*8) + "px";
-    flake.style.opacity = 0.5 + Math.random()*0.4;
-    flake.style.animation = `fall ${8+Math.random()*12}s linear infinite`;
-    flake.style.zIndex = 10;
-    flake.style.color = "#ffffff";
-    text-shadow: 0 0 4px rgba(255,255,255,0.7);
+
+    flake.style.left = Math.random() * 100 + "vw";
+    flake.style.fontSize = (6 + Math.random() * 8) + "px";
+    flake.style.animationDuration = (8 + Math.random() * 10) + "s";
+    flake.style.animationDelay = (Math.random() * 8) + "s";
+
     document.body.appendChild(flake);
   }
 }
 
-</script>
-
-<style>
-.en-text { display: block; }
-.ko-text { display: none; }
-
-@keyframes fall {
-  0% { transform: translateY(-10px); opacity:0; }
-  10% { opacity:1; }
-  100% { transform: translateY(110vh); opacity:0; }
-}
-</style>
-
-<!-- ============================= -->
-<!--     FLOWER CLICKER GAME       -->
-<!-- ============================= -->
-<script>
+// =============================
+// FLOWER CLICKER GAME
+// =============================
 let flowerCount = 0;
 let activeFlowers = 0;
 const MAX_FLOWERS = 4;
@@ -630,11 +698,8 @@ function spawnFlower() {
   f.className = "flower";
   f.textContent = "🪻";
 
-  const x = Math.random()*(window.innerWidth-40);
-  const y = Math.random()*(window.innerHeight-200);
-
-  f.style.left = x + "px";
-  f.style.top  = y + "px";
+  f.style.left = Math.random() * (window.innerWidth - 40) + "px";
+  f.style.top  = Math.random() * (window.innerHeight - 200) + "px";
 
   document.body.appendChild(f);
   activeFlowers++;
@@ -643,11 +708,9 @@ function spawnFlower() {
     flowerCount++;
     activeFlowers--;
     f.remove();
-    document.getElementById("flowerCounter").innerText = flowerCount;
 
-    if (flowerCount % 5 === 0) {
-      document.getElementById("scoreboardLink")?.setAttribute("style","display:block");
-    }
+    const counter = document.getElementById("flowerCounter");
+    if (counter) counter.innerText = flowerCount;
   });
 
   setTimeout(() => {
@@ -659,198 +722,147 @@ function spawnFlower() {
 }
 
 function flowerLoop() {
-  const delay = 1000 + Math.random()*4000;
-  setTimeout(() => {
-    spawnFlower();
-    flowerLoop();
-  }, delay);
+  spawnFlower();
+  const delay = 1200 + Math.random() * 2500;
+  setTimeout(flowerLoop, delay);
 }
-</script>
 
-<style>
-.flower {
-  position: fixed;
-  font-size: 26px;
-  cursor: pointer;
-  user-select: none;
-  z-index: 10;
-  transition: transform .2s;
-}
-.flower:hover { transform: scale(1.25); }
-</style>
-
-<!-- ============================= -->
-<!--    GOOGLE APPS SCRIPT API     -->
-<!-- ============================= -->
-
-<script>
-const WEBAPP = "https://script.google.com/macros/s/AKfycbx6rTcXAYVXu7V4_eaTjPSFvvzKRIXwaVgnlug3MWG2O4a395rGAZE8saJdr08hJzAl/exec";
-
-/* ------------------------------
-   SUBMIT MESSAGE
------------------------------- */
+// =============================
+// GUEST MESSAGES (Apps Script)
+// =============================
 function submitMessage() {
-  const name = guestName.value.trim();
-  const msg  = guestMsg.value.trim();
-  const status = msgStatus;
+  const name = document.getElementById("guestName").value.trim();
+  const msg  = document.getElementById("guestMsg").value.trim();
+  const status = document.getElementById("msgStatus");
 
   if (!name || !msg) {
     status.style.color = "red";
-    status.innerText = "Please enter both fields.";
+    status.innerText = "Please enter both your name and a message.";
     return;
   }
 
   status.style.color = "#444";
   status.innerText = "Submitting...";
 
-  fetch(`${WEBAPP}?action=addMessage&name=${encodeURIComponent(name)}&message=${encodeURIComponent(msg)}`)
+  const url = `${WEBAPP}?action=addMessage&name=${encodeURIComponent(name)}&message=${encodeURIComponent(msg)}`;
+
+  fetch(url)
     .then(() => {
       status.style.color = "green";
-      status.innerText = "Message added!";
-      guestName.value = "";
-      guestMsg.value = "";
+      status.innerText = "Thank you! Your message has been added.";
+      document.getElementById("guestName").value = "";
+      document.getElementById("guestMsg").value = "";
       loadMessages();
     })
     .catch(() => {
       status.style.color = "red";
-      status.innerText = "Error submitting.";
+      status.innerText = "Error: Please try again.";
     });
 }
 
-/* ------------------------------
-   LOAD MESSAGES
------------------------------- */
 function loadMessages() {
-  fetch(`${WEBAPP}?action=getMessages`)
-    .then(r => r.json())
-    .then(rows => {
-      const box = messageCarousel;
-      box.innerHTML = "";
-      rows.forEach(r => {
+  const url = `${WEBAPP}?action=getMessages`;
+
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById("messageCarousel");
+      container.innerHTML = "";
+
+      data.forEach(row => {
         const card = document.createElement("div");
-        card.style.minWidth = "180px";
-        card.style.border = "1px solid #ddd";
-        card.style.borderRadius = "12px";
-        card.style.padding = "14px";
-        card.style.background = "#fafafa";
-        card.style.scrollSnapAlign = "center";
-        card.innerHTML = `<strong>${r.name}</strong><br><br>${r.message}`;
-        box.appendChild(card);
+        card.className = "message-card";
+        card.innerHTML = `<strong>${row.name}</strong><br><br>${row.message}`;
+        container.appendChild(card);
       });
+    })
+    .catch(() => {
+      // silently ignore for now
     });
 }
 
-/* ------------------------------
-   SUBMIT SCORE
------------------------------- */
+// =============================
+// SCOREBOARD (Apps Script)
+// =============================
 function submitScore() {
-  const name = scoreName.value.trim();
-  const status = scoreStatus;
+  const name = document.getElementById("scoreName").value.trim();
+  const status = document.getElementById("scoreStatus");
 
   if (!name) {
     status.style.color = "red";
-    status.innerText = "Enter your name.";
+    status.innerText = "Please enter your name.";
     return;
   }
 
   status.style.color = "#444";
   status.innerText = "Submitting...";
 
-  fetch(`${WEBAPP}?action=addFlower&name=${encodeURIComponent(name)}&count=${flowerCount}`)
+  const url = `${WEBAPP}?action=addFlower&name=${encodeURIComponent(name)}&count=${encodeURIComponent(flowerCount)}`;
+
+  fetch(url)
     .then(() => {
       status.style.color = "green";
-      status.innerText = "Score saved!";
+      status.innerText = "Score submitted!";
       loadScoreboard();
     })
     .catch(() => {
       status.style.color = "red";
-      status.innerText = "Error submitting.";
+      status.innerText = "Error submitting score.";
     });
 }
 
-/* ------------------------------
-   LOAD SCOREBOARD
------------------------------- */
 function loadScoreboard() {
-  fetch(`${WEBAPP}?action=getFlowers`)
-    .then(r => r.json())
+  const url = `${WEBAPP}?action=getFlowers`;
+
+  fetch(url)
+    .then(res => res.json())
     .then(rows => {
-      scoreboardArea.innerHTML = "";
+      const area = document.getElementById("scoreboardArea");
+      area.innerHTML = "";
+
       if (!rows.length) {
-        scoreboardArea.innerHTML = "<p>No scores yet.</p>";
+        area.innerHTML = "<p>No scores yet.</p>";
         return;
       }
+
       rows.forEach(r => {
         const p = document.createElement("p");
+        p.style.margin = "6px 0";
         p.innerHTML = `<strong>${r.name}</strong> — ${r.total}`;
-        scoreboardArea.appendChild(p);
+        area.appendChild(p);
       });
+    })
+    .catch(() => {
+      const area = document.getElementById("scoreboardArea");
+      area.innerHTML = "<p>Error loading scores.</p>";
     });
 }
 
-/* ------------------------------
-   TOGGLE SCOREBOARD
------------------------------- */
+// =============================
+// SCOREBOARD TOGGLE
+// =============================
 function toggleScoreboard() {
-  scoreboardWrapper.style.display =
-    scoreboardWrapper.style.display === "none" ? "block" : "none";
+  const wrap = document.getElementById("scoreboardWrapper");
+  if (!wrap) return;
+  wrap.style.display = (wrap.style.display === "none" || !wrap.style.display)
+    ? "block"
+    : "none";
 }
 
-/* ------------------------------
-   INITIALIZE EVERYTHING
------------------------------- */
+// =============================
+// INIT
+// =============================
 document.addEventListener("DOMContentLoaded", () => {
   updateTimes();
   setInterval(updateTimes, 60000);
 
-  loadMessages();
-  loadScoreboard();
-
+  initCollapsibles();
   createSnow();
   flowerLoop();
+
+  loadMessages();
+  loadScoreboard();
 });
-</script>
-
-</div> <!-- END .container -->
-   <script>
-// --- fix flower generator ---
-let flowerCount = 0;
-let onScreenFlowers = 0;
-const MAX_FLOWERS = 4;
-
-function spawnFlower() {
-  if (onScreenFlowers >= MAX_FLOWERS) return;
-
-  const f = document.createElement("div");
-  f.className = "flower";
-  f.textContent = "🪻";
-
-  f.style.left = Math.random() * (window.innerWidth - 40) + "px";
-  f.style.top = Math.random() * (window.innerHeight - 200) + "px";
-
-  document.body.appendChild(f);
-  onScreenFlowers++;
-
-  f.onclick = () => {
-    flowerCount++;
-    onScreenFlowers--;
-    f.remove();
-  };
-
-  setTimeout(() => {
-    if (f.parentNode) {
-      onScreenFlowers--;
-      f.remove();
-    }
-  }, 5000);
-}
-
-function flowerLoop() {
-  spawnFlower();
-  setTimeout(flowerLoop, 1200 + Math.random() * 2500);
-}
-
-document.addEventListener("DOMContentLoaded", flowerLoop);
 </script>
 
 </body>
