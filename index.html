@@ -717,11 +717,14 @@ document.addEventListener("DOMContentLoaded", () => {
   <hr>
 
   <!-- Message Viewer -->
-  <div class="section-title"
-       data-en="Messages"
-       data-ko="메시지 보기">
-       Messages
-  </div>
+<div class="section-title"
+     data-en="Messages"
+     data-ko="메시지 보기">
+     Messages
+</div>
+
+<hr>
+
 
   <div id="messageCarousel"
        style="
@@ -820,7 +823,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const flower = document.createElement('div');
     flower.className = 'falling-flower';
-    flower.textContent = '🌸';
+    flower.textContent = '🪻';
 
     // random position
     const x = Math.random() * 80 + 10;  // between 10vw and 90vw
@@ -922,53 +925,72 @@ document.addEventListener("DOMContentLoaded", () => {
     outline: none !important;
   }
 </style>
+<button id="trophyBtn"
+        class="btn"
+        style="margin-top:20px;"
+        onclick="toggleScoreboard()">
+  🏆
+</button>
 
-<!-- Flower Counter -->
-<div style="margin-top:14px; font-size:0.95rem;">
-  <span data-en="Flowers collected:"
-        data-ko="모은 꽃 수:">Flowers collected:</span>
-  <strong id="flowerCounter">0</strong>
-</div>
+<!-- Hidden scoreboard wrapper -->
+<div id="scoreboardWrapper" style="display:none;">
 
-<!-- Collapsible Scoreboard Link -->
-<div class="collapsible-wrapper" style="margin-top:12px;">
-  <button class="collapsible"
-          data-en="See Scoreboard"
-          data-ko="스코어보드 보기">
-    See Scoreboard
-  </button>
-
-  <div class="collapsible-content" id="scoreboardArea" style="text-align:center;">
-    <!-- scoreboard from Google Sheets loads here -->
-    <p style="font-size:0.9rem; color:#555;">
-      Loading scoreboard...
-    </p>
+  <!-- Flower Counter -->
+  <div style="margin-top:14px; font-size:0.95rem;">
+    <span data-en="Flowers collected:" data-ko="모은 꽃 수:">
+      Flowers collected:
+    </span>
+    <strong id="flowerCounter">0</strong>
   </div>
-</div>
-<!-- SCOREBOARD SUBMISSION -->
-<div style="max-width:620px; margin:20px auto;">
-  <p class="small" data-en="Submit your flower score"
-                  data-ko="꽃 점수 제출하기">
+
+  <!-- Collapsible Scoreboard Link -->
+  <div class="collapsible-wrapper" style="margin-top:12px;">
+    <button class="collapsible"
+            data-en="See Scoreboard"
+            data-ko="스코어보드 보기">
+      See Scoreboard
+    </button>
+
+    <div class="collapsible-content" id="scoreboardArea" style="text-align:center;">
+      <p style="font-size:0.9rem; color:#555;">
+        Loading scoreboard...
+      </p>
+    </div>
+  </div>
+
+  <!-- SCOREBOARD SUBMISSION -->
+  <div style="max-width:620px; margin:20px auto;">
+    <p class="small"
+       data-en="Submit your flower score"
+       data-ko="꽃 점수 제출하기"
+       style="margin-bottom:10px;">
       Submit your flower score
-  </p>
+    </p>
 
-  <input id="scoreName"
-         maxlength="30"
-         placeholder="Your Name"
-         data-en="Your Name"
-         data-ko="이름"
-         style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc; text-align:center;">
+    <!-- FIXED INPUT — your previous one was broken -->
+    <input id="scoreName"
+           maxlength="30"
+           placeholder="Your Name"
+           data-en="Your Name"
+           data-ko="이름"
+           style="width:200px; padding:10px; border-radius:8px;
+                  border:1px solid #ccc; text-align:center;
+                  margin:0 auto 10px auto; display:block;">
 
-  <button class="btn btn-primary" onclick="submitScore()"
-          data-en="Submit Score"
-          data-ko="점수 제출">
-    Submit Score
-  </button>
+    <button class="btn btn-primary"
+            onclick="submitScore()"
+            data-en="Submit Score"
+            data-ko="점수 제출">
+      Submit Score
+    </button>
 
-  <div id="scoreStatus"
-       style="margin-top:10px; font-size:0.9rem; color:#555;">
+    <div id="scoreStatus"
+         style="margin-top:10px; font-size:0.9rem; color:#555;">
+    </div>
   </div>
-</div>
+
+</div> <!-- /scoreboardWrapper -->
+
 
 <script>
   /* ---------- Submit Flower Score ---------- */
@@ -986,13 +1008,14 @@ document.addEventListener("DOMContentLoaded", () => {
     msg.style.color = "#444";
     msg.innerText = "Submitting...";
 
-    fetch("https://script.google.com/macros/s/AKfycbzpJKn2-98o3GsNug0D4C0EMabI5Fe5gXpe2Sn5cDGYhBd8wYiWgoVsKAu4zybMZD5w/exec
-?score=1", {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, score })
-    })
+    fetch("https://script.google.com/macros/s/AKfycbzpJKn2-98o3GsNug0D4C0EMabI5Fe5gXpe2Sn5cDGYhBd8wYiWgoVsKAu4zybMZD5w/exec?score=1",
+      {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, score })
+      }
+    )
     .then(() => {
       msg.style.color = "green";
       msg.innerText = "Score submitted!";
@@ -1006,8 +1029,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ---------- Load Scoreboard ---------- */
   function loadScoreboard() {
-    fetch("https://script.google.com/macros/s/AKfycbzpJKn2-98o3GsNug0D4C0EMabI5Fe5gXpe2Sn5cDGYhBd8wYiWgoVsKAu4zybMZD5w/exec
-?readScore=1")
+    fetch("https://script.google.com/macros/s/AKfycbzpJKn2-98o3GsNug0D4C0EMabI5Fe5gXpe2Sn5cDGYhBd8wYiWgoVsKAu4zybMZD5w/exec?readScore=1")
       .then(r => r.json())
       .then(rows => {
         const area = document.getElementById("scoreboardArea");
@@ -1027,8 +1049,15 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
+  /* ---------- Toggle scoreboard wrapper ---------- */
+  function toggleScoreboard() {
+    const wrap = document.getElementById("scoreboardWrapper");
+    wrap.style.display = (wrap.style.display === "none") ? "block" : "none";
+  }
+
   document.addEventListener("DOMContentLoaded", loadScoreboard);
 </script>
+
 
 <!-- ---------- COLLAPSIBLE LOGIC ---------- -->
 <script>
@@ -1051,6 +1080,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 </script>
 
+
 <style>
   .collapsible {
     background: #fafafa;
@@ -1058,8 +1088,8 @@ document.addEventListener("DOMContentLoaded", () => {
     border-radius: 10px;
     padding: 10px 14px;
     cursor: pointer;
-    width: 80%;
-    max-width: 380px;
+    width: 200px;
+    max-width: 200px;
     margin: 10px auto;
     text-align: center;
     font-size: 0.9rem;
@@ -1078,6 +1108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     margin-bottom: 10px;
   }
 </style>
+
 
 </div> <!-- end .container -->
 
