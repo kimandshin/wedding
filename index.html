@@ -483,6 +483,66 @@ function toggleQR(id) {
   const el = document.getElementById(id);
   el.style.display = (el.style.display === "none") ? "block" : "none";
 }
+  
+<hr>
+
+<div class="section-title"
+     data-en="Leave a Message"
+     data-ko="축하 메시지 남겨주세요">
+  Leave a Message
+</div>
+
+<!-- Input Form -->
+<div style="max-width:620px; margin:auto;">
+
+  <input id="guestName"
+         maxlength="30"
+         placeholder="Your Name"
+         data-en="Your Name"
+         data-ko="이름"
+         style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc;
+                font-size:0.95rem; text-align:center;">
+
+  <textarea id="guestMsg"
+            maxlength="200"
+            placeholder="Write your message (200 characters)"
+            data-en="Write your message (200 characters)"
+            data-ko="축하 메시지를 작성해주세요 (200자)"
+            style="width:100%; height:90px; padding:10px; border-radius:8px; border:1px solid #ccc;
+                   resize:none; font-size:0.95rem; text-align:center;"></textarea>
+
+  <button type="button" class="btn btn-primary"
+          onclick="submitMessage()"
+          data-en="Submit"
+          data-ko="보내기">
+    Submit
+  </button>
+
+</div>
+
+<!-- Submission Status -->
+<div id="msgStatus"
+     style="margin-top:10px; font-size:0.9rem; color:#444;">
+</div>
+
+<hr>
+
+<!-- Message Viewer Title -->
+<div class="section-title"
+     data-en="Messages"
+     data-ko="메시지 보기">
+  Messages
+</div>
+
+<hr>
+
+<!-- Message Viewer -->
+<div id="messageCarousel"
+     style="display:flex; overflow-x:auto; gap:16px; padding:10px 5px;
+            scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+            justify-content:center;">
+</div>
+
 
 /* ------------------------------
    EMOJI POP
