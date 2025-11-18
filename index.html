@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -6,432 +6,834 @@
 <title>Wedding Invitation – 김유석 🤍 신혜수</title>
 
 <style>
+  @font-face {
+    font-family: 'Samanco';
+    src: url('BinggraeSamanco.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
 
-  /* FIX CLOCK ROW LAYOUT */
-.time-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 18px;
+  .name-click {
+  cursor: pointer;
+  outline: none;
 }
 
-.time-item {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  font-size: 0.85rem;
+.name-click:focus,
+.name-click:active {
+  outline: none;
 }
 
-  
+.floating-flower {
+  outline: none;
+}
+
+.floating-flower:focus,
+.floating-flower:active {
+  outline: none;
+}
+
+  /* ---------- Base layout ---------- */
+  body {
+    font-family: 'Samanco', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    margin: 0;
+    padding: 40px 10px 60px;
+    background: #f5f2ee;
+    color: #333;
+    text-align: center;
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 40px 26px 60px;
+    border-radius: 18px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  }
+
+  .top-buttons {
+    margin-bottom: 26px;
+  }
+
+  /* Time display under language buttons */
+  .time-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: -10px;
+    margin-bottom: 10px;
+  }
+
+  .time-item {
+    min-width: 135px;
+    max-width: 160px;
+    font-size: 0.8rem;
+    color: #555555;
+  }
+
+  .time-label {
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .time-value {
+    font-weight: 600;
+  }
+
+  /* Banking details section */
+  .bank-section {
+    margin-top: 32px;
+  }
+
+  .bank-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .bank-col {
+    flex: 1 1 220px;
+    max-width: 260px;
+  }
+
+  .bank-label {
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+
+  .bank-toggle {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .qr-wrapper {
+    display: none;
+    margin-top: 10px;
+  }
+
+  .qr-img {
+    width: 70%;
+    max-width: 170px;
+    border-radius: 12px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 1.9rem;
+    letter-spacing: 0.15em;
+    margin: 0 0 10px;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    margin: 0 0 8px;
+  }
+
+  .subtext {
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+    color: #666;
+  }
+
   img.wedding-img {
-  width: 90%;
-  max-width: 420px;
-  margin: 30px auto;
-  border-radius: 12px;
-  display: block;
-}
-  
-/* CUSTOM FONT */
-@font-face {
-  font-family: 'Samanco';
-  src: url('BinggraeSamanco.otf') format('opentype');
-}
+    width: 90%;
+    max-width: 420px;
+    border-radius: 12px;
+    margin: 30px auto;
+    display: block;
+  }
 
-body {
-  font-family: 'Samanco', system-ui, sans-serif;
-  margin: 0;
-  padding: 40px 10px 60px;
-  background: #f5f2ee;
-  color: #333;
-  text-align: center;
-}
+  .hymn-img {
+    width: 80%;
+    max-width: 480px;
+    margin: 20px auto;
+    display: block;
+    border-radius: 12px;
+  }
 
-/* Container */
-.container {
-  max-width: 760px;
-  margin: 0 auto;
-  background: white;
-  padding: 40px 26px 60px;
-  border-radius: 18px;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
-}
+  .btn {
+    display: inline-block;
+    padding: 9px 16px;
+    margin: 6px 6px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    font-size: 0.85rem;
+    text-decoration: none;
+    color: #333;
+    background: #fafafa;
+    transition: 0.2s;
+  }
 
-/* Buttons */
-.btn {
-  display: inline-block;
-  padding: 9px 16px;
-  margin: 6px;
-  border-radius: 20px;
-  border: 1px solid #ddd;
-  background: #fafafa;
-  font-size: 0.85rem;
-  cursor: pointer;
-}
-.btn-primary {
-  border-color: #000;
-  font-weight: 600;
-}
+  .btn:hover {
+    background: #f0f0f0;
+  }
 
-/* Section Titles */
-.section-title {
-  font-size: 1.3rem;
-  margin-top: 40px;
-  font-weight: bold;
-}
+  .btn-primary {
+    border-color: #000;
+    font-weight: 600;
+  }
 
-/* Snow Layers */
-.snow-container {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-}
-.snow-back  { z-index: -3; }
-.snow-mid   { z-index: -2; }
-.snow-front { z-index: -1; }
+  hr {
+    margin: 30px auto;
+    border: none;
+    height: 1px;
+    width: 90%;
+    background: #e5e5e5;
+  }
 
-.snowflake {
-  position: absolute;
-  top: -10px;
-  color: rgba(190, 215, 255, 0.75);
-  font-size: 6px;
-  animation-name: snow-fall;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-@keyframes snow-fall {
-  0%   { transform: translateY(-10px); opacity: 0; }
-  20%  { opacity: 1; }
-  100% { transform: translateY(110vh); opacity: 0; }
-}
+  .section-title {
+    font-size: 1.25rem;
+    margin: 32px 0 10px;
+    font-weight: 600;
+  }
 
-/* Spark effect */
-.spark {
-  pointer-events: none;
-  position: fixed;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,240,180,1) 0%, rgba(255,240,180,0) 60%);
-  opacity: 0.9;
-  transform: translate(-50%, -50%) scale(0.2);
-  animation: sparkFade 0.6s ease-out forwards;
-}
-@keyframes sparkFade {
-  0%   { opacity:0.9; transform:scale(0.2); }
-  100% { opacity:0;   transform:scale(1.4); }
-}
+  p {
+    margin: 6px 0;
+    line-height: 1.7;
+  }
 
-/* Flower Game */
-.flower {
-  position: fixed;
-  font-size: 26px;
-  cursor: pointer;
-  z-index: 5;
-}
+  ul {
+    list-style: none;
+    padding-left: 0;
+    font-size: 1rem;
+    line-height: 1.8;
+    margin: 10px 0 0;
+  }
 
-/* Scoreboard */
-.collapsible {
-  background: #fafafa;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 10px;
-  width: 200px;
-  margin: 10px auto;
-  cursor: pointer;
-}
-.collapsible-content {
-  overflow: hidden;
-  max-height: 0;
-  transition: 0.3s ease;
-  margin-bottom: 10px;
-}
+  /* Collapsible English lyrics */
+  details {
+    max-width: 620px;
+    margin: 10px auto 0;
+    text-align: center;
+    font-size: 0.95rem;
+  }
 
-/* Trophy Button */
-#trophyBtn {
-  font-size: 32px;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
+  details summary {
+    cursor: pointer;
+    outline: none;
+    list-style: none;
+  }
+
+  details p {
+    text-align: center;
+  }
+
+  /* Language blocks */
+  .lang-en { display: block; }
+  .lang-ko { display: none; }
+
+  /* Emoji bursts on names */
+  .emoji-burst {
+    position: fixed;
+    font-size: 20px;
+    pointer-events: none;
+    animation: emoji-pop 800ms ease-out forwards;
+    z-index: 3;
+  }
+
+  @keyframes emoji-pop {
+    0% {
+      transform: translate(-50%, -50%) scale(0.5);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-50%, -120%) scale(1.2);
+      opacity: 0;
+    }
+  }
+
+  /* ---------- Snow overlay with depth ---------- */
+
+  .snow-container {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .snow-back { z-index: -3; }
+  .snow-mid  { z-index: -2; }
+  .snow-front{ z-index: -1; }
+
+  .snowflake {
+    position: absolute;
+    top: -10px;
+    color: rgba(185, 210, 255, 0.75);
+    text-shadow: 0 0 4px rgba(140, 170, 220, 0.25);
+    font-size: 6px;
+    will-change: transform, opacity;
+    animation-name: snow-fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes snow-fall {
+    0% {
+      transform: translate3d(0, -10px, 0);
+      opacity: 0;
+    }
+    15% {
+      opacity: 1;
+    }
+    100% {
+      transform: translate3d(var(--drift, 0px), 110vh, 0);
+      opacity: 0;
+    }
+  }
+
+  .spark {
+    pointer-events: none;
+    position: fixed;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 240, 180, 1) 0%, rgba(255, 240, 180, 0) 60%);
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(0.2);
+    animation: spark-fade 0.6s ease-out forwards;
+    z-index: 2;
+  }
+
+  @keyframes spark-fade {
+    0% {
+      opacity: 0.9;
+      transform: translate(-50%, -50%) scale(0.2);
+    }
+    50% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(1.4);
+    }
+  }
+
+  .snow-piles {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .snow-pile {
+    position: absolute;
+    bottom: 0;
+    width: 36px;
+    height: 14px;
+    background: radial-gradient(ellipse at top, rgba(235, 245, 255, 0.9) 0%, rgba(235, 245, 255, 0) 70%);
+    transform: translateX(-50%);
+    opacity: 0.8;
+  }
+
+  /* ---------- Floating collectible flowers ---------- */
+  .floating-flower {
+    position: fixed;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 4;
+    animation: floaty 10s linear infinite alternate;
+  }
+
+  @keyframes floaty {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+  }
+
+  #flower-status {
+    margin-top: 32px;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  #flower-status.pulse {
+    animation: pulse 0.8s ease-out;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+
+  #flower-scoreboard {
+    margin-top: 12px;
+    font-size: 0.9rem;
+  }
+
+  #flower-scoreboard form {
+    margin-bottom: 8px;
+  }
+
+  #flower-scoreboard input {
+    padding: 6px 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-family: inherit;
+    font-size: 0.85rem;
+  }
+
+  #flower-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 6px 0 0;
+  }
 </style>
 
 <script>
-/* LANGUAGE TOGGLE */
-function switchLang(lang) {
-  const els = document.querySelectorAll("[data-en][data-ko]");
-  els.forEach(el => {
-    el.innerHTML = (lang === "ko") ? el.dataset.ko : el.dataset.en;
+  /* ---------- Language toggle ---------- */
+  function switchLang(lang) {
+    // swap text for small elements with data-en / data-ko
+    const elements = document.querySelectorAll("[data-en][data-ko]");
+    elements.forEach(el => {
+      el.innerHTML = (lang === "ko")
+        ? el.getAttribute("data-ko")
+        : el.getAttribute("data-en");
+    });
+    document.documentElement.lang = (lang === "ko") ? "ko" : "en";
+
+    // show/hide larger language blocks
+    const enBlocks = document.querySelectorAll('.lang-en');
+    const koBlocks = document.querySelectorAll('.lang-ko');
+
+    enBlocks.forEach(el => { el.style.display = (lang === 'en') ? 'block' : 'none'; });
+    koBlocks.forEach(el => { el.style.display = (lang === 'ko') ? 'block' : 'none'; });
+  }
+
+  /* ---------- BGM ---------- */
+  let bgm;
+  function toggleBGM() {
+    if (!bgm) {
+      bgm = new Audio("hymn.mp3");
+      bgm.loop = true;
+      bgm.play().catch(() => {});
+      document.getElementById("bgmBtn").innerText = "♪ Pause BGM";
+    } else if (bgm.paused) {
+      bgm.play().catch(() => {});
+      document.getElementById("bgmBtn").innerText = "♪ Pause BGM";
+    } else {
+      bgm.pause();
+      document.getElementById("bgmBtn").innerText = "♪ Play BGM";
+    }
+  }
+
+  /* ---------- Snow creation with depth ---------- */
+  function createSnowLayer(containerId, numFlakes, sizeMin, sizeMax, durationMin, durationMax, opacityBoost) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    for (let i = 0; i < numFlakes; i++) {
+      const flake = document.createElement('div');
+      flake.className = 'snowflake';
+      flake.textContent = '❄';
+
+      const size = sizeMin + Math.random() * (sizeMax - sizeMin);
+      const left = Math.random() * 100;
+      const delay = Math.random() * 12;
+      const duration = durationMin + Math.random() * (durationMax - durationMin);
+      const drift = -40 + Math.random() * 80;
+      const opacity = 0.4 + Math.random() * 0.4 + (opacityBoost || 0);
+
+      flake.style.left = left + 'vw';
+      flake.style.fontSize = size + 'px';
+      flake.style.animationDuration = duration + 's';
+      flake.style.animationDelay = delay + 's';
+      flake.style.setProperty('--drift', drift + 'px');
+      flake.style.opacity = opacity;
+
+      container.appendChild(flake);
+    }
+  }
+
+  function createSnow() {
+    createSnowLayer('snow-back', 40, 3, 6, 20, 30, 0);
+    createSnowLayer('snow-mid', 60, 4, 7, 16, 24, 0.1);
+    createSnowLayer('snow-front', 50, 5, 8, 12, 20, 0.15);
+  }
+
+  /* ---------- Timezones: San Jose & Korea ---------- */
+  function updateTimes() {
+    const sjEl = document.getElementById('time-sj');
+    const krEl = document.getElementById('time-kr');
+    if (!sjEl || !krEl) return;
+
+    const now = new Date();
+    const opts = { hour: '2-digit', minute: '2-digit', hour12: false };
+
+    const sj = now.toLocaleTimeString('en-US', { ...opts, timeZone: 'America/Los_Angeles' });
+    const kr = now.toLocaleTimeString('en-US', { ...opts, timeZone: 'Asia/Seoul' });
+
+    sjEl.textContent = sj;
+    krEl.textContent = kr;
+  }
+
+  /* ---------- QR show/hide ---------- */
+  function toggleQR(which) {
+    const el = document.getElementById(which + '-qr');
+    if (!el) return;
+    const isHidden = el.style.display === 'none' || !el.style.display;
+    el.style.display = isHidden ? 'block' : 'none';
+  }
+
+  /* ---------- Emoji bursts ---------- */
+  function burstEmojis(x, y, emojiList) {
+    for (let i = 0; i < 10; i++) {
+      const span = document.createElement('span');
+      span.className = 'emoji-burst';
+      span.textContent = emojiList[Math.floor(Math.random() * emojiList.length)];
+      const offsetX = -30 + Math.random() * 60;
+      const offsetY = -10 + Math.random() * 20;
+      span.style.left = (x + offsetX) + 'px';
+      span.style.top = (y + offsetY) + 'px';
+      document.body.appendChild(span);
+      setTimeout(() => span.remove(), 800);
+    }
+  }
+
+/* ---------- Collectible flowers mini-game ---------- */
+let flowerCount = 0;
+let activeFlowers = 0;
+
+function spawnFlower() {
+  // cap at 10 flowers on screen
+  if (activeFlowers >= 5) return;
+
+  const flower = document.createElement('span');
+  flower.className = 'floating-flower';
+  flower.textContent = '🪻'; // purple flower instead of heart
+
+  const left = 5 + Math.random() * 90;
+  const top  = 15 + Math.random() * 60;
+  flower.style.left = left + 'vw';
+  flower.style.top  = top + 'vh';
+
+  document.body.appendChild(flower);
+  activeFlowers++;
+
+  let removed = false;
+  function removeFlower() {
+    if (removed) return;
+    removed = true;
+    if (flower.parentNode) flower.parentNode.removeChild(flower);
+    activeFlowers = Math.max(0, activeFlowers - 1);
+  }
+
+  flower.addEventListener('click', () => {
+    flowerCount++;
+    removeFlower();
+
+    const status = document.getElementById('flower-status');
+    if (!status) return;
+
+    status.innerHTML =
+      `You collected <strong>${flowerCount}</strong> flowers. Tap here to open the scoreboard.`;
+    if (flowerCount % 5 === 0) {
+      status.style.display = 'block';
+      status.classList.add('pulse');
+      setTimeout(() => status.classList.remove('pulse'), 800);
+    }
   });
-}
 
-/* BGM */
-let bgm;
-function toggleBGM() {
-  if (!bgm) {
-    bgm = new Audio("hymn.mp3");
-    bgm.loop = true;
-  }
-  if (bgm.paused) {
-    bgm.play();
-    bgmBtn.innerText = "♪ Pause BGM";
-  } else {
-    bgm.pause();
-    bgmBtn.innerText = "♪ Play BGM";
-  }
-}
+  // if the flower survives 2 seconds, spawn another one (up to 10)
+  setTimeout(() => {
+    if (!removed && activeFlowers < 5) {
+      spawnFlower();
+    }
+  }, 2000);
 
-/* SNOW */
-function snowLayer(id, count) {
-  const box = document.getElementById(id);
-  for (let i=0;i<count;i++){
-    const f=document.createElement("div");
-    f.className="snowflake";
-    f.innerText="❄";
-    f.style.left=Math.random()*100+"vw";
-    f.style.fontSize=4+Math.random()*6+"px";
-    f.style.animationDuration=10+Math.random()*20+"s";
-    f.style.animationDelay=Math.random()*10+"s";
-    box.appendChild(f);
+  // auto-remove after 20 seconds so it doesn’t live forever
+  setTimeout(() => {
+    removeFlower();
+  }, 20000);
+}
+  function toggleFlowerScoreboard() {
+    const board = document.getElementById('flower-scoreboard');
+    if (!board) return;
+    const visible = board.style.display === 'block';
+    board.style.display = visible ? 'none' : 'block';
+    if (!visible) {
+      loadFlowerScores();
+    }
   }
-}
-function createSnow(){
-  snowLayer("snow-back",40);
-  snowLayer("snow-mid",50);
-  snowLayer("snow-front",60);
-}
+
+  function saveFlowerScore(event) {
+    event.preventDefault();
+    const nameInput = document.getElementById('flower-name');
+    if (!nameInput) return;
+    const name = nameInput.value.trim() || 'Guest';
+    const scores = loadFlowerScores(true);
+    scores.push({ name, flowers: flowerCount });
+    localStorage.setItem('weddingFlowerScores', JSON.stringify(scores));
+    nameInput.value = '';
+    loadFlowerScores();
+  }
+
+  function loadFlowerScores(returnOnly) {
+    const listEl = document.getElementById('flower-list');
+    let scores = [];
+    try {
+      const raw = localStorage.getItem('weddingFlowerScores');
+      if (raw) scores = JSON.parse(raw);
+    } catch (e) {
+      scores = [];
+    }
+
+    if (returnOnly) return scores;
+
+    if (!listEl) return scores;
+    listEl.innerHTML = '';
+
+    if (scores.length === 0) {
+      const li = document.createElement('li');
+      li.textContent = 'No scores yet – be the first!';
+      listEl.appendChild(li);
+      return scores;
+    }
+
+    scores.sort((a, b) => b.flowers - a.flowers);
+
+    scores.forEach((s, idx) => {
+      const li = document.createElement('li');
+      li.textContent = `${idx + 1}. ${s.name} – ${s.flowers} flowers`;
+      listEl.appendChild(li);
+    });
+
+    return scores;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    updateTimes();
+    setInterval(updateTimes, 60000);
+
+    createSnow();
+
+    const pilesContainer = document.getElementById('snow-piles');
+
+    document.addEventListener('pointerdown', (e) => {
+      const x = e.clientX;
+      const y = e.clientY;
+
+      const spark = document.createElement('div');
+      spark.className = 'spark';
+      spark.style.left = x + 'px';
+      spark.style.top = y + 'px';
+      document.body.appendChild(spark);
+
+      setTimeout(() => {
+        spark.remove();
+      }, 650);
+
+      if (pilesContainer && y > window.innerHeight * 0.55) {
+        const pile = document.createElement('div');
+        pile.className = 'snow-pile';
+        pile.style.left = x + 'px';
+        pilesContainer.appendChild(pile);
+
+        setTimeout(() => {
+          if (pile.parentNode) pile.parentNode.removeChild(pile);
+        }, 20000);
+      }
+    }, false);
+
+    const groomEl = document.getElementById('groom-name');
+    const brideEl = document.getElementById('bride-name');
+
+    if (groomEl) {
+      groomEl.addEventListener('click', (e) => {
+        burstEmojis(e.clientX, e.clientY, ['😄','😊','😁','🥰','🤍','😆']);
+      });
+    }
+
+    if (brideEl) {
+      brideEl.addEventListener('click', (e) => {
+        burstEmojis(e.clientX, e.clientY, ['🌸','🌷','🌹','🌼','💐','🌻']);
+      });
+    }
+
+    const statusEl = document.getElementById('flower-status');
+    if (statusEl) {
+      statusEl.addEventListener('click', toggleFlowerScoreboard);
+    }
+
+    const form = document.getElementById('flower-form');
+    if (form) {
+      form.addEventListener('submit', saveFlowerScore);
+    }
+
+    spawnFlower();
+    setInterval(spawnFlower, 9000);
+
+    // ensure initial language is English
+    switchLang('en');
+  });
 </script>
+
 </head>
 <body>
 
-<!-- Snow -->
-<div id="snow-back"  class="snow-container"></div>
-<div id="snow-mid"   class="snow-container"></div>
-<div id="snow-front" class="snow-container"></div>
+<!-- Snow overlays (back, mid, front) -->
+<div class="snow-container snow-back" id="snow-back"></div>
+<div class="snow-container snow-mid"  id="snow-mid"></div>
+<div class="snow-container snow-front" id="snow-front"></div>
+
+<!-- Snow piles / sparkles layer -->
+<div class="snow-piles" id="snow-piles"></div>
 
 <div class="container">
-  <!-- Top buttons -->
+
   <div class="top-buttons">
     <button class="btn" onclick="switchLang('en')">ENG</button>
     <button class="btn" onclick="switchLang('ko')">KOR</button>
     <button id="bgmBtn" class="btn" onclick="toggleBGM()">♪ Play BGM</button>
   </div>
 
-  <!-- Time Row -->
   <div class="time-row">
     <div class="time-item">
-      <span data-en="San Jose time" data-ko="샌호세 시간">San Jose time</span>
-      <div id="time-sj">--:--</div>
+      <span class="time-label"
+            data-en="San Jose time"
+            data-ko="샌호세 시간">
+        San Jose time
+      </span>
+      <span class="time-value" id="time-sj">--:--</span>
     </div>
     <div class="time-item">
-      <span data-en="Korea time" data-ko="한국 시간">Korea time</span>
-      <div id="time-kr">--:--</div>
+      <span class="time-label"
+            data-en="Korea time"
+            data-ko="한국 시간">
+        Korea time
+      </span>
+      <span class="time-value" id="time-kr">--:--</span>
     </div>
   </div>
-
-  <script>
-    function updateTimes(){
-      const now=new Date();
-      const opt={hour:"2-digit",minute:"2-digit",hour12:false};
-      document.getElementById("time-sj").innerText =
-        now.toLocaleTimeString("en-US",{...opt,timeZone:"America/Los_Angeles"});
-      document.getElementById("time-kr").innerText =
-        now.toLocaleTimeString("en-US",{...opt,timeZone:"Asia/Seoul"});
-    }
-    setInterval(updateTimes,1000);
-    document.addEventListener("DOMContentLoaded",updateTimes);
-  </script>
-
+    
   <h1>WEDDING INVITATION</h1>
+<h2>
+  <span id="groom-name" class="name-click">김유석</span> 🤍
+  <span id="bride-name" class="name-click">신혜수</span>
+</h2>
 
-  <h2>
-    <span onclick="popEmojis('groom')" style="cursor:pointer;">김유석</span>
-    🤍
-    <span onclick="popEmojis('bride')" style="cursor:pointer;">신혜수</span>
-  </h2>
-
-  <script>
-    function popEmojis(who){
-      const set = (who==="groom")
-        ? ["😄","😎","✨","🤍","😁"]
-        : ["🌸","🌺","🌷","💐","🌼"];
-      for (let i=0;i<5;i++){
-        setTimeout(()=>{
-          const e=document.createElement("div");
-          e.innerText=set[Math.floor(Math.random()*set.length)];
-          e.style.position="fixed";
-          e.style.left=(window.innerWidth/2+Math.random()*120-60)+"px";
-          e.style.top=(window.innerHeight/2+Math.random()*80-40)+"px";
-          e.style.fontSize="30px";
-          e.style.opacity="1";
-          e.style.transition="1.2s ease-out";
-          e.style.zIndex="999";
-          document.body.appendChild(e);
-          setTimeout(()=>{
-            e.style.opacity="0";
-            e.style.top=(parseInt(e.style.top)-80)+"px";
-          },80);
-          setTimeout(()=>e.remove(),1300);
-        },i*120);
-      }
-    }
-  </script>
-
-  <div style="font-size:0.95rem; color:#666; margin-top:10px;">
+  <div class="subtext">
     February 7, 2025 · 5:00 PM · Asador, Haeundae, Busan
   </div>
 
-  <img src="hyesoo_david.png"
-       class="wedding-img"
-       style="margin-top:30px; border-radius:12px;"
-       alt="Wedding Image">
+  <img src="hyesoo_david.png" alt="Wedding illustration" class="wedding-img">
 
-  <p data-en="We invite you to celebrate our special day."
-     data-ko="저희의 특별한 날에 함께해주시길 부탁드립니다.">
-     We invite you to celebrate our special day.
+  <p class="lang-en">
+    We invite you to celebrate our special day.
+  </p>
+  <p class="lang-ko">
+    저희의 특별한 날에 함께해주시길 부탁드립니다.
   </p>
 
-  <p style="max-width:600px; margin:8px auto 0;">
-    Asador (4F), 부산 해운대구 해운대해변로298번길 9
+  <p class="lang-en" style="max-width:600px; margin:8px auto 0;">
+    Asador (4F), 9 Haeundaehaebyeon-ro 298beon-gil,<br>
+    Haeundae-gu, Busan, South Korea
+  </p>
+  <p class="lang-ko" style="max-width:600px; margin:8px auto 0;">
+    아사도 (4층), 부산 해운대구 해운대해변로298번길 9
   </p>
 
-  <div style="margin-top:16px;">
+  <div style="margin-top:14px;">
     <a class="btn btn-primary"
-       target="_blank"
-       href="https://maps.app.goo.gl/LcdHkqLCrS2RkzkG6">Google Maps</a>
+       href="https://maps.app.goo.gl/"
+       data-en="Google Maps"
+       data-ko="구글 지도"
+       target="_blank">
+      Google Maps
+    </a>
     <a class="btn"
-       target="_blank"
-       href="https://naver.me/5rtZYV4F">Naver Map</a>
+       href="https://map.naver.com/p/search/%EB%B6%80%EC%82%B0%20%ED%95%B4%EC%9A%B4%EB%8C%80%EA%B5%AC%20%ED%95%B4%EC%9A%B4%EB%8C%80%ED%95%B4%EB%B3%80%EB%A1%9C298%EB%B2%88%EA%B8%B8%209%204F"
+       data-en="Naver Map"
+       data-ko="네이버 지도"
+       target="_blank">
+      Naver Map
+    </a>
   </div>
 
   <hr>
 
-  <!-- Our Vows -->
-  <div class="section-title" data-en="Our Vows" data-ko="서약">
+  <div class="section-title lang-en">
     Our Vows
   </div>
+  <div class="section-title lang-ko">
+    서약
+  </div>
 
-  <p class="en-text" style="max-width:620px;margin:auto;">
+  <!-- Vows EN -->
+  <p class="lang-en" style="max-width:620px; margin:auto;">
     Today, before God, our families, and friends, we promise to walk together in faith and love.
     We will support one another, forgive quickly, and choose grace over pride.
   </p>
-
-  <p class="en-text" style="max-width:620px;margin:15px auto;">
+  <p class="lang-en" style="max-width:620px; margin:10px auto 0;">
     In seasons of joy and in seasons of hardship, we will seek God first, listen deeply,
-    and protect this covenant with patience and honesty. With God’s help,
-    we will build a home filled with warmth, prayer, and laughter.
+    and protect this covenant with patience and honesty. With God’s help, we will build a
+    home filled with warmth, prayer, and laughter.
   </p>
 
-  <div class="ko-text" style="display:none; max-width:620px; margin:auto;">
-    <p>
-      오늘, 하나님과 양가 가족, 그리고 소중한 친구들 앞에서<br>
-      우리는 믿음과 사랑으로 함께 걸어갈 것을 약속합니다.<br>
-      서로를 지지하고, 빨리 용서하며, 자존심보다 은혜를 선택하겠습니다.
-    </p>
-    <p>
-      기쁨의 순간에도, 어려움의 순간에도<br>
-      우리는 하나님을 먼저 구하고, 깊이 귀 기울이며,<br>
-      인내와 진실함으로 이 언약을 지켜 나가겠습니다.
-    </p>
-    <p>
-      하나님의 도우심으로<br>
-      우리의 가정이 따뜻함과 기도와 웃음으로 가득하길 소망합니다.
-    </p>
-  </div>
+  <!-- Vows KO -->
+  <p class="lang-ko" style="max-width:620px; margin:auto;">
+    오늘, 하나님과 양가 가족, 그리고 소중한 친구들 앞에서
+    우리는 믿음과 사랑으로 함께 걸어갈 것을 약속합니다.
+    서로를 지지하고, 빨리 용서하며, 자존심보다 은혜를 선택하겠습니다.
+  </p>
+  <p class="lang-ko" style="max-width:620px; margin:10px auto 0;">
+    기쁨의 순간에도, 어려움의 순간에도
+    우리는 하나님을 먼저 구하고, 깊이 귀 기울이며,
+    인내와 진실함으로 이 언약을 지켜 나가겠습니다.
+  </p>
+  <p class="lang-ko" style="max-width:620px; margin:10px auto 0;">
+    하나님의 도우심으로
+    우리의 가정이 따뜻함과 기도, 그리고 웃음으로 가득한 집이 되길 소망합니다.
+  </p>
 
-  <hr>
-  <!-- HYMN SECTION -->
-  <div class="section-title"
-       data-en="Hymn"
-       data-ko="찬송가">
-       Hymn
+  <!-- Hymn Section -->
+  <div class="section-title lang-en">
+    Hymn
+  </div>
+  <div class="section-title lang-ko">
+    찬송가
   </div>
 
   <img src="hymn.png"
-       alt="Hymn Image"
-       style="width:90%; max-width:600px; margin:20px auto; display:block; border-radius:12px;">
+       alt="Hymn: 완전한 사랑"
+       class="hymn-img">
 
-  <!-- Collapsible English Translation -->
-  <style>
-    .collapsible {
-      background: #fafafa;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 10px 16px;
-      width: 70%;
-      max-width: 280px;
-      margin: 0 auto;
-      font-size: 0.9rem;
-      cursor: pointer;
-      text-align:center;
-      transition: background 0.2s ease;
-    }
-    .collapsible:hover { background:#f1f1f1; }
-
-    .collapsible-content {
-      max-height:0;
-      overflow:hidden;
-      transition:max-height 0.35s ease;
-      padding:0;
-    }
-  </style>
-
-  <button class="collapsible"
-          data-en="Show English translation"
-          data-ko="영문 번역 보기">
-    Show English translation
-  </button>
-
-  <div class="collapsible-content" id="hymnContent">
-    <p style="max-width:620px; margin:20px auto; text-align:center;">
-      <strong>Love Forever – English Translation</strong><br><br>
-
-      1.<br>
-      Your perfect love, unchanging love<br>
-      Fills my heart again today<br>
-      Even if I walk through darkness<br>
-      You are with me, holding me<br><br>
-
-      2.<br>
-      Your endless grace, amazing grace<br>
-      Covers all my brokenness<br>
-      When I fall and lose my strength<br>
-      You lift me up again<br><br>
-
-      3.<br>
-      Forever more, forever Lord<br>
-      My life belongs to You alone<br>
-      Lead me by Your faithful hand<br>
-      In Your love forever
+  <!-- Collapsible English lyrics (O Perfect Love) -->
+  <details>
+    <summary data-en="Show English lyrics"
+             data-ko="영문 가사 보기">
+      Show English lyrics
+    </summary>
+    <p>
+      O perfect Love, all human thought transcending,<br>
+      Lowly we kneel in prayer before thy throne,<br>
+      That theirs may be the love which knows no ending,<br>
+      Whom thou forevermore dost join in one.
     </p>
-  </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded",()=>{
-      const btn=document.querySelector(".collapsible");
-      const content=document.getElementById("hymnContent");
-
-      btn.addEventListener("click",()=>{
-        if(content.style.maxHeight){
-          content.style.maxHeight=null;
-        } else {
-          content.style.maxHeight = content.scrollHeight + "px";
-        }
-      });
-    });
-  </script>
+    <p>
+      O perfect Life, be thou their full assurance<br>
+      Of tender charity and steadfast faith,<br>
+      Of patient hope, and quiet, brave endurance,<br>
+      With childlike trust that fears nor pain nor death.
+    </p>
+    <p>
+      Grant them the joy which brightens earthly sorrow;<br>
+      Grant them the peace which calms all earthly strife;<br>
+      And to life's day the glorious unknown morrow<br>
+      That dawns upon eternal love and life.
+    </p>
+  </details>
 
   <hr>
-  <!-- ORDER OF CEREMONY -->
-  <div class="section-title"
-       data-en="Order of Ceremony"
-       data-ko="결혼식 순서">
-       Order of Ceremony
-  </div>
 
-  <!-- English Order -->
-  <ul class="en-text" style="text-align:center; padding-left:0; margin:0 auto;">
+  <!-- Order of Ceremony EN -->
+  <div class="section-title lang-en">
+    Order of Ceremony (Wedding Service)
+  </div>
+  <ul class="lang-en">
     <li>Apostles’ Creed</li>
     <li>Song: Love Forever</li>
     <li>Blessings</li>
@@ -443,8 +845,11 @@ function createSnow(){
     <li>Dinner</li>
   </ul>
 
-  <!-- Korean Order -->
-  <ul class="ko-text" style="text-align:center; padding-left:0; display:none; margin:0 auto;">
+  <!-- Order of Ceremony KO -->
+  <div class="section-title lang-ko">
+    결혼식 순서
+  </div>
+  <ul class="lang-ko">
     <li>사도신경</li>
     <li>찬양: 완전한 사랑</li>
     <li>축사</li>
@@ -456,412 +861,72 @@ function createSnow(){
     <li>저녁식사</li>
   </ul>
 
-  <hr>
-  <!-- WEDDING GIFTS & BLESSINGS -->
-  <div class="section-title"
-       data-en="Wedding Gifts & Blessing"
-       data-ko="결혼 선물과 축복의 마음">
-       Wedding Gifts & Blessing
-  </div>
+  <!-- Banking / Gifts Section -->
+  <div class="bank-section">
+    <div class="section-title"
+         data-en="Wedding Gifts &amp; Blessing"
+         data-ko="결혼 선물과 축복의 마음">
+      Wedding Gifts &amp; Blessing
+    </div>
 
-  <!-- Buttons to reveal QR images -->
-  <div style="margin-bottom:18px; text-align:center;">
-    <button class="btn" onclick="toggleQR('groomQR')"
-            data-en="Groom"
-            data-ko="신랑">
-      Groom
-    </button>
+    <div class="bank-row">
+      <div class="bank-col">
+        <div class="bank-label"
+             data-en="Groom"
+             data-ko="신랑">
+          Groom
+        </div>
+        <button class="btn bank-toggle"
+                onclick="toggleQR('groom')"
+                data-en="Show Groom QR"
+                data-ko="신랑 QR 보기">
+          Show Groom QR
+        </button>
+        <div class="qr-wrapper" id="groom-qr">
+          <img src="DavidZelle.png"
+               alt="Groom account QR"
+               class="qr-img">
+        </div>
+      </div>
 
-    <button class="btn" onclick="toggleQR('brideQR')"
-            data-en="Bride"
-            data-ko="신부">
-      Bride
-    </button>
-  </div>
-
-  <!-- Groom QR -->
-  <div id="groomQR" style="display:none; text-align:center; margin-bottom:20px;">
-    <img src="DavidZelle.png"
-         alt="Groom QR Code"
-         style="width:65%; max-width:260px; border-radius:12px; margin:10px auto; display:block;">
-  </div>
-
-  <!-- Bride QR -->
-  <div id="brideQR" style="display:none; text-align:center; margin-bottom:20px;">
-    <img src="HyesooBank.jpg"
-         alt="Bride Bank QR"
-         style="width:65%; max-width:260px; border-radius:12px; margin:10px auto; display:block;">
-  </div>
-
-  <script>
-    function toggleQR(id) {
-      const el = document.getElementById(id);
-      el.style.display = (el.style.display === "none") ? "block" : "none";
-    }
-  </script>
-
-  <hr>
-  <!-- GUEST MESSAGE SECTION -->
-  <div class="section-title"
-       data-en="Leave a Message"
-       data-ko="축하 메시지 남겨주세요">
-       Leave a Message
-  </div>
-
-  <!-- Input Form -->
-  <div style="max-width:620px; margin: auto;">
-
-    <input id="guestName"
-           maxlength="30"
-           placeholder="Your Name"
-           data-en="Your Name"
-           data-ko="이름"
-           style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc; font-size:0.95rem; text-align:center;">
-
-    <textarea id="guestMsg"
-              maxlength="200"
-              placeholder="Write your message (200 characters)"
-              data-en="Write your message (200 characters)"
-              data-ko="축하 메시지를 작성해주세요 (200자)"
-              style="width:100%; height:90px; padding:10px; border-radius:8px; border:1px solid #ccc; resize:none; font-size:0.95rem; text-align:center;"></textarea>
-
-    <button type="button" class="btn btn-primary"
-            onclick="submitMessage()"
-            data-en="Submit"
-            data-ko="보내기">
-      Submit
-    </button>
-
-  </div>
-
-  <!-- Submission Status -->
-  <div id="msgStatus" style="margin-top:10px; font-size:0.9rem; color:#444;"></div>
-
-  <hr>
-
-  <!-- Message Viewer -->
-  <div class="section-title"
-       data-en="Messages"
-       data-ko="메시지 보기">
-       Messages
-  </div>
-
-  <div id="messageCarousel"
-       style="
-         display:flex;
-         overflow-x:auto;
-         gap:16px;
-         padding:10px 5px;
-         scroll-snap-type:x mandatory;
-         -webkit-overflow-scrolling:touch;
-         justify-content:center;
-       ">
-    <!-- Messages load here -->
-  </div>
-
-  <!-- =======================
-       MESSAGE SCRIPT
-  ======================== -->
-  <script>
-    const SCRIPT_URL =
-      "https://script.google.com/macros/s/AKfycbx6rTcXAYVXu7V4_eaTjPSFvvzKRIXwaVgnlug3MWG2O4a395rGAZE8saJdr08hJzAl/exec";
-
-    /* ---- SUBMIT MESSAGE ---- */
-    function submitMessage() {
-      const name = document.getElementById("guestName").value.trim();
-      const msg  = document.getElementById("guestMsg").value.trim();
-      const status = document.getElementById("msgStatus");
-
-      if (!name || !msg) {
-        status.style.color = "red";
-        status.innerText = "Please enter both your name and a message.";
-        return;
-      }
-
-      status.style.color = "#444";
-      status.innerText = "Submitting...";
-
-      const url =
-        SCRIPT_URL +
-        "?action=addMessage" +
-        "&name=" + encodeURIComponent(name) +
-        "&message=" + encodeURIComponent(msg);
-
-      fetch(url)
-        .then(() => {
-          status.style.color = "green";
-          status.innerText = "Thank you! Your message has been added.";
-
-          document.getElementById("guestName").value = "";
-          document.getElementById("guestMsg").value = "";
-
-          loadMessages();
-        })
-        .catch(() => {
-          status.style.color = "red";
-          status.innerText = "Error: Please try again.";
-        });
-    }
-
-    /* ---- LOAD MESSAGES ---- */
-    function loadMessages() {
-      const url = SCRIPT_URL + "?action=getMessages";
-
-      fetch(url)
-        .then(res => res.json())
-        .then(data => {
-          const container = document.getElementById("messageCarousel");
-          container.innerHTML = "";
-
-          data.forEach(row => {
-            const card = document.createElement("div");
-            card.style.minWidth = "180px";
-            card.style.maxWidth = "220px";
-            card.style.padding = "14px";
-            card.style.border = "1px solid #ddd";
-            card.style.borderRadius = "12px";
-            card.style.background = "#fafafa";
-            card.style.scrollSnapAlign = "center";
-            card.style.fontSize = "0.9rem";
-            card.style.textAlign = "center";
-
-            card.innerHTML = `<strong>${row.name}</strong><br><br>${row.message}`;
-            container.appendChild(card);
-          });
-        });
-    }
-
-    document.addEventListener("DOMContentLoaded", loadMessages);
-  </script>
-
-  <hr>
-<!-- ================================
-     FLOWER GAME SECTION
-================================ -->
-
-<div style="margin-top:40px; text-align:center;">
-  <button id="trophyBtn"
-          class="btn"
-          onclick="toggleScoreboard()"
-          style="font-size:1.6rem;">
-    🏆
-  </button>
-</div>
-
-<!-- Hidden Scoreboard Wrapper -->
-<div id="scoreboardWrapper"
-     style="display:none; margin-top:20px; text-align:center;">
-
-  <!-- Flower Counter -->
-  <p style="font-size:0.95rem; margin-bottom:6px;">
-    <span data-en="Flowers collected:" data-ko="모은 꽃 수:">
-      Flowers collected:
-    </span>
-    <strong id="flowerCounter">0</strong>
-  </p>
-
-  <!-- Collapsible Scoreboard -->
-  <button class="collapsible"
-          style="margin:10px auto 0 auto; width:180px;"
-          data-en="See Scoreboard"
-          data-ko="스코어보드 보기">
-    See Scoreboard
-  </button>
-
-  <div class="collapsible-content"
-       id="scoreboardArea"
-       style="text-align:center;">
-    <p style="font-size:0.9rem; color:#555;">Loading...</p>
-  </div>
-
-  <!-- Score Submission -->
-  <div style="max-width:300px; margin:20px auto;">
-    <input id="scoreName"
-           maxlength="30"
-           placeholder="Your Name"
-           data-en="Your Name"
-           data-ko="이름"
-           style="width:160px; padding:10px; border-radius:8px;
-                  border:1px solid #ccc; text-align:center; margin-bottom:10px;">
-    <br>
-
-    <button type="button" class="btn btn-primary"
-            onclick="submitScore()"
-            data-en="Submit Score"
-            data-ko="점수 제출">
-      Submit Score
-    </button>
-
-    <div id="scoreStatus"
-         style="margin-top:10px; font-size:0.9rem; color:#555;">
+      <div class="bank-col">
+        <div class="bank-label"
+             data-en="Bride"
+             data-ko="신부">
+          Bride
+        </div>
+        <button class="btn bank-toggle"
+                onclick="toggleQR('bride')"
+                data-en="Show Bride Account"
+                data-ko="신부 계좌 보기">
+          Show Bride Account
+        </button>
+        <div class="qr-wrapper" id="bride-qr">
+          <img src="HyesooBank.jpg"
+               alt="Bride account information"
+               class="qr-img">
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- Flower game status + scoreboard -->
+  <div id="flower-status" style="display:none;">
+    <!-- filled by JS -->
+  </div>
+
+  <div id="flower-scoreboard" style="display:none;">
+    <div style="font-weight:600; margin-bottom:4px;">Flower Catch Scoreboard</div>
+    <form id="flower-form">
+      <input id="flower-name" type="text" placeholder="Your name">
+      <button type="submit" class="btn" style="margin-top:4px;">Save score</button>
+    </form>
+    <ul id="flower-list"></ul>
+  </div>
+
 </div>
 
-<style>
-  .flower {
-    position: fixed;
-    font-size: 32px;
-    cursor: pointer;
-    user-select: none;
-    z-index: 5;
-    transition: transform 0.15s ease;
-  }
-  .flower:hover {
-    transform: scale(1.25);
-  }
-
-  .collapsible {
-    background: #fafafa;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 8px 12px;
-    cursor: pointer;
-    text-align: center;
-    font-size: 0.9rem;
-  }
-  .collapsible-content {
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 0.3s ease;
-    margin-top: 8px;
-  }
-</style>
-
-<script>
-/* ----------------------------------------
-   CONFIG — Script URL
------------------------------------------ */
-const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbx6rTcXAYVXu7V4_eaTjPSFvvzKRIXwaVgnlug3MWG2O4a395rGAZE8saJdr08hJzAl/exec";
-
-/* ----------------------------------------
-   FLOWER GAME
------------------------------------------ */
-let flowerCount = 0;
-let activeFlowers = 0;
-const MAX_FLOWERS = 4;
-
-function spawnFlower() {
-  if (activeFlowers >= MAX_FLOWERS) return;
-
-  const f = document.createElement("div");
-  f.className = "flower";
-  f.textContent = "🪻";
-
-  f.style.left = Math.random() * (window.innerWidth - 40) + "px";
-  f.style.top  = Math.random() * (window.innerHeight - 200) + "px";
-
-  document.body.appendChild(f);
-  activeFlowers++;
-
-  f.onclick = () => {
-    flowerCount++;
-    activeFlowers--;
-    document.getElementById("flowerCounter").innerText = flowerCount;
-    f.remove();
-  };
-
-  setTimeout(() => {
-    if (f.parentNode) {
-      f.remove();
-      activeFlowers--;
-    }
-  }, 5000);
-}
-
-function flowerLoop() {
-  const delay = 1000 + Math.random() * 4000;
-  setTimeout(() => {
-    spawnFlower();
-    flowerLoop();
-  }, delay);
-}
-
-/* ----------------------------------------
-   SCOREBOARD TOGGLE
------------------------------------------ */
-function toggleScoreboard() {
-  const wrap = document.getElementById("scoreboardWrapper");
-  wrap.style.display = (wrap.style.display === "none") ? "block" : "none";
-}
-
-/* ----------------------------------------
-   SUBMIT SCORE
------------------------------------------ */
-function submitScore() {
-  const name = document.getElementById("scoreName").value.trim();
-  const status = document.getElementById("scoreStatus");
-
-  if (!name) {
-    status.style.color = "red";
-    status.innerText = "Please enter your name.";
-    return;
-  }
-
-  status.style.color = "#444";
-  status.innerText = "Submitting...";
-
-  const url =
-    SCRIPT_URL +
-    "?action=addFlower" +
-    "&name=" + encodeURIComponent(name) +
-    "&count=" + encodeURIComponent(flowerCount);
-
-  fetch(url)
-    .then(() => {
-      status.style.color = "green";
-      status.innerText = "Score submitted!";
-      loadScoreboard();
-    })
-    .catch(() => {
-      status.style.color = "red";
-      status.innerText = "Error submitting score.";
-    });
-}
-
-/* ----------------------------------------
-   LOAD SCOREBOARD
------------------------------------------ */
-function loadScoreboard() {
-  const url = SCRIPT_URL + "?action=getFlowers";
-
-  fetch(url)
-    .then(res => res.json())
-    .then(rows => {
-      const area = document.getElementById("scoreboardArea");
-      area.innerHTML = "";
-
-      if (!rows.length) {
-        area.innerHTML = "<p>No scores yet.</p>";
-        return;
-      }
-
-      rows.forEach(r => {
-        const p = document.createElement("p");
-        p.style.margin = "6px 0";
-        p.innerHTML = `<strong>${r.name}</strong> — ${r.total}`;
-        area.appendChild(p);
-      });
-    });
-}
-
-/* ----------------------------------------
-   COLLAPSIBLES
------------------------------------------ */
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".collapsible").forEach(btn => {
-    btn.addEventListener("click", () => {
-      btn.classList.toggle("active");
-      const content = btn.nextElementSibling;
-      content.style.maxHeight =
-        content.style.maxHeight ? null : content.scrollHeight + "px";
-    });
-  });
-
-  flowerLoop();
-  loadScoreboard();
-});
-</script>
 </body>
 </html>
+
+
