@@ -173,11 +173,18 @@ ul li { margin: 6px 0; }
 <!-- ============ JS: LANG + TIME ============ -->
 <script>
 function switchLang(lang) {
-  const items = document.querySelectorAll("[data-en][data-ko]");
-  items.forEach(el => {
-    el.innerHTML = (lang === "ko") ? el.dataset.ko : el.dataset.en;
-  });
+  const enTexts = document.querySelectorAll('.en-text');
+  const koTexts = document.querySelectorAll('.ko-text');
+
+  if (lang === "ko") {
+    enTexts.forEach(el => el.style.display = "none");
+    koTexts.forEach(el => el.style.display = "block");
+  } else {
+    enTexts.forEach(el => el.style.display = "block");
+    koTexts.forEach(el => el.style.display = "none");
+  }
 }
+
 
 function updateTimes() {
   const sj = document.getElementById("time-sj");
@@ -236,11 +243,11 @@ function updateTimes() {
 
   <!-- MAP BUTTONS (STYLE FIXED: NO BLUE UNDERLINES) -->
   <div style="margin-top:14px;">
-    <a class="btn btn-primary" href="https://maps.app.goo.gl/LcdHkqLCrS2RkzkG6" target="_blank" style="color:#333; text-decoration:none;">
+    <a class="btn btn-primary" href="https://maps.app.goo.gl/JHUsDcZcbDqTpjZQ6" target="_blank" style="color:#333; text-decoration:none;">
       Google Maps
     </a>
 
-    <a class="btn" href="https://naver.me/5rtZYV4F" target="_blank" style="color:#333; text-decoration:none;">
+    <a class="btn" href="https://naver.me/5T4nAinf" target="_blank" style="color:#333; text-decoration:none;">
       Naver Map
     </a>
   </div>
@@ -562,7 +569,7 @@ function popEmojis(target) {
       e.style.fontSize = "28px";
       e.style.opacity = "1";
       e.style.transition = "1.2s";
-      e.style.zIndex = 99;
+      e.style.zIndex = 999999;
       document.body.appendChild(e);
 
       setTimeout(() => {
@@ -588,7 +595,9 @@ function createSnow() {
     flake.style.fontSize = (6 + Math.random()*8) + "px";
     flake.style.opacity = 0.5 + Math.random()*0.4;
     flake.style.animation = `fall ${8+Math.random()*12}s linear infinite`;
-    flake.style.zIndex = -1;
+    flake.style.zIndex = 10;
+    flake.style.color = "#ffffff";
+    text-shadow: 0 0 4px rgba(255,255,255,0.7);
     document.body.appendChild(flake);
   }
 }
@@ -596,6 +605,9 @@ function createSnow() {
 </script>
 
 <style>
+.en-text { display: block; }
+.ko-text { display: none; }
+
 @keyframes fall {
   0% { transform: translateY(-10px); opacity:0; }
   10% { opacity:1; }
@@ -800,5 +812,46 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 </div> <!-- END .container -->
+   <script>
+// --- fix flower generator ---
+let flowerCount = 0;
+let onScreenFlowers = 0;
+const MAX_FLOWERS = 4;
+
+function spawnFlower() {
+  if (onScreenFlowers >= MAX_FLOWERS) return;
+
+  const f = document.createElement("div");
+  f.className = "flower";
+  f.textContent = "🪻";
+
+  f.style.left = Math.random() * (window.innerWidth - 40) + "px";
+  f.style.top = Math.random() * (window.innerHeight - 200) + "px";
+
+  document.body.appendChild(f);
+  onScreenFlowers++;
+
+  f.onclick = () => {
+    flowerCount++;
+    onScreenFlowers--;
+    f.remove();
+  };
+
+  setTimeout(() => {
+    if (f.parentNode) {
+      onScreenFlowers--;
+      f.remove();
+    }
+  }, 5000);
+}
+
+function flowerLoop() {
+  spawnFlower();
+  setTimeout(flowerLoop, 1200 + Math.random() * 2500);
+}
+
+document.addEventListener("DOMContentLoaded", flowerLoop);
+</script>
+
 </body>
 </html>
