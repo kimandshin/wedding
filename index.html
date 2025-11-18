@@ -756,9 +756,13 @@ function submitMessage() {
   status.style.color = "#444";
   status.innerText = "Submitting...";
 
-  fetch("https://script.google.com/macros/s/AKfycbzpJKn2-98o3GsNug0D4C0EMabI5Fe5gXpe2Sn5cDGYhBd8wYiWgoVsKAu4zybMZD5w/exec?action=addMessage&name="
-        + encodeURIComponent(name)
-        + "&message=" + encodeURIComponent(msg))
+  const url =
+    "https://script.google.com/macros/s/AKfycbzpJKn2-98o3GsNug0D4C0EMabI5Fe5gXpe2Sn5cDGYhBd8wYiWgoVsKAu4zybMZD5w/exec"
+    + "?action=addMessage"
+    + "&name=" + encodeURIComponent(name)
+    + "&message=" + encodeURIComponent(msg);
+
+  fetch(url, { method: "GET" })
     .then(() => {
       status.style.color = "green";
       status.innerText = "Thank you! Your message has been added.";
@@ -774,6 +778,7 @@ function submitMessage() {
     });
 }
 </script>
+
 
 
 <script>
@@ -796,15 +801,14 @@ function loadMessages() {
         card.style.fontSize = "0.9rem";
         card.style.textAlign = "center";
 
-        card.innerHTML = `
-          <strong>${row.name}</strong><br><br>
-          ${row.message}
-        `;
+        card.innerHTML = `<strong>${row.name}</strong><br><br>${row.message}`;
         container.appendChild(card);
       });
-    });
+    })
+    .catch(err => console.error(err));
 }
 </script>
+
 
 <!-- FLOWER GAME -->
 <script>
@@ -814,49 +818,61 @@ function loadMessages() {
 
   /* ---------- Spawn Flowers ---------- */
   function spawnFlower() {
-    if (activeFlowers >= maxFlowers) {
-      scheduleNextSpawn();
-      return;
-    }
-
-    const flower = document.createElement('div');
-    flower.className = 'falling-flower';
-    flower.textContent = '🪻';
-
-    // random position
-    const x = Math.random() * 80 + 10;  // between 10vw and 90vw
-    const y = -20; // start above screen
-
-    flower.style.left = x + 'vw';
-    flower.style.top = y + 'px';
-
-    document.body.appendChild(flower);
-    activeFlowers++;
-
-    // animation
-    let fallDuration = 8000 + Math.random() * 5000; // 8–13s
-    flower.animate(
-      [
-        { transform: `translateY(0px)`, opacity: 0 },
-        { transform: `translateY(30vh)`, opacity: 1 },
-        { transform: `translateY(80vh)`, opacity: 0 }
-      ],
-      { duration: fallDuration, easing: 'linear' }
-    );
-
-    // handle click
-    flower.addEventListener('click', () => {
-      collectFlower(flower);
-    }, { passive: true });
-
-    // remove after fall ends
-    setTimeout(() => {
-      if (flower.parentNode) flower.remove();
-      activeFlowers--;
-    }, fallDuration + 300);
-
+  if (activeFlowers >= maxFlowers) {
     scheduleNextSpawn();
+    return;
   }
+
+  const f = document.createElement("div");
+  f.className = "falling-flower";   // IMPORTANT FIX
+  f.textContent = "🪻";            // purple flower emoji
+
+  const x = Math.random() * 80 + 10;
+  f.style.left = x + "vw";
+  f.style.top = "-30px";
+  document.body.appendChild(f);
+
+  activeFlowers++;
+
+  const fallMs = 8000 + Math.random() * 5000;
+
+  // animation
+  f.animate(
+    [
+      { transform: "translateY(0px)", opacity: 0 },
+      { transform: "translateY(40vh)", opacity: 1 },
+      { transform: "translateY(85vh)", opacity: 0 }
+    ],
+    { duration: fallMs, easing: "linear" }
+  );
+
+  // --- CLICK HANDLER FIX ---
+  f.addEventListener("click", () => {
+    f.remove();
+    activeFlowers--;
+    flowerCount++;
+    document.getElementById("flowerCounter").innerText = flowerCount;
+  });
+
+  // cleanup
+  setTimeout(() => {
+    if (f.parentNode) {
+      f.remove();
+      activeFlowers--;
+    }
+  }, fallMs + 300);
+
+  scheduleNextSpawn();
+}
+
+function scheduleNextSpawn() {
+  const delay = 1000 + Math.random() * 4000;
+  setTimeout(spawnFlower, delay);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  scheduleNextSpawn();
+});
 
   /* ---------- Schedule Next Spawn ---------- */
   function scheduleNextSpawn() {
@@ -1028,7 +1044,37 @@ function submitMessage() {
     });
 }
 
+function submitScore() {
+  const name = document.getElementById("scoreName").value.trim();
+  const count = flowerCount;
+  const status = document.getElementById("scoreStatus");
 
+  if (!name) {
+    status.style.color = "red";
+    status.innerText = "Please enter your name.";
+    return;
+  }
+
+  status.style.color = "#444";
+  status.innerText = "Submitting...";
+
+  const url =
+    "https://script.google.com/macros/s/AKfycbzpJKn2-98o3GsNug0D4C0EMabI5Fe5gXpe2Sn5cDGYhBd8wYiWgoVsKAu4zybMZD5w/exec" +
+    "?action=addFlower" +
+    "&name=" + encodeURIComponent(name) +
+    "&count=" + encodeURIComponent(count);
+
+  fetch(url, { method: "GET" })
+    .then(() => {
+      status.style.color = "green";
+      status.innerText = "Score submitted!";
+      loadScoreboard();
+    })
+    .catch(() => {
+      status.style.color = "red";
+      status.innerText = "Error submitting score.";
+    });
+}
   /* ---------- Load Scoreboard ---------- */
   function loadScoreboard() {
     fetch("https://script.google.com/macros/s/AKfycbzpJKn2-98o3GsNug0D4C0EMabI5Fe5gXpe2Sn5cDGYhBd8wYiWgoVsKAu4zybMZD5w/exec?readScore=1")
