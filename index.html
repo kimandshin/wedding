@@ -1,1164 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Wedding Invitation – 김유석 🤍 신혜수</title>
 
 <style>
-
-/* ----------------------------------------------------
-   CUSTOM FONT (Samanco)
----------------------------------------------------- */
 @font-face {
   font-family: 'Samanco';
   src: url('BinggraeSamanco.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
 }
-
-/* ----------------------------------------------------
-   BASE LAYOUT
----------------------------------------------------- */
 body {
-  font-family: 'Samanco', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: 'Samanco', system-ui, sans-serif;
   margin: 0;
   padding: 40px 10px 60px;
   background: #f5f2ee;
   color: #333;
   text-align: center;
 }
-
 .container {
   max-width: 760px;
   margin: 0 auto;
-  background: #ffffff;
+  background: #fff;
   padding: 40px 26px 60px;
   border-radius: 18px;
   box-shadow: 0 10px 24px rgba(0,0,0,0.08);
 }
-
-.top-buttons {
-  margin-bottom: 26px;
-}
-
-/* ----------------------------------------------------
-   TIME DISPLAY UNDER LANGUAGE BUTTONS
----------------------------------------------------- */
-.time-row {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-top: -10px;
-  margin-bottom: 10px;
-}
-.time-item {
-  min-width: 135px;
-  max-width: 160px;
-  font-size: 0.8rem;
-  color: #555;
-}
-.time-label {
-  display: block;
-  margin-bottom: 2px;
-}
-.time-value {
-  font-weight: 600;
-}
-
-/* ----------------------------------------------------
-   TITLE + MAIN IMAGE
----------------------------------------------------- */
-h1 {
-  font-size: 1.9rem;
-  letter-spacing: 0.15em;
-  margin: 0 0 10px;
-}
-h2 {
-  font-size: 1.8rem;
-  margin: 0 0 8px;
-}
-
-.subtext {
-  font-size: 0.95rem;
-  margin-bottom: 24px;
-  color: #666;
-}
-
-img.wedding-img {
-  width: 90%;
-  max-width: 420px;
-  border-radius: 12px;
-  margin: 30px auto;
-  display: block;
-}
-
-/* ----------------------------------------------------
-   BUTTONS
----------------------------------------------------- */
 .btn {
-  display: inline-block;
   padding: 9px 16px;
-  margin: 6px 6px;
   border-radius: 20px;
   border: 1px solid #ddd;
-  font-size: 0.85rem;
-  text-decoration: none;
-  color: #333;
   background: #fafafa;
-  transition: 0.2s;
-}
-.btn:hover {
-  background: #f0f0f0;
+  margin: 6px;
+  font-size: 0.85rem;
 }
 .btn-primary {
   border-color: #000;
   font-weight: 600;
 }
-
-hr {
-  margin: 30px auto;
-  border: none;
-  height: 1px;
-  width: 90%;
-  background: #e5e5e5;
-}
-
-/* ----------------------------------------------------
-   SECTION TITLES
----------------------------------------------------- */
 .section-title {
   font-size: 1.25rem;
   margin: 32px 0 10px;
   font-weight: 600;
 }
-
-p {
-  margin: 6px 0;
-  line-height: 1.7;
+#messageCarousel {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 10px 5px;
 }
-
-/* ----------------------------------------------------
-   LISTS
----------------------------------------------------- */
-ul {
-  list-style: none;
-  padding-left: 0;
-  font-size: 1rem;
-  line-height: 1.8;
-  margin: 10px 0 0;
-}
-
-/* ----------------------------------------------------
-   SNOW OVERLAY (WITH DEPTH)
----------------------------------------------------- */
-.snow-container {
-  pointer-events: none;
+.falling-flower {
   position: fixed;
-  inset: 0;
-  overflow: hidden;
-}
-
-.snow-back { z-index: -3; }
-.snow-mid  { z-index: -2; }
-.snow-front{ z-index: -1; }
-
-.snowflake {
-  position: absolute;
-  top: -10px;
-  color: rgba(185, 210, 255, 0.75);
-  text-shadow: 0 0 4px rgba(140,170,220,0.25);
-  font-size: 6px;
-  will-change: transform, opacity;
-  animation-name: snow-fall;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-@keyframes snow-fall {
-  0% { transform: translate3d(0, -10px, 0); opacity: 0; }
-  15%{ opacity: 1; }
-  100%{ transform: translate3d(var(--drift,0px), 110vh, 0); opacity:0; }
-}
-
-/* SPARK EFFECT WHEN TOUCHING SCREEN */
-.spark {
-  pointer-events: none;
-  position: fixed;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,240,180,1) 0%, rgba(255,240,180,0) 60%);
-  opacity: 0.9;
-  transform: translate(-50%, -50%) scale(0.2);
-  animation: spark-fade 0.6s ease-out forwards;
-  z-index: 2;
-}
-
-@keyframes spark-fade {
-  0%   { opacity: 0.9; transform: translate(-50%,-50%) scale(0.2); }
-  50%  { opacity: 1;   transform: translate(-50%,-50%) scale(1); }
-  100% { opacity: 0;   transform: translate(-50%,-50%) scale(1.4); }
-}
-
-/* ----------------------------------------------------
-   PURPLE FLOWER GAME
----------------------------------------------------- */
-.flower {
-  position: fixed;
-  font-size: 22px;
-  cursor: pointer;
+  font-size: 32px;
   user-select: none;
+  cursor: pointer;
   z-index: 5;
-  transition: transform 0.2s ease-out;
 }
-.flower:hover {
-  transform: scale(1.25);
-}
-
-.scoreboard-link {
-  margin-top: 30px;
-  font-size: 1rem;
-  cursor: pointer;
-  color: #444;
-  text-decoration: underline;
-}
-
-/* Scoreboard popup */
-#scoreboardPopup {
+#scoreboardWrapper {
   display: none;
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 500px;
-  padding: 20px;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-  z-index: 999;
+  margin-top: 20px;
 }
-#scoreboardPopup h3{ margin-top:0; }
-#scoreboardPopup input {
-  width: 90%;
-  padding: 8px;
-  margin: 6px auto;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+.collapsible {
+  background: #fafafa; border:1px solid #ddd;
+  border-radius:10px; padding:10px 14px;
+  cursor:pointer; width:200px; margin:10px auto;
+  font-size:0.9rem;
 }
-#scoreboardPopup button {
-  margin-top: 10px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  background: #333;
-  color: white;
-  border: none;
-  cursor: pointer;
+.collapsible-content {
+  overflow:hidden; max-height:0; padding:0;
+  transition:max-height 0.3s ease;
 }
-
 </style>
+
 <script>
-/* ----------------------------------------------------
-   LANGUAGE TOGGLE
----------------------------------------------------- */
-function switchLang(lang) {
-  const elements = document.querySelectorAll("[data-en][data-ko]");
-  elements.forEach(el => {
-    el.innerHTML = (lang === "ko")
-      ? el.getAttribute("data-ko")
-      : el.getAttribute("data-en");
+/* ---------- LANGUAGE ---------- */
+function switchLang(lang){
+  document.querySelectorAll("[data-en][data-ko]").forEach(el=>{
+    el.innerHTML = (lang==="ko") ? el.dataset.ko : el.dataset.en;
   });
-  document.documentElement.lang = (lang === "ko") ? "ko" : "en";
 }
 
-/* ----------------------------------------------------
-   BGM
----------------------------------------------------- */
+/* ---------- BGM ---------- */
 let bgm;
-function toggleBGM() {
-  if (!bgm) {
-    bgm = new Audio("hymn.mp3"); 
+function toggleBGM(){
+  if(!bgm){
+    bgm = new Audio("hymn.mp3");
     bgm.loop = true;
-    bgm.play().catch(() => {});
-    document.getElementById("bgmBtn").innerText = "♪ Pause BGM";
-  } else if (bgm.paused) {
-    bgm.play().catch(() => {});
-    document.getElementById("bgmBtn").innerText = "♪ Pause BGM";
+    bgm.play().catch(()=>{});
+    document.getElementById("bgmBtn").innerText="♪ Pause BGM";
+  } else if(bgm.paused){
+    bgm.play(); document.getElementById("bgmBtn").innerText="♪ Pause BGM";
   } else {
-    bgm.pause();
-    document.getElementById("bgmBtn").innerText = "♪ Play BGM";
+    bgm.pause(); document.getElementById("bgmBtn").innerText="♪ Play BGM";
   }
 }
 
-/* ----------------------------------------------------
-   SNOW CREATION
----------------------------------------------------- */
-function createSnowLayer(containerId, numFlakes, sizeMin, sizeMax, durationMin, durationMax, opacityBoost) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
+/* ---------- FLOWERS ---------- */
+let flowerCount=0, activeFlowers=0, maxFlowers=4;
 
-  for (let i = 0; i < numFlakes; i++) {
-    const flake = document.createElement("div");
-    flake.className = "snowflake";
-    flake.textContent = "❄";
+function spawnFlower(){
+  if(activeFlowers>=maxFlowers) return;
 
-    const size = sizeMin + Math.random() * (sizeMax - sizeMin);
-    const left = Math.random() * 100;
-    const delay = Math.random() * 12;
-    const duration = durationMin + Math.random() * (durationMax - durationMin);
-    const drift = -40 + Math.random() * 80;
-    const opacity = 0.4 + Math.random() * 0.4 + (opacityBoost || 0);
-
-    flake.style.left = left + "vw";
-    flake.style.fontSize = size + "px";
-    flake.style.animationDuration = duration + "s";
-    flake.style.animationDelay = delay + "s";
-    flake.style.setProperty("--drift", drift + "px");
-    flake.style.opacity = opacity;
-
-    container.appendChild(flake);
-  }
-}
-
-function createSnow() {
-  createSnowLayer("snow-back", 40, 3, 6, 20, 30, 0);
-  createSnowLayer("snow-mid", 60, 4, 7, 16, 24, 0.1);
-  createSnowLayer("snow-front", 50, 5, 8, 12, 20, 0.15);
-}
-
-/* ----------------------------------------------------
-   TIME ZONES
----------------------------------------------------- */
-function updateTimes() {
-  const sjEl = document.getElementById("time-sj");
-  const krEl = document.getElementById("time-kr");
-  if (!sjEl || !krEl) return;
-
-  const now = new Date();
-  const opts = { hour: "2-digit", minute: "2-digit", hour12: false };
-
-  sjEl.textContent = now.toLocaleTimeString("en-US", { ...opts, timeZone: "America/Los_Angeles" });
-  krEl.textContent = now.toLocaleTimeString("en-US", { ...opts, timeZone: "Asia/Seoul" });
-}
-
-/* ----------------------------------------------------
-   NAME CLICK EFFECTS
----------------------------------------------------- */
-function popEmojis(targetName) {
-  const emojis = (targetName === "groom")
-    ? ["😄", "😁", "😎", "🤍", "✨"]
-    : ["🌸", "🌺", "💐", "🌷", "🌼"];
-
-  for (let i = 0; i < 5; i++) {
-    setTimeout(() => {
-      const e = document.createElement("div");
-      e.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      e.style.position = "fixed";
-      e.style.left = (window.innerWidth / 2 + (Math.random()*120-60)) + "px";
-      e.style.top = (window.innerHeight / 2 + (Math.random()*80-40)) + "px";
-      e.style.fontSize = "28px";
-      e.style.opacity = "1";
-      e.style.transition = "1.3s ease-out";
-      e.style.zIndex = 999;
-
-      document.body.appendChild(e);
-
-      setTimeout(() => {
-        e.style.top = (parseInt(e.style.top) - 80) + "px";
-        e.style.opacity = "0";
-      }, 50);
-
-      setTimeout(() => e.remove(), 1400);
-    }, i * 120);
-  }
-}
-
-/* ----------------------------------------------------
-   PURPLE FLOWER GAME LOGIC
----------------------------------------------------- */
-let flowerCount = 0;
-let onScreenFlowers = 0;
-const MAX_FLOWERS = 4;
-
-function spawnFlower() {
-  if (onScreenFlowers >= MAX_FLOWERS) return;
-
-  const f = document.createElement("div");
-  f.className = "flower";
-  f.textContent = "🪻";
-
-  const x = Math.random() * (window.innerWidth - 40);
-  const y = Math.random() * (window.innerHeight - 200);
-
-  f.style.left = x + "px";
-  f.style.top = y + "px";
+  const f=document.createElement("div");
+  f.className="falling-flower";
+  f.textContent="🪻";
+  f.style.left=Math.random()*80+10+"vw";
+  f.style.top="-30px";
 
   document.body.appendChild(f);
-  onScreenFlowers++;
+  activeFlowers++;
 
-  f.onclick = () => {
+  const fallMs=8000+Math.random()*5000;
+  f.animate([
+    {transform:"translateY(0)",opacity:0},
+    {transform:"translateY(40vh)",opacity:1},
+    {transform:"translateY(85vh)",opacity:0}
+  ],{duration:fallMs,easing:"linear"});
+
+  f.onclick=()=>{
     flowerCount++;
-    onScreenFlowers--;
+    activeFlowers--;
     f.remove();
-    if (flowerCount % 5 === 0) {
-      document.getElementById("scoreboardLink").style.display = "block";
-      document.getElementById("scoreboardLink").textContent =
-        `You collected ${flowerCount} flowers! (See scoreboard)`;
-    }
+    document.getElementById("flowerCounter").innerText=flowerCount;
   };
 
-  setTimeout(() => {
-    if (f.parentNode) {
-      onScreenFlowers--;
-      f.remove();
-    }
-  }, 5000);
+  setTimeout(()=>{
+    if(f.parentNode){ activeFlowers--; f.remove(); }
+  }, fallMs+300);
+
+  setTimeout(spawnFlower, 1000+Math.random()*4000);
 }
 
-function flowerSpawnerLoop() {
-  const delay = 1000 + Math.random() * 4000;
-  setTimeout(() => {
-    spawnFlower();
-    flowerSpawnerLoop();
-  }, delay);
+document.addEventListener("DOMContentLoaded",()=>{ spawnFlower(); loadMessages(); loadScoreboard(); });
+
+/* ---------- GOOGLE SCRIPT ENDPOINT ---------- */
+const API = "https://script.google.com/macros/s/AKfycbx6rTcXAYVXu7V4_eaTjPSFvvzKRIXwaVgnlug3MWG2O4a395rGAZE8saJdr08hJzAl/exec";
+
+/* ---------- SUBMIT MESSAGE ---------- */
+function submitMessage(){
+  const name=guestName.value.trim();
+  const msg=guestMsg.value.trim();
+  const status=msgStatus;
+
+  if(!name||!msg){
+    status.style.color="red";
+    status.innerText="Please enter both your name and a message.";
+    return;
+  }
+  status.style.color="#444";
+  status.innerText="Submitting...";
+
+  fetch(`${API}?action=addMessage&name=${encodeURIComponent(name)}&message=${encodeURIComponent(msg)}`)
+  .then(()=>{ 
+    status.style.color="green";
+    status.innerText="Thank you! Your message has been added!";
+    guestName.value=""; guestMsg.value="";
+    loadMessages();
+  })
+  .catch(()=>{
+    status.style.color="red";
+    status.innerText="Error: Please try again.";
+  });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  updateTimes();
-  setInterval(updateTimes, 60000);
+/* ---------- LOAD MESSAGES ---------- */
+function loadMessages(){
+  fetch(`${API}?action=getMessages`)
+    .then(r=>r.json())
+    .then(rows=>{
+      messageCarousel.innerHTML="";
+      rows.forEach(r=>{
+        const card=document.createElement("div");
+        card.style.minWidth="180px";
+        card.style.maxWidth="220px";
+        card.style.padding="14px";
+        card.style.border="1px solid #ddd";
+        card.style.borderRadius="12px";
+        card.style.background="#fafafa";
+        card.style.scrollSnapAlign="center";
+        card.innerHTML=`<strong>${r.name}</strong><br><br>${r.message}`;
+        messageCarousel.appendChild(card);
+      });
+    });
+}
 
-  createSnow();
-  flowerSpawnerLoop();
+/* ---------- SUBMIT SCORE ---------- */
+function submitScore(){
+  const name=scoreName.value.trim();
+  const status=scoreStatus;
+
+  if(!name){
+    status.style.color="red";
+    status.innerText="Please enter your name.";
+    return;
+  }
+  status.style.color="#444";
+  status.innerText="Submitting...";
+
+  fetch(`${API}?action=addFlower&name=${encodeURIComponent(name)}&count=${encodeURIComponent(flowerCount)}`)
+    .then(()=>{
+      status.style.color="green";
+      status.innerText="Score submitted!";
+      loadScoreboard();
+    })
+    .catch(()=>{
+      status.style.color="red";
+      status.innerText="Error submitting score.";
+    });
+}
+
+/* ---------- LOAD SCOREBOARD ---------- */
+function loadScoreboard(){
+  fetch(`${API}?action=getFlowers`)
+    .then(r=>r.json())
+    .then(rows=>{
+      scoreboardArea.innerHTML="";
+      if(rows.length===0){
+        scoreboardArea.innerHTML="<p>No scores yet.</p>";
+        return;
+      }
+      rows.forEach(r=>{
+        const p=document.createElement("p");
+        p.innerHTML=`<strong>${r.name}</strong> — ${r.total}`;
+        scoreboardArea.appendChild(p);
+      });
+    });
+}
+
+/* ---------- COLLAPSIBLE ---------- */
+document.addEventListener("DOMContentLoaded",()=>{
+  document.querySelectorAll(".collapsible").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      btn.classList.toggle("active");
+      const content=btn.nextElementSibling;
+      content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight+"px";
+    });
+  });
 });
+
+/* ---------- TROPHY BUTTON ---------- */
+function toggleScoreboard(){
+  const wrap=document.getElementById("scoreboardWrapper");
+  wrap.style.display = wrap.style.display==="none" ? "block" : "none";
+}
 </script>
 </head>
+
 <body>
-
-<!-- Snow layers -->
-<div class="snow-container snow-back" id="snow-back"></div>
-<div class="snow-container snow-mid"  id="snow-mid"></div>
-<div class="snow-container snow-front" id="snow-front"></div>
-
-<!-- Snow piles -->
-<div class="snow-piles" id="snow-piles"></div>
 
 <div class="container">
 
-  <!-- Top buttons -->
-  <div class="top-buttons">
-    <button class="btn" onclick="switchLang('en')">ENG</button>
-    <button class="btn" onclick="switchLang('ko')">KOR</button>
-    <button id="bgmBtn" class="btn" onclick="toggleBGM()">♪ Play BGM</button>
-  </div>
+  <button class="btn" onclick="switchLang('en')">ENG</button>
+  <button class="btn" onclick="switchLang('ko')">KOR</button>
+  <button id="bgmBtn" class="btn" onclick="toggleBGM()">♪ Play BGM</button>
 
-  <!-- Time row -->
-  <div class="time-row">
-    <div class="time-item">
-      <span class="time-label"
-            data-en="San Jose time"
-            data-ko="샌호세 시간">
-        San Jose time
-      </span>
-      <span class="time-value" id="time-sj">--:--</span>
-    </div>
-
-    <div class="time-item">
-      <span class="time-label"
-            data-en="Korea time"
-            data-ko="한국 시간">
-        Korea time
-      </span>
-      <span class="time-value" id="time-kr">--:--</span>
-    </div>
-  </div>
-
-  <!-- Header -->
   <h1>WEDDING INVITATION</h1>
+  <h2>김유석 🤍 신혜수</h2>
 
-  <h2>
-    <span onclick="popEmojis('groom')" style="cursor:pointer;">김유석</span>
-    🤍
-    <span onclick="popEmojis('bride')" style="cursor:pointer;">신혜수</span>
-  </h2>
-
-  <div class="subtext">
-    February 7, 2025 · 5:00 PM · Asador, Haeundae, Busan
-  </div>
-
-  <!-- Main Image -->
-  <img src="hyesoo_david.png"
-       class="wedding-img"
-       alt="Wedding Illustration">
-
-  <p data-en="We invite you to celebrate our special day."
-     data-ko="저희의 특별한 날에 함께해주시길 부탁드립니다.">
-     We invite you to celebrate our special day.
-  </p>
-
-  <p style="max-width:600px; margin:8px auto 0;">
-    Asador (4F), 부산 해운대구 해운대해변로298번길 9
-  </p>
-
-  <div style="margin-top:14px;">
-    <a class="btn btn-primary"
-       href="https://maps.app.goo.gl/LcdHkqLCrS2RkzkG6"
-       target="_blank">
-       Google Maps
-    </a>
-
-    <a class="btn"
-       href="https://naver.me/5rtZYV4F"
-       target="_blank">
-       Naver Map
-    </a>
-  </div>
+  <img src="hyesoo_david.png" class="wedding-img" />
 
   <hr>
-  <!-- OUR VOWS -->
-  <div class="section-title"
-       data-en="Our Vows"
-       data-ko="서약">
-       Our Vows
+
+  <div class="section-title" data-en="Leave a Message" data-ko="축하 메시지 남겨주세요">
+    Leave a Message
   </div>
 
-  <!-- English Vows -->
-  <p class="vow-text en-text" style="max-width:620px; margin:auto;">
-    Today, before God, our families, and friends, we promise to walk together in faith and love.
-    We will support one another, forgive quickly, and choose grace over pride.
-  </p>
-
-  <p class="vow-text en-text" style="max-width:620px; margin:10px auto 0;">
-    In seasons of joy and in seasons of hardship, we will seek God first, listen deeply,
-    and protect this covenant with patience and honesty. With God’s help, we will build a
-    home filled with warmth, prayer, and laughter.
-  </p>
-
-  <!-- Korean Vows -->
-  <div class="ko-text" style="display:none; max-width:620px; margin:auto;">
-    <p>
-      오늘, 하나님과 양가 가족, 그리고 소중한 친구들 앞에서<br>
-      우리는 믿음과 사랑으로 함께 걸어갈 것을 약속합니다.<br>
-      서로를 지지하고, 빨리 용서하며, 자존심보다 은혜를 선택하겠습니다.
-    </p>
-
-    <p style="margin-top:10px;">
-      기쁨의 순간에도, 어려움의 순간에도<br>
-      우리는 하나님을 먼저 구하고, 깊이 귀 기울이며,<br>
-      인내와 진실함으로 이 언약을 지켜 나가겠습니다.
-    </p>
-
-    <p style="margin-top:10px;">
-      하나님의 도우심으로<br>
-      우리의 가정이 따뜻함과 기도, 그리고 웃음으로 가득한 집이 되길 소망합니다.
-    </p>
-  </div>
+  <input id="guestName" placeholder="Your Name" style="width:100%; padding:10px; margin:10px 0;" />
+  <textarea id="guestMsg" placeholder="Write your message" style="width:100%; height:90px; padding:10px;"></textarea>
+  <button class="btn btn-primary" onclick="submitMessage()">Submit</button>
+  <div id="msgStatus" style="margin-top:10px;"></div>
 
   <hr>
-  <!-- HYMN SECTION -->
-  <div class="section-title"
-       data-en="Hymn"
-       data-ko="찬송가">
-       Hymn
-  </div>
 
-  <img src="hymn.png"
-       alt="Hymn: 완전한 사랑"
-       style="width:90%; max-width:600px; margin:20px auto; display:block; border-radius:12px;">
+  <div class="section-title">Messages</div>
+  <div id="messageCarousel"></div>
 
-  <!-- Collapsible English Translation -->
-  <div class="collapsible-wrapper">
-    <button class="collapsible"
-            data-en="Show English translation"
-            data-ko="영문 번역 보기">
-      Show English translation
-    </button>
+  <hr>
 
-    <div class="collapsible-content">
-      <p style="max-width:620px; margin:auto; text-align:center;">
-        <strong>Love Forever – English Translation</strong><br><br>
+  <button id="trophyBtn" class="btn" onclick="toggleScoreboard()">🏆 Scoreboard</button>
 
-        1.<br>
-        Your perfect love, unchanging love<br>
-        Fills my heart again today<br>
-        Even if I walk through darkness<br>
-        You are with me, holding me<br><br>
+  <div id="scoreboardWrapper">
 
-        2.<br>
-        Your endless grace, amazing grace<br>
-        Covers all my brokenness<br>
-        When I fall and lose my strength<br>
-        You lift me up again<br><br>
+    <p>Flowers collected: <strong id="flowerCounter">0</strong></p>
 
-        3.<br>
-        Forever more, forever Lord<br>
-        My life belongs to You alone<br>
-        Lead me by Your faithful hand<br>
-        In Your love forever
-      </p>
+    <button class="collapsible">See Scoreboard</button>
+    <div class="collapsible-content" id="scoreboardArea">
+      <p>Loading scoreboard...</p>
     </div>
-  </div>
 
-  <hr>
-  <!-- ORDER OF CEREMONY -->
-  <div class="section-title"
-       data-en="Order of Ceremony"
-       data-ko="결혼식 순서">
-       Order of Ceremony
-  </div>
-
-  <!-- English Order -->
-  <ul class="en-text" style="text-align:center;">
-    <li>Apostles’ Creed</li>
-    <li>Song: Love Forever</li>
-    <li>Blessings</li>
-    <li>· Bride’s Father</li>
-    <li>· Groom’s Father</li>
-    <li>Vows</li>
-    <li>Groom’s Father Prayer</li>
-    <li>The Lord’s Prayer</li>
-    <li>Dinner</li>
-  </ul>
-
-  <!-- Korean Order -->
-  <ul class="ko-text" style="display:none; text-align:center;">
-    <li>사도신경</li>
-    <li>찬양: 완전한 사랑</li>
-    <li>축사</li>
-    <li>· 신부쪽 아버지</li>
-    <li>· 신랑쪽 아버지</li>
-    <li>결혼 서약</li>
-    <li>신랑쪽 아버지 기도</li>
-    <li>주기도문</li>
-    <li>저녁식사</li>
-  </ul>
-
-  <hr>
-  <!-- WEDDING GIFTS & BLESSINGS -->
-  <div class="section-title"
-       data-en="Wedding Gifts & Blessing"
-       data-ko="결혼 선물과 축복의 마음">
-       Wedding Gifts & Blessing
-  </div>
-
-  <!-- Buttons to reveal QR images -->
-  <div style="margin-bottom:18px;">
-    <button class="btn" onclick="toggleQR('groomQR')"
-            data-en="Groom"
-            data-ko="신랑">
-      Groom
-    </button>
-
-    <button class="btn" onclick="toggleQR('brideQR')"
-            data-en="Bride"
-            data-ko="신부">
-      Bride
-    </button>
-  </div>
-
-  <!-- QR Images (hidden by default) -->
-  <div id="groomQR" style="display:none;">
-    <img src="DavidZelle.png"
-         alt="Groom QR Code"
-         style="width:65%; max-width:260px; border-radius:12px; margin:10px auto; display:block;">
-  </div>
-
-  <div id="brideQR" style="display:none;">
-    <img src="HyesooBank.jpg"
-         alt="Bride Bank QR"
-         style="width:65%; max-width:260px; border-radius:12px; margin:10px auto; display:block;">
-  </div>
-
-  <script>
-    function toggleQR(id) {
-      const el = document.getElementById(id);
-      el.style.display = (el.style.display === "none") ? "block" : "none";
-    }
-  </script>
-
-  <hr>
-  <!-- GUEST MESSAGE SECTION -->
-  <div class="section-title"
-       data-en="Leave a Message"
-       data-ko="축하 메시지 남겨주세요">
-       Leave a Message
-  </div>
-
-  <!-- Input Form -->
-  <div style="max-width:620px; margin: auto;">
-
-    <input id="guestName"
-           maxlength="30"
-           placeholder="Your Name"
-           data-en="Your Name"
-           data-ko="이름"
-           style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc; font-size:0.95rem; text-align:center;">
-
-    <textarea id="guestMsg"
-              maxlength="200"
-              placeholder="Write your message (200 characters)"
-              data-en="Write your message (200 characters)"
-              data-ko="축하 메시지를 작성해주세요 (200자)"
-              style="width:100%; height:90px; padding:10px; border-radius:8px; border:1px solid #ccc; resize:none; font-size:0.95rem; text-align:center;"></textarea>
-
-<button type="button" class="btn btn-primary"
-        onclick="submitMessage()"
-        data-en="Submit"
-        data-ko="보내기">
-  Submit
-</button>
+    <div style="margin-top:20px;">
+      <input id="scoreName" placeholder="Your Name" style="padding:10px; width:200px;" />
+      <button class="btn btn-primary" onclick="submitScore()">Submit Score</button>
+      <div id="scoreStatus" style="margin-top:10px;"></div>
+    </div>
 
   </div>
 
-  <!-- Submission Status -->
-  <div id="msgStatus" style="margin-top:10px; font-size:0.9rem; color:#444;"></div>
-
-  <hr>
-
-  <!-- Message Viewer -->
-<div class="section-title"
-     data-en="Messages"
-     data-ko="메시지 보기">
-     Messages
 </div>
-
-<hr>
-
-
-  <div id="messageCarousel"
-       style="
-         display:flex;
-         overflow-x:auto;
-         gap:16px;
-         padding:10px 5px;
-         scroll-snap-type:x mandatory;
-         -webkit-overflow-scrolling:touch;
-         justify-content:center;
-       ">
-    <!-- Messages will load here -->
-  </div>
-
-  <script>
-    /* ------- Submit Guest Message to Google Apps Script ------- */
-<script>
-function submitMessage() {
-  const name = document.getElementById("guestName").value.trim();
-  const msg  = document.getElementById("guestMsg").value.trim();
-  const status = document.getElementById("msgStatus");
-
-  if (!name || !msg) {
-    status.style.color = "red";
-    status.innerText = "Please enter both your name and a message.";
-    return;
-  }
-
-  status.style.color = "#444";
-  status.innerText = "Submitting...";
-
-  const url =
-    "https://script.google.com/macros/s/AKfycbzpJKn2-98o3GsNug0D4C0EMabI5Fe5gXpe2Sn5cDGYhBd8wYiWgoVsKAu4zybMZD5w/exec"
-    + "?action=addMessage"
-    + "&name=" + encodeURIComponent(name)
-    + "&message=" + encodeURIComponent(msg);
-
-  fetch(url, { method: "GET" })
-    .then(() => {
-      status.style.color = "green";
-      status.innerText = "Thank you! Your message has been added.";
-
-      document.getElementById("guestName").value = "";
-      document.getElementById("guestMsg").value = "";
-
-      loadMessages();
-    })
-    .catch(() => {
-      status.style.color = "red";
-      status.innerText = "Error: Please try again.";
-    });
-}
-</script>
-
-
-
-<script>
-function loadMessages() {
-  fetch("https://script.google.com/macros/s/AKfycbzpJKn2-98o3GsNug0D4C0EMabI5Fe5gXpe2Sn5cDGYhBd8wYiWgoVsKAu4zybMZD5w/exec?action=getMessages")
-    .then(res => res.json())
-    .then(data => {
-      const container = document.getElementById("messageCarousel");
-      container.innerHTML = "";
-
-      data.forEach(row => {
-        const card = document.createElement("div");
-        card.style.minWidth = "180px";
-        card.style.maxWidth = "220px";
-        card.style.padding = "14px";
-        card.style.border = "1px solid #ddd";
-        card.style.borderRadius = "12px";
-        card.style.background = "#fafafa";
-        card.style.scrollSnapAlign = "center";
-        card.style.fontSize = "0.9rem";
-        card.style.textAlign = "center";
-
-        card.innerHTML = `<strong>${row.name}</strong><br><br>${row.message}`;
-        container.appendChild(card);
-      });
-    })
-    .catch(err => console.error(err));
-}
-</script>
-
-
-<!-- FLOWER GAME -->
-<script>
-  let flowerCount = 0;
-  let activeFlowers = 0;
-  const maxFlowers = 4;
-
-  /* ---------- Spawn Flowers ---------- */
-  function spawnFlower() {
-  if (activeFlowers >= maxFlowers) {
-    scheduleNextSpawn();
-    return;
-  }
-
-  const f = document.createElement("div");
-  f.className = "falling-flower";   // IMPORTANT FIX
-  f.textContent = "🪻";            // purple flower emoji
-
-  const x = Math.random() * 80 + 10;
-  f.style.left = x + "vw";
-  f.style.top = "-30px";
-  document.body.appendChild(f);
-
-  activeFlowers++;
-
-  const fallMs = 8000 + Math.random() * 5000;
-
-  // animation
-  f.animate(
-    [
-      { transform: "translateY(0px)", opacity: 0 },
-      { transform: "translateY(40vh)", opacity: 1 },
-      { transform: "translateY(85vh)", opacity: 0 }
-    ],
-    { duration: fallMs, easing: "linear" }
-  );
-
-  // --- CLICK HANDLER FIX ---
-  f.addEventListener("click", () => {
-    f.remove();
-    activeFlowers--;
-    flowerCount++;
-    document.getElementById("flowerCounter").innerText = flowerCount;
-  });
-
-  // cleanup
-  setTimeout(() => {
-    if (f.parentNode) {
-      f.remove();
-      activeFlowers--;
-    }
-  }, fallMs + 300);
-
-  scheduleNextSpawn();
-}
-
-function scheduleNextSpawn() {
-  const delay = 1000 + Math.random() * 4000;
-  setTimeout(spawnFlower, delay);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  scheduleNextSpawn();
-});
-
-  /* ---------- Schedule Next Spawn ---------- */
-  function scheduleNextSpawn() {
-    const delay = 1000 + Math.random() * 4000; // 1–5 seconds
-    setTimeout(spawnFlower, delay);
-  }
-
-  /* ---------- Collect Flower ---------- */
-  function collectFlower(flower) {
-    if (!flower.parentNode) return;
-
-    flower.remove();
-    flowerCount++;
-    activeFlowers--;
-
-    // update display
-    const counter = document.getElementById("flowerCounter");
-    if (counter) counter.innerText = flowerCount;
-
-    // Every 5th flower
-    if (flowerCount % 5 === 0) {
-      showFlowerReward();
-    }
-  }
-
-  /* ---------- Reward Message ---------- */
-  function showFlowerReward() {
-    const reward = document.createElement('div');
-    reward.textContent = `You collected ${flowerCount} flowers!`;
-    reward.style.position = 'fixed';
-    reward.style.bottom = '40px';
-    reward.style.left = '50%';
-    reward.style.transform = 'translateX(-50%)';
-    reward.style.background = 'rgba(255,255,255,0.85)';
-    reward.style.padding = '10px 16px';
-    reward.style.borderRadius = '12px';
-    reward.style.fontSize = '0.95rem';
-    reward.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
-    reward.style.zIndex = '20';
-
-    document.body.appendChild(reward);
-
-    setTimeout(() => reward.remove(), 3000);
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    scheduleNextSpawn();
-  });
-</script>
-
-<style>
-  .falling-flower {
-    position: fixed;
-    font-size: 32px;
-    user-select: none;
-    cursor: pointer;
-    pointer-events: auto;
-    z-index: 5;
-    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
-  }
-
-  /* remove clickable outline */
-  .falling-flower:focus {
-    outline: none !important;
-  }
-</style>
-<button id="trophyBtn"
-        class="btn"
-        style="margin-top:20px;"
-        onclick="toggleScoreboard()">
-  🏆
-</button>
-
-<!-- Hidden scoreboard wrapper -->
-<div id="scoreboardWrapper" style="display:none;">
-
-  <!-- Flower Counter -->
-  <div style="margin-top:14px; font-size:0.95rem;">
-    <span data-en="Flowers collected:" data-ko="모은 꽃 수:">
-      Flowers collected:
-    </span>
-    <strong id="flowerCounter">0</strong>
-  </div>
-
-  <!-- Collapsible Scoreboard Link -->
-  <div class="collapsible-wrapper" style="margin-top:12px;">
-    <button class="collapsible"
-            data-en="See Scoreboard"
-            data-ko="스코어보드 보기">
-      See Scoreboard
-    </button>
-
-    <div class="collapsible-content" id="scoreboardArea" style="text-align:center;">
-      <p style="font-size:0.9rem; color:#555;">
-        Loading scoreboard...
-      </p>
-    </div>
-  </div>
-
-  <!-- SCOREBOARD SUBMISSION -->
-  <div style="max-width:620px; margin:20px auto;">
-    <p class="small"
-       data-en="Submit your flower score"
-       data-ko="꽃 점수 제출하기"
-       style="margin-bottom:10px;">
-      Submit your flower score
-    </p>
-
-    <!-- FIXED INPUT — your previous one was broken -->
-    <input id="scoreName"
-           maxlength="30"
-           placeholder="Your Name"
-           data-en="Your Name"
-           data-ko="이름"
-           style="width:200px; padding:10px; border-radius:8px;
-                  border:1px solid #ccc; text-align:center;
-                  margin:0 auto 10px auto; display:block;">
-
-<button type="button" class="btn btn-primary"
-        onclick="submitScore()"
-        data-en="Submit Score"
-        data-ko="점수 제출">
-  Submit Score
-</button>
-
-
-    <div id="scoreStatus"
-         style="margin-top:10px; font-size:0.9rem; color:#555;">
-    </div>
-  </div>
-
-</div> <!-- /scoreboardWrapper -->
-
-
-<script>
-function submitMessage() {
-  const name = document.getElementById("guestName").value.trim();
-  const msg  = document.getElementById("guestMsg").value.trim();
-  const status = document.getElementById("msgStatus");
-
-  if (!name || !msg) {
-    status.style.color = "red";
-    status.innerText = "Please enter both your name and a message.";
-    return;
-  }
-
-  status.style.color = "#444";
-  status.innerText = "Submitting...";
-
-  const url =
-    "https://script.google.com/macros/s/AKfycbzpJKn2-98o3GsNug0D4C0EMabI5Fe5gXpe2Sn5cDGYhBd8wYiWgoVsKAu4zybMZD5w/exec" +
-    "?action=addMessage" +
-    "&name=" + encodeURIComponent(name) +
-    "&message=" + encodeURIComponent(msg);
-
-  fetch(url)
-    .then(() => {
-      status.style.color = "green";
-      status.innerText = "Thank you! Your message has been added.";
-
-      document.getElementById("guestName").value = "";
-      document.getElementById("guestMsg").value = "";
-
-      loadMessages();
-    })
-    .catch(() => {
-      status.style.color = "red";
-      status.innerText = "Error: Please try again.";
-    });
-}
-
-function submitScore() {
-  const name = document.getElementById("scoreName").value.trim();
-  const count = flowerCount;
-  const status = document.getElementById("scoreStatus");
-
-  if (!name) {
-    status.style.color = "red";
-    status.innerText = "Please enter your name.";
-    return;
-  }
-
-  status.style.color = "#444";
-  status.innerText = "Submitting...";
-
-  const url =
-    "https://script.google.com/macros/s/AKfycbzpJKn2-98o3GsNug0D4C0EMabI5Fe5gXpe2Sn5cDGYhBd8wYiWgoVsKAu4zybMZD5w/exec" +
-    "?action=addFlower" +
-    "&name=" + encodeURIComponent(name) +
-    "&count=" + encodeURIComponent(count);
-
-  fetch(url, { method: "GET" })
-    .then(() => {
-      status.style.color = "green";
-      status.innerText = "Score submitted!";
-      loadScoreboard();
-    })
-    .catch(() => {
-      status.style.color = "red";
-      status.innerText = "Error submitting score.";
-    });
-}
-  /* ---------- Load Scoreboard ---------- */
-  function loadScoreboard() {
-    fetch("https://script.google.com/macros/s/AKfycbzpJKn2-98o3GsNug0D4C0EMabI5Fe5gXpe2Sn5cDGYhBd8wYiWgoVsKAu4zybMZD5w/exec?readScore=1")
-      .then(r => r.json())
-      .then(rows => {
-        const area = document.getElementById("scoreboardArea");
-        area.innerHTML = "";
-
-        if (!rows.length) {
-          area.innerHTML = "<p>No scores yet.</p>";
-          return;
-        }
-
-        rows.forEach(r => {
-          const entry = document.createElement("p");
-          entry.style.margin = "6px 0";
-          entry.innerHTML = `<strong>${r.name}</strong> — ${r.score}`;
-          area.appendChild(entry);
-        });
-      });
-  }
-
-  /* ---------- Toggle scoreboard wrapper ---------- */
-  function toggleScoreboard() {
-    const wrap = document.getElementById("scoreboardWrapper");
-    wrap.style.display = (wrap.style.display === "none") ? "block" : "none";
-  }
-
-  document.addEventListener("DOMContentLoaded", loadScoreboard);
-</script>
-
-
-<!-- ---------- COLLAPSIBLE LOGIC ---------- -->
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const colls = document.querySelectorAll(".collapsible");
-    colls.forEach(btn => {
-      btn.addEventListener("click", function () {
-        this.classList.toggle("active");
-        const content = this.nextElementSibling;
-
-        if (content.style.maxHeight) {
-          content.style.maxHeight = null;
-          content.style.padding = "0px 0px";
-        } else {
-          content.style.maxHeight = content.scrollHeight + "px";
-          content.style.padding = "12px 0px";
-        }
-      });
-    });
-  });
-</script>
-
-
-<style>
-  .collapsible {
-    background: #fafafa;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 10px 14px;
-    cursor: pointer;
-    width: 200px;
-    max-width: 200px;
-    margin: 10px auto;
-    text-align: center;
-    font-size: 0.9rem;
-    transition: background 0.2s;
-  }
-
-  .collapsible.active {
-    background: #f0f0f0;
-  }
-
-  .collapsible-content {
-    overflow: hidden;
-    max-height: 0;
-    padding: 0;
-    transition: max-height 0.3s ease, padding 0.3s ease;
-    margin-bottom: 10px;
-  }
-</style>
-
-
-</div> <!-- end .container -->
 
 </body>
 </html>
