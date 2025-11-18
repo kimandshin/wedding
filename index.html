@@ -702,13 +702,13 @@ document.addEventListener("DOMContentLoaded", () => {
               data-ko="축하 메시지를 작성해주세요 (200자)"
               style="width:100%; height:90px; padding:10px; border-radius:8px; border:1px solid #ccc; resize:none; font-size:0.95rem; text-align:center;"></textarea>
 
-    <button class="btn btn-primary"
-            onclick="submitMessage()"
-            style="margin-top:12px;"
-            data-en="Submit"
-            data-ko="보내기">
-      Submit
-    </button>
+<button type="button" class="btn btn-primary"
+        onclick="submitMessage()"
+        data-en="Submit"
+        data-ko="보내기">
+  Submit
+</button>
+
   </div>
 
   <!-- Submission Status -->
@@ -776,7 +776,6 @@ function submitMessage() {
 </script>
 
 
-    /* ------- Load messages from Google Apps Script ------- */
 <script>
 function loadMessages() {
   fetch("https://script.google.com/macros/s/AKfycbzpJKn2-98o3GsNug0D4C0EMabI5Fe5gXpe2Sn5cDGYhBd8wYiWgoVsKAu4zybMZD5w/exec?action=getMessages")
@@ -976,12 +975,13 @@ function loadMessages() {
                   border:1px solid #ccc; text-align:center;
                   margin:0 auto 10px auto; display:block;">
 
-    <button class="btn btn-primary"
-            onclick="submitScore()"
-            data-en="Submit Score"
-            data-ko="점수 제출">
-      Submit Score
-    </button>
+<button type="button" class="btn btn-primary"
+        onclick="submitScore()"
+        data-en="Submit Score"
+        data-ko="점수 제출">
+  Submit Score
+</button>
+
 
     <div id="scoreStatus"
          style="margin-top:10px; font-size:0.9rem; color:#555;">
@@ -992,39 +992,42 @@ function loadMessages() {
 
 
 <script>
-  /* ---------- Submit Flower Score ---------- */
-  function submitScore() {
-    const name = document.getElementById("scoreName").value.trim();
-    const score = flowerCount;
-    const msg = document.getElementById("scoreStatus");
+function submitMessage() {
+  const name = document.getElementById("guestName").value.trim();
+  const msg  = document.getElementById("guestMsg").value.trim();
+  const status = document.getElementById("msgStatus");
 
-    if (!name) {
-      msg.style.color = "red";
-      msg.innerText = "Please enter your name.";
-      return;
-    }
+  if (!name || !msg) {
+    status.style.color = "red";
+    status.innerText = "Please enter both your name and a message.";
+    return;
+  }
 
-    msg.style.color = "#444";
-    msg.innerText = "Submitting...";
+  status.style.color = "#444";
+  status.innerText = "Submitting...";
 
-    fetch("https://script.google.com/macros/s/AKfycbzpJKn2-98o3GsNug0D4C0EMabI5Fe5gXpe2Sn5cDGYhBd8wYiWgoVsKAu4zybMZD5w/exec?score=1",
-      {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, score })
-      }
-    )
+  const url =
+    "https://script.google.com/macros/s/AKfycbzpJKn2-98o3GsNug0D4C0EMabI5Fe5gXpe2Sn5cDGYhBd8wYiWgoVsKAu4zybMZD5w/exec" +
+    "?action=addMessage" +
+    "&name=" + encodeURIComponent(name) +
+    "&message=" + encodeURIComponent(msg);
+
+  fetch(url)
     .then(() => {
-      msg.style.color = "green";
-      msg.innerText = "Score submitted!";
-      loadScoreboard();
+      status.style.color = "green";
+      status.innerText = "Thank you! Your message has been added.";
+
+      document.getElementById("guestName").value = "";
+      document.getElementById("guestMsg").value = "";
+
+      loadMessages();
     })
     .catch(() => {
-      msg.style.color = "red";
-      msg.innerText = "Error submitting score.";
+      status.style.color = "red";
+      status.innerText = "Error: Please try again.";
     });
-  }
+}
+
 
   /* ---------- Load Scoreboard ---------- */
   function loadScoreboard() {
