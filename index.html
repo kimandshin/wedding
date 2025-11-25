@@ -30,6 +30,7 @@ body {
   padding: 40px 26px 60px;
   border-radius: 18px;
   box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  position: relative; /* NEW: so flowers can be anchored here */
 }
 
 .top-buttons {
@@ -727,28 +728,35 @@ function spawnFlower() {
   if (activeFlowers >= MAX_FLOWERS) return;
 
   const trophy = document.getElementById("trophyBtn");
-  if (!trophy) return;
+  const container = document.querySelector(".container");
+  if (!trophy || !container) return;
 
-  const rect = trophy.getBoundingClientRect();
-  const scrollY = window.scrollY || document.documentElement.scrollTop;
-  const scrollX = window.scrollX || document.documentElement.scrollLeft;
+  // Bounding boxes relative to the viewport
+  const trophyRect = trophy.getBoundingClientRect();
+  const containerRect = container.getBoundingClientRect();
 
+  // Create flower element
   const f = document.createElement("div");
   f.className = "flower";
   f.textContent = "🪻";
 
-  // Area around the trophy (“ground” zone)
-  const horizontalSpread = 120; // how wide left/right from trophy
-  const verticalOffsetMin = -10;  // a bit above trophy bottom
-  const verticalOffsetMax = 25;   // a bit below / around
+  // Trophy position relative to the container
+  const trophyCenterX = trophyRect.left + trophyRect.width / 2 - containerRect.left;
+  const trophyBottomY = trophyRect.bottom - containerRect.top;
+
+  // “Ground strip” around the trophy
+  const horizontalSpread = 160;   // how wide left/right from trophy
+  const verticalOffsetMin = 5;    // just below the trophy
+  const verticalOffsetMax = 30;   // small band under it
 
   const randX = (Math.random() - 0.5) * horizontalSpread;
   const randY = verticalOffsetMin + Math.random() * (verticalOffsetMax - verticalOffsetMin);
 
-  f.style.left = (scrollX + rect.left + rect.width / 2 + randX) + "px";
-  f.style.top  = (scrollY + rect.bottom + randY) + "px";
+  f.style.left = (trophyCenterX + randX) + "px";
+  f.style.top  = (trophyBottomY + randY) + "px";
 
-  document.body.appendChild(f);
+  // Attach to the container so it stays in the white area
+  container.appendChild(f);
   activeFlowers++;
 
   f.addEventListener("click", () => {
