@@ -188,8 +188,8 @@ ul li {
 
 /* FLOWER GAME */
 .flower {
-  position: fixed;
-  font-size: 13px;
+  position: absolute;   
+  font-size: 13px;      
   cursor: pointer;
   user-select: none;
   z-index: 10;
@@ -726,16 +726,27 @@ const MAX_FLOWERS = 4;
 function spawnFlower() {
   if (activeFlowers >= MAX_FLOWERS) return;
 
+  const trophy = document.getElementById("trophyBtn");
+  if (!trophy) return;
+
+  const rect = trophy.getBoundingClientRect();
+  const scrollY = window.scrollY || document.documentElement.scrollTop;
+  const scrollX = window.scrollX || document.documentElement.scrollLeft;
+
   const f = document.createElement("div");
   f.className = "flower";
   f.textContent = "🪻";
 
-  // Spawn near bottom area (last 150px of screen height)
-  const bottomZoneHeight = 150;
-  const xPadding = 40;
+  // Area around the trophy (“ground” zone)
+  const horizontalSpread = 120; // how wide left/right from trophy
+  const verticalOffsetMin = -10;  // a bit above trophy bottom
+  const verticalOffsetMax = 25;   // a bit below / around
 
-  f.style.left = (Math.random() * (window.innerWidth - xPadding)) + "px";
-  f.style.top = (window.innerHeight - bottomZoneHeight + Math.random() * 60) + "px";
+  const randX = (Math.random() - 0.5) * horizontalSpread;
+  const randY = verticalOffsetMin + Math.random() * (verticalOffsetMax - verticalOffsetMin);
+
+  f.style.left = (scrollX + rect.left + rect.width / 2 + randX) + "px";
+  f.style.top  = (scrollY + rect.bottom + randY) + "px";
 
   document.body.appendChild(f);
   activeFlowers++;
