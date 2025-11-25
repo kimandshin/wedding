@@ -175,7 +175,7 @@ ul li {
 
 /* TROPHY & SCOREBOARD */
 #trophyBtn {
-  font-size: 26px;
+  font-size: 13px;
   background: none;
   border: none;
   cursor: pointer;
@@ -189,7 +189,7 @@ ul li {
 /* FLOWER GAME */
 .flower {
   position: fixed;
-  font-size: 26px;
+  font-size: 13px;
   cursor: pointer;
   user-select: none;
   z-index: 10;
@@ -730,8 +730,12 @@ function spawnFlower() {
   f.className = "flower";
   f.textContent = "🪻";
 
-  f.style.left = Math.random() * (window.innerWidth - 40) + "px";
-  f.style.top  = Math.random() * (window.innerHeight - 200) + "px";
+  // Spawn near bottom area (last 150px of screen height)
+  const bottomZoneHeight = 150;
+  const xPadding = 40;
+
+  f.style.left = (Math.random() * (window.innerWidth - xPadding)) + "px";
+  f.style.top = (window.innerHeight - bottomZoneHeight + Math.random() * 60) + "px";
 
   document.body.appendChild(f);
   activeFlowers++;
