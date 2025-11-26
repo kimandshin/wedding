@@ -183,7 +183,30 @@ ul li {
   transition: max-height 0.3s ease, padding 0.3s ease;
   margin-bottom: 10px;
 }
-
+/* COLLAPSIBLES (Hymn + Scoreboard) */
+.collapsible {
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  width: 240px;
+  margin: 10px auto;
+  text-align: center;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+.collapsible.active {
+  background: #f0f0f0;
+}
+.collapsible-content {
+  overflow: hidden;
+  max-height: 0;
+  padding: 0;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  margin-bottom: 10px;
+}
+  
 /* MESSAGE CARDS */
 .message-card {
   min-width: 180px;
@@ -346,17 +369,20 @@ ul li {
     </a>
   </div>
 
- <!-- LIVE STREAM SECTION -->
+  <!-- LIVE STREAM SECTION -->
   <div class="section-title"
        data-en="Watch Live"
        data-ko="온라인 생중계">
+    Watch Live
   </div>
 
-  <button class="collapsible"
-          data-en="▼ Watch live ▼"
-          data-ko="▼ 온라인 생중계 보기 ▼">
-    ▼ 🎥-Watch-🎥 ▼
-  </button>
+  <div>
+    <button class="glass-toggle"
+            data-en="Watch Live Feed"
+            data-ko="온라인 생중계 보기">
+      🎥 Watch Live Feed
+    </button>
+  </div>
 
   <div class="collapsible-content">
     <p style="font-size:0.9rem; margin-bottom:10px;"
@@ -414,11 +440,26 @@ ul li {
   <hr>
 
   <!-- HYMN -->
-  <div class="section-title" data-en="Hymn" data-ko="찬송가">Hymn</div>
+  <div class="section-title"
+       data-en="Hymn"
+       data-ko="찬송가">
+    Hymn
+  </div>
 
-  <img src="hymn.png"
-       alt="Hymn: 완전한 사랑"
-       style="width:90%; max-width:600px; margin:20px auto; display:block; border-radius:12px;">
+  <!-- Collapsible Hymn Image -->
+  <div>
+    <button class="glass-toggle"
+            data-en="Tap to view Hymn"
+            data-ko="찬송가 보기 (누르세요)">
+      ♬ Hymn (tap to open)
+    </button>
+  </div>
+
+  <div class="collapsible-content">
+    <img src="hymn.png"
+         alt="Hymn: 완전한 사랑"
+         style="width:90%; max-width:600px; margin:0 auto; display:block; border-radius:12px;">
+  </div>
 
   <!-- HYMN TRANSLATION COLLAPSIBLE -->
   <button class="collapsible"
@@ -688,7 +729,7 @@ function updateTimes() {
 // COLLAPSIBLES (Hymn + Scoreboard)
 // =============================
 function initCollapsibles() {
-  document.querySelectorAll(".collapsible").forEach(btn => {
+  document.querySelectorAll(".collapsible, .glass-toggle").forEach(btn => {
     btn.addEventListener("click", () => {
       btn.classList.toggle("active");
       const content = btn.nextElementSibling;
