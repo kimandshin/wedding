@@ -16,7 +16,7 @@
 /* NEW: Yoon Gothic (윤고딕) */
 @font-face {
   font-family: 'YoonGothic';
-  src: url('YoonGothic.ttf') format('truetype'); /* change filename/format to match your actual font */
+  src: url('YoonGothic.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -38,7 +38,7 @@ body {
   padding: 40px 26px 60px;
   border-radius: 18px;
   box-shadow: 0 10px 24px rgba(0,0,0,0.08);
-  position: relative; /* NEW: so flowers can be anchored here */
+  position: relative; 
 }
 
 .top-buttons {
@@ -399,36 +399,23 @@ ul li {
   <hr>
 
   <!-- VOWS -->
-  <div class="section-title" data-en="Our Vows" data-ko="서약">Our Vows</div>
-
-  <p class="en-text" style="max-width:620px; margin:auto;">
-    Today, before God, our families, and friends, we promise to walk together in faith and love.
-    We will support one another, forgive quickly, and choose grace over pride.
-  </p>
-
-  <p class="en-text" style="max-width:620px; margin:10px auto 0;">
-    In seasons of joy and in seasons of hardship, we will seek God first, listen deeply,
-    and protect this covenant with patience and honesty. With God’s help, we will build a
-    home filled with warmth, prayer, and laughter.
-  </p>
-
-  <div class="ko-text" style="max-width:620px; margin:auto;">
-    <p>
-      오늘, 하나님과 양가 가족, 그리고 소중한 친구들 앞에서<br>
-      우리는 믿음과 사랑으로 함께 걸어갈 것을 약속합니다.<br>
-      서로를 지지하고, 빨리 용서하며, 자존심보다 은혜를 선택하겠습니다.
-    </p>
-    <p style="margin-top:10px;">
-      기쁨의 순간에도, 어려움의 순간에도<br>
-      우리는 하나님을 먼저 구하고, 깊이 귀 기울이며,<br>
-      인내와 진실함으로 이 언약을 지켜 나가겠습니다.
-    </p>
-    <p style="margin-top:10px;">
-      하나님의 도우심으로<br>
-      우리의 가정이 따뜻함과 기도, 그리고 웃음으로 가득한 집이 되길 소망합니다.
-    </p>
+  <div class="section-title"
+       data-en="Our Vows"
+       data-ko="서약">
+    Our Vows
   </div>
 
+  <!-- English Vows Image -->
+  <img src="vows_eng.png"
+       alt="Our Vows (English)"
+       class="en-text"
+       style="width:90%; max-width:600px; margin:0 auto; display:block; border-radius:12px;">
+
+  <!-- Korean Vows Image -->
+  <img src="vows_kr.png"
+       alt="서약 (Korean)"
+       class="ko-text"
+       style="width:90%; max-width:600px; margin:0 auto; display:block; border-radius:12px; display:none;">
   <hr>
 
   <!-- HYMN TOGGLE -->
