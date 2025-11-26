@@ -339,6 +339,27 @@ ul li {
   font-size: 0.9rem;
   cursor: pointer;
 }
+/* STICKY TOP HEADER */
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 10px 0 16px;
+  margin: -20px -10px 10px; /* adjust for your container padding */
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Ensure the buttons don't shift */
+.sticky-header .top-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+  
 /* LANG GROUPS */
 .en-text { display: block; }
 .ko-text { display: none; }
@@ -349,11 +370,13 @@ ul li {
 <div class="container">
 
   <!-- TOP BUTTONS -->
+<div class="sticky-header">
   <div class="top-buttons">
     <button class="btn" onclick="switchLang('en')">🇺🇸</button>
     <button class="btn" onclick="switchLang('ko')">🇰🇷</button>
     <button id="bgmBtn" class="btn" onclick="toggleBGM()">♪ Play BGM</button>
   </div>
+</div>
 
   <!-- TIME ROW -->
   <div class="time-row">
