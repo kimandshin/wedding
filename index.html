@@ -272,7 +272,73 @@ ul li {
     opacity: 0;
   }
 }
+/* BANK MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
 
+.modal-content {
+  width: 90%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 14px 32px rgba(0,0,0,0.18);
+  padding: 22px 20px 18px;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.bank-body {
+  margin-top: 4px;
+}
+
+.bank-block {
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.bank-label {
+  margin-bottom: 4px;
+}
+
+.bank-number {
+  font-weight: 600;
+  margin-bottom: 6px;
+  word-break: break-all;
+}
+
+.copy-btn {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: none;
+  background: #111111;
+  color: #ffffff;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.copy-btn:active {
+  transform: translateY(1px);
+}
+
+.modal-close {
+  margin-top: 16px;
+  width: 100%;
+  padding: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #c4c4ff;
+  background: #ffffff;
+  color: #4a4ae6;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
 /* LANG GROUPS */
 .en-text { display: block; }
 .ko-text { display: none; }
@@ -515,14 +581,14 @@ ul li {
 
   <div style="margin-bottom:18px;">
     <button class="btn"
-            onclick="toggleQR('groomQR')"
+            onclick="handleGiftClick('groom')"
             data-en="Groom"
             data-ko="신랑">
       Groom
     </button>
 
     <button class="btn"
-            onclick="toggleQR('brideQR')"
+            onclick="handleGiftClick('bride')"
             data-en="Bride"
             data-ko="신부">
       Bride
@@ -536,11 +602,59 @@ ul li {
   </div>
 
   <div id="brideQR" style="display:none;">
-    <img src="HyesooBank.jpg"
+    <img src="DavidZelle.png"
          alt="Bride Bank QR"
          style="width:65%; max-width:260px; border-radius:12px; margin:10px auto; display:block;">
   </div>
 
+  <!-- KOREAN BANK INFO MODAL -->
+  <div id="bankModalOverlay" class="modal-overlay" style="display:none;">
+    <div class="modal-content">
+      <h3 id="bankModalTitle" style="margin-top:0; margin-bottom:12px; font-size:1.05rem;">
+        신랑 계좌
+      </h3>
+
+      <!-- GROOM ACCOUNT LIST -->
+      <div id="bankGroom" class="bank-body">
+        <div class="bank-block">
+          <div class="bank-label">우리은행 (예금주: KIM YOUSEOK)</div>
+          <div class="bank-number">1002181612500</div>
+          <button class="copy-btn" onclick="copyAccount(this)">계좌번호 복사</button>
+        </div>
+
+        <!-- 필요하면 더 추가 -->
+        <!--
+        <div class="bank-block">
+          <div class="bank-label">하나은행 (예금주: KIHONG KIM)</div>
+          <div class="bank-number">11111111111111</div>
+          <button class="copy-btn" onclick="copyAccount(this)">계좌번호 복사</button>
+        </div>
+        -->
+                <!-- 필요하면 더 추가 -->
+        <!--
+        <div class="bank-block">
+          <div class="bank-label">하나은행 (예금주: SOONBONG KIM)</div>
+          <div class="bank-number">11111111111111</div>
+          <button class="copy-btn" onclick="copyAccount(this)">계좌번호 복사</button>
+        </div>
+        -->
+      </div>
+
+      <!-- BRIDE ACCOUNT LIST -->
+      <div id="bankBride" class="bank-body" style="display:none;">
+        <div class="bank-block">
+          <div class="bank-label">은행명 (예금주: 신혜수)</div>
+          <div class="bank-number">620252629990</div>
+          <button class="copy-btn" onclick="copyAccount(this)">계좌번호 복사</button>
+        </div>
+
+        <!-- 필요하면 더 추가 -->
+      </div>
+
+      <button class="modal-close" onclick="closeBankModal()">닫기</button>
+    </div>
+  </div>
+  
   <hr>
 
   <!-- GUEST MESSAGE SECTION -->
@@ -642,6 +756,8 @@ ul li {
 </div> <!-- /container -->
 
   <script>
+let currentLang = 'en';
+    
 // =============================
 // CONFIG
 // =============================
@@ -651,6 +767,8 @@ const WEBAPP = "https://script.google.com/macros/s/AKfycbx6rTcXAYVXu7V4_eaTjPSFv
 // LANGUAGE SWITCH
 // =============================
 function switchLang(lang) {
+  currentLang = lang;
+
   // Elements with data-en / data-ko
   document.querySelectorAll("[data-en][data-ko]").forEach(el => {
     el.innerHTML = (lang === "ko") ? el.getAttribute("data-ko") : el.getAttribute("data-en");
@@ -666,6 +784,14 @@ function switchLang(lang) {
   } else {
     enBlocks.forEach(el => el.style.display = "block");
     koBlocks.forEach(el => el.style.display = "none");
+  }
+
+  // Hide QR blocks in Korean mode (so only modal is used)
+  const groomQR = document.getElementById("groomQR");
+  const brideQR = document.getElementById("brideQR");
+  if (groomQR && brideQR && lang === "ko") {
+    groomQR.style.display = "none";
+    brideQR.style.display = "none";
   }
 }
 
@@ -737,6 +863,66 @@ function toggleQR(id) {
   el.style.display = (el.style.display === "none" || !el.style.display) ? "block" : "none";
 }
 
+    // =============================
+// GIFTS: QR vs BANK MODAL
+// =============================
+function handleGiftClick(person) {
+  if (currentLang === "ko") {
+    // Show Korean-style modal
+    openBankModal(person);
+  } else {
+    // English: toggle QR codes as before
+    const id = (person === "groom") ? "groomQR" : "brideQR";
+    toggleQR(id);
+  }
+}
+
+function openBankModal(person) {
+  const overlay = document.getElementById("bankModalOverlay");
+  const title = document.getElementById("bankModalTitle");
+  const groomBody = document.getElementById("bankGroom");
+  const brideBody = document.getElementById("bankBride");
+  if (!overlay || !title || !groomBody || !brideBody) return;
+
+  if (person === "groom") {
+    title.innerText = "신랑 계좌";
+    groomBody.style.display = "block";
+    brideBody.style.display = "none";
+  } else {
+    title.innerText = "신부 계좌";
+    groomBody.style.display = "none";
+    brideBody.style.display = "block";
+  }
+
+  overlay.style.display = "flex";
+}
+
+function closeBankModal() {
+  const overlay = document.getElementById("bankModalOverlay");
+  if (overlay) overlay.style.display = "none";
+}
+
+// Copy account number to clipboard
+function copyAccount(buttonEl) {
+  const block = buttonEl.closest(".bank-block");
+  if (!block) return;
+  const numEl = block.querySelector(".bank-number");
+  if (!numEl) return;
+
+  const text = numEl.textContent.trim();
+  if (!text) return;
+
+  navigator.clipboard.writeText(text).then(() => {
+    const original = buttonEl.innerText;
+    buttonEl.innerText = "복사 완료!";
+    setTimeout(() => {
+      buttonEl.innerText = original;
+    }, 1500);
+  }).catch(() => {
+    alert("복사에 실패했습니다. 직접 복사해 주세요.");
+  });
+}
+    
 // =============================
 // EMOJI POP ON NAMES
 // =============================
