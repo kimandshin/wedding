@@ -256,8 +256,11 @@ ul li {
   font-size: 8px;
   opacity: 0.9;
   pointer-events: none;
-  z-index: 5;
+  z-index: 2500;            /* now above sticky header */
   animation: snow-fall linear infinite;
+
+  /* force non-emoji font so color works */
+  font-family: "Arial", "Helvetica", sans-serif;
 }
 @keyframes snow-fall {
   0% {
@@ -344,18 +347,24 @@ ul li {
   position: sticky;
   top: 0;
   z-index: 2000;
-  background: rgba(255,255,255,0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 10px 0 16px;
-  margin: -20px -10px 10px; /* adjust for your container padding */
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  /* thinner bar */
+  padding: 4px 0 6px;
+
+  /* stretch to container edges but not too tall */
+  margin: -20px -26px 6px;  /* left/right = -container padding (26px) */
+
+  /* remove visible dividing line */
+  border-bottom: none;
 }
 
-/* Ensure the buttons don't shift */
+/* keep buttons nicely centered in a row */
 .sticky-header .top-buttons {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   justify-content: center;
 }
 
