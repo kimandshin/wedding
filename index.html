@@ -146,7 +146,8 @@ hr {
 .section-title {
   font-size: 1.25rem;
   margin: 32px 0 10px;
-  font-weight: 600;
+  font-weight: 500; /* a bit softer */
+  font-family: 'YoonGothic', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 /* LISTS (no bullets) */
@@ -246,21 +247,20 @@ ul li {
 .flower:hover {
   transform: scale(1.25);
 }
-
 /* SNOW */
 .snowflake {
   position: fixed;
   top: -10px;
-  color: #ffffff;
-  text-shadow: 0 0 4px rgba(255,255,255,0.7);
+  color: #ffffff !important;
+  text-shadow: 0 0 6px rgba(255,255,255,0.9);
   font-size: 8px;
   opacity: 0.9;
   pointer-events: none;
-  z-index: 2500;            /* now above sticky header */
+  z-index: 2500;
   animation: snow-fall linear infinite;
 
   /* force non-emoji font so color works */
-  font-family: "Arial", "Helvetica", sans-serif;
+  font-family: "Arial", "Helvetica", sans-serif !important;
 }
 @keyframes snow-fall {
   0% {
@@ -275,6 +275,7 @@ ul li {
     opacity: 0;
   }
 }
+  
 /* BANK MODAL */
 .modal-overlay {
   position: fixed;
@@ -521,9 +522,9 @@ ul li {
   <ul class="en-text" style="text-align:center;">
     <li>
       <button class="glass-toggle"
-              data-en="Apostles’ Creed"
+              data-en="Apostles' Creed"
               data-ko="사도신경">
-        Apostles’ Creed
+        Apostles' Creed
       </button>
       <div class="collapsible-content">
         <img src="apostlescreed_en.png"
@@ -534,16 +535,16 @@ ul li {
 
     <li>Song: Love Forever</li>
     <li>Blessings</li>
-    <li>Bride’s Father</li>
-    <li>Groom’s Father</li>
+    <li>Bride's Father</li>
+    <li>Groom's Father</li>
     <li>Vows</li>
-    <li>Groom’s Father Prayer</li>
+    <li>Groom's Father Prayer</li>
 
     <li>
       <button class="glass-toggle"
-              data-en="The Lord’s Prayer"
+              data-en="The Lord's Prayer"
               data-ko="주기도문">
-        The Lord’s Prayer
+        The Lord's Prayer
       </button>
       <div class="collapsible-content">
         <img src="lordprayer_en.png"
@@ -677,16 +678,16 @@ ul li {
 
   <!-- GUEST MESSAGE SECTION -->
   <div class="section-title"
-       data-en="Leave a Message"
+       data-en="Leave a message"
        data-ko="축하 메시지 남겨주세요">
-    Leave a Message
+    Leave a message
   </div>
 
   <div style="max-width:620px; margin:auto;">
     <input id="guestName"
            maxlength="30"
-           placeholder="Your Name"
-           data-en="Your Name"
+           placeholder="Your name"
+           data-en="Your name"
            data-ko="이름"
            style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px;
                   border:1px solid #ccc; font-size:0.95rem; text-align:center;">
@@ -980,7 +981,7 @@ function createSnow() {
   for (let i = 0; i < FLAKES; i++) {
     const flake = document.createElement("div");
     flake.className = "snowflake";
-    flake.textContent = "❄";
+    flake.textContent = "\u2744\uFE0E";
 
     flake.style.left = Math.random() * 100 + "vw";
     flake.style.fontSize = (6 + Math.random() * 8) + "px";
