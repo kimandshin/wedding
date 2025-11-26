@@ -13,9 +13,17 @@
   font-style: normal;
 }
 
+/* NEW: Yoon Gothic (윤고딕) */
+@font-face {
+  font-family: 'YoonGothic';
+  src: url('YoonGothic.ttf') format('truetype'); /* change filename/format to match your actual font */
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* BASE */
 body {
-  font-family: 'Samanco', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: 'YoonGothic', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   margin: 0;
   padding: 40px 10px 60px;
   background: #f5f2ee;
@@ -70,6 +78,21 @@ h2 {
   font-size: 1.8rem;
   margin: 0 0 8px;
 }
+  
+.title-img {
+  width: 80%;
+  max-width: 460px;
+  height: auto;
+  display: block;
+  margin: 0 auto 6px;
+}
+
+h2.name-line {
+  font-family: 'YoonGothic', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 1.8rem;
+  margin: 0 0 8px;
+}
+  
 .subtext {
   font-size: 0.95rem;
   margin-bottom: 24px;
@@ -258,12 +281,36 @@ ul li {
     </div>
   </div>
 
-  <!-- HEADER -->
-  <h1>WEDDING INVITATION</h1>
-  <h2>
-    <span onclick="popEmojis('groom')" style="cursor:pointer;">김유석</span>
+    <!-- HEADER TITLE (PNG) -->
+  <div style="margin-top:10px; margin-bottom:4px;">
+    <img
+      src="wedding_en.png"
+      alt="Wedding Invitation"
+      class="title-img en-text"
+    >
+    <img
+      src="wedding_kr.png"
+      alt="결혼 청첩장"
+      class="title-img ko-text"
+      style="display:none;"
+    >
+  </div>
+
+  <!-- NAMES (윤고딕, bilingual) -->
+  <h2 class="name-line">
+    <span
+      data-en="Youseok"
+      data-ko="김유석"
+      onclick="popEmojis('groom')"
+      style="cursor:pointer;"
+    >김유석</span>
     🤍
-    <span onclick="popEmojis('bride')" style="cursor:pointer;">신혜수</span>
+    <span
+      data-en="Hyesoo"
+      data-ko="신혜수"
+      onclick="popEmojis('bride')"
+      style="cursor:pointer;"
+    >신혜수</span>
   </h2>
 
   <div class="subtext">
