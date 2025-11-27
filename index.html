@@ -7,6 +7,13 @@
 <title></title>
 
 <style>
+/* Make placeholders grey and normal weight */
+input::placeholder,
+textarea::placeholder {
+  color: #888 !important;
+  font-weight: 400 !important;
+}
+  
 @font-face {
   font-family: 'Samanco';
   src: url('BinggraeSamanco.otf') format('opentype');
@@ -364,7 +371,7 @@ ul li {
   padding: 4px 0 6px;
 
   /* stretch to container edges but not too tall */
-  margin: -20px -26px 6px;  /* left/right = -container padding (26px) */
+  margin: -20px -26px 20px;  /* left/right = -container padding (26px) */
 
   /* remove visible dividing line */
   border-bottom: none;
@@ -655,14 +662,8 @@ ul li {
 
 
         <div class="bank-block">
-          <div class="bank-label">하나은행 (예금주: KIHONG KIM)</div>
-          <div class="bank-number">11111111111111</div>
-          <button class="copy-btn" onclick="copyAccount(this)">계좌번호 복사</button>
-        </div>
-
-        <div class="bank-block">
-          <div class="bank-label">하나은행 (예금주: SOONBONG KIM)</div>
-          <div class="bank-number">11111111111111</div>
+          <div class="bank-label">하나은행 (예금주: 김기홍) 신랑측 부</div>
+          <div class="bank-number">20229115600107</div>
           <button class="copy-btn" onclick="copyAccount(this)">계좌번호 복사</button>
         </div>
       </div>
@@ -674,7 +675,13 @@ ul li {
           <div class="bank-number">620252629990</div>
           <button class="copy-btn" onclick="copyAccount(this)">계좌번호 복사</button>
         </div>
-
+        
+      <div id="bankBride" class="bank-body" style="display:none;">
+        <div class="bank-block">
+          <div class="bank-label">하나은행 (예금주: 신혜수)</div>
+          <div class="bank-number">620252629990</div>
+          <button class="copy-btn" onclick="copyAccount(this)">계좌번호 복사</button>
+        </div>
         <!-- 필요하면 더 추가 -->
       </div>
 
@@ -696,7 +703,7 @@ ul li {
            maxlength="30"
            placeholder="Your name"
            data-en="Your name"
-           data-ko="이름"
+           data-ko="이름 적어주세요"
            style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px;
                   border:1px solid #ccc; font-size:0.95rem; text-align:center;">
 
