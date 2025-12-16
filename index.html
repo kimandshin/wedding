@@ -838,7 +838,18 @@ const POPUP_IMAGES = [
 // CONFIG
 // =============================
 const WEBAPP = "https://script.google.com/macros/s/AKfycbx6rTcXAYVXu7V4_eaTjPSFvvzKRIXwaVgnlug3MWG2O4a395rGAZE8saJdr08hJzAl/exec";
-
+    
+function incPhotoClickCount() {
+  return fetch(`${WEBAPP}?action=incClickCount`)
+    .then(r => r.json())
+    .then(d => {
+      if (!d || !d.ok) return null;
+      const el = document.getElementById("photoCounter");
+      if (el) el.textContent = d.count;
+      return d.count;
+    })
+    .catch(() => null);
+}
     function initPhotoPopups() {
   const wrap = document.getElementById("photoWrap");
   const img = document.getElementById("mainPhoto");
@@ -864,9 +875,8 @@ const WEBAPP = "https://script.google.com/macros/s/AKfycbx6rTcXAYVXu7V4_eaTjPSFv
     x = Math.max(pad, Math.min(rect.width - pad, x));
     y = Math.max(pad, Math.min(rect.height - pad, y));
 
-    // update counter
-    photoClicks++;
-    counter.textContent = String(photoClicks);
+    // update GLOBAL counter (shared by all viewers)
+    incPhotoClickCount();
 
     // random popup image
     const src = POPUP_IMAGES[Math.floor(Math.random() * POPUP_IMAGES.length)];
@@ -891,7 +901,17 @@ const WEBAPP = "https://script.google.com/macros/s/AKfycbx6rTcXAYVXu7V4_eaTjPSFv
   img.addEventListener("click", handleTap);
   img.addEventListener("touchstart", handleTap, { passive: true });
 }
-    
+
+function loadPhotoClickCount() {
+  fetch(`${WEBAPP}?action=getClickCount`)
+    .then(r => r.json())
+    .then(d => {
+      if (!d || !d.ok) return;
+      const el = document.getElementById("photoClickCount");
+      if (el) el.textContent = d.count;
+    })
+    .catch(() => {});
+}
 // =============================
 // LANGUAGE SWITCH
 // =============================
@@ -1305,6 +1325,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadMessages();
   loadScoreboard();
    initPhotoPopups();
+  loadPhotoClickCount();
 });
 </script>
 
