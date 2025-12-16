@@ -384,6 +384,34 @@ ul li {
   justify-content: center;
 }
 
+  .photo-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.photo-counter {
+  margin-top: 6px;
+  font-size: 10px;
+  color: #999;
+}
+
+.photo-popup {
+  position: absolute;
+  left: 50px;
+  top: 50px;
+  width: 90px;          /* not too big */
+  max-width: 38%;       /* keeps it small on phones */
+  height: auto;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: popupFade 2s ease forwards;
+}
+
+@keyframes popupFade {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.85); }
+  10%  { opacity: 1; transform: translate(-50%, -55%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -80%) scale(1.05); }
+}
   
 /* LANG GROUPS */
 .en-text { display: block; }
@@ -452,7 +480,11 @@ ul li {
   </div>
 
   <!-- MAIN IMAGE -->
-  <img src="hyesoo_david.png" class="wedding-img" alt="Wedding Illustration">
+  <!-- MAIN IMAGE (click for popups) -->
+<div id="photoWrap" class="photo-wrap">
+  <img id="mainPhoto" src="hyesoo_david.png" class="wedding-img" alt="Wedding Illustration">
+  <div id="photoCounter" class="photo-counter">0</div>
+</div>
 
   <p data-en="We invite you to celebrate our special day."
      data-ko="저희의 특별한 날에 함께해주시길 부탁드립니다.">
@@ -783,12 +815,70 @@ ul li {
 
   <script>
 let currentLang = 'ko';
-    
+
+    let photoClicks = 0;
+const POPUP_IMAGES = [
+  "text1.png","text2.png","text3.png","text4.png","text5.png",
+  "text6.png","text7.png","text8.png","text9.png","text10.png"
+];
 // =============================
 // CONFIG
 // =============================
 const WEBAPP = "https://script.google.com/macros/s/AKfycbx6rTcXAYVXu7V4_eaTjPSFvvzKRIXwaVgnlug3MWG2O4a395rGAZE8saJdr08hJzAl/exec";
 
+    function initPhotoPopups() {
+  const wrap = document.getElementById("photoWrap");
+  const img = document.getElementById("mainPhoto");
+  const counter = document.getElementById("photoCounter");
+  if (!wrap || !img || !counter) return;
+
+  // preload so they appear instantly
+  POPUP_IMAGES.forEach(src => { const i = new Image(); i.src = src; });
+
+  function handleTap(e) {
+    const rect = img.getBoundingClientRect();
+
+    // support touch + mouse
+    const clientX = (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX;
+    const clientY = (e.touches && e.touches[0]) ? e.touches[0].clientY : e.clientY;
+
+    // click position inside image
+    let x = clientX - rect.left;
+    let y = clientY - rect.top;
+
+    // clamp so popup stays inside image area
+    const pad = 45; // roughly half of popup width
+    x = Math.max(pad, Math.min(rect.width - pad, x));
+    y = Math.max(pad, Math.min(rect.height - pad, y));
+
+    // update counter
+    photoClicks++;
+    counter.textContent = String(photoClicks);
+
+    // random popup image
+    const src = POPUP_IMAGES[Math.floor(Math.random() * POPUP_IMAGES.length)];
+
+    // create popup
+    const pop = document.createElement("img");
+    pop.className = "photo-popup";
+    pop.src = src;
+
+    // position relative to wrapper (which contains the image)
+    pop.style.left = x + "px";
+    pop.style.top = y + "px";
+
+    wrap.appendChild(pop);
+
+    // remove after animation
+    setTimeout(() => {
+      if (pop && pop.parentNode) pop.remove();
+    }, 2000);
+  }
+
+  img.addEventListener("click", handleTap);
+  img.addEventListener("touchstart", handleTap, { passive: true });
+}
+    
 // =============================
 // LANGUAGE SWITCH
 // =============================
@@ -1201,6 +1291,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadMessages();
   loadScoreboard();
+   initPhotoPopups();
 });
 </script>
 
