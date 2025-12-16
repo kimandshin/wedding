@@ -404,13 +404,26 @@ ul li {
   height: auto;
   pointer-events: none;
   transform: translate(-50%, -50%);
-  animation: popupFade 2s ease forwards;
+  animation: popupFade 3.5s ease forwards;
 }
 
 @keyframes popupFade {
-  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.85); }
-  10%  { opacity: 1; transform: translate(-50%, -55%) scale(1); }
-  100% { opacity: 0; transform: translate(-50%, -80%) scale(1.05); }
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.85);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, -55%) scale(1);
+  }
+  75% {
+    opacity: 1; /* stay visible */
+    transform: translate(-50%, -60%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -80%) scale(1.05);
+  }
 }
   
 /* LANG GROUPS */
