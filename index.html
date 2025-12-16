@@ -782,7 +782,7 @@ ul li {
 </div> <!-- /container -->
 
   <script>
-let currentLang = 'en';
+let currentLang = 'ko';
     
 // =============================
 // CONFIG
@@ -1190,6 +1190,8 @@ function toggleScoreboard() {
 // INIT
 // =============================
 document.addEventListener("DOMContentLoaded", () => {
+  switchLang('ko');
+  
   updateTimes();
   setInterval(updateTimes, 60000);
 
