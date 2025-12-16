@@ -389,10 +389,17 @@ ul li {
   display: inline-block;
 }
 
-.photo-counter {
+  .photo-counter {
   margin-top: 6px;
   font-size: 10px;
   color: #999;
+
+  opacity: 0;                 /* hidden by default */
+  transition: opacity 0.2s ease;
+}
+
+.photo-counter.show {
+  opacity: 1;                 /* show temporarily */
 }
 
 .photo-popup {
@@ -834,6 +841,22 @@ const POPUP_IMAGES = [
   "text1.png","text2.png","text3.png","text4.png","text5.png",
   "text6.png","text7.png","text8.png","text9.png","text10.png"
 ];
+
+
+    let counterHideTimer = null;
+
+function showPhotoCounterTemporarily() {
+  const el = document.getElementById("photoCounter");
+  if (!el) return;
+
+  el.classList.add("show");
+
+  if (counterHideTimer) clearTimeout(counterHideTimer);
+  counterHideTimer = setTimeout(() => {
+    el.classList.remove("show");
+  }, 1500);
+}
+    
 // =============================
 // CONFIG
 // =============================
@@ -845,8 +868,9 @@ function incPhotoClickCount() {
     .then(d => {
       if (!d || !d.ok) return null;
       const el = document.getElementById("photoCounter");
-      if (el) el.textContent = d.count;
-      return d.count;
+if (el) el.textContent = d.count;
+showPhotoCounterTemporarily();
+return d.count;
     })
     .catch(() => null);
 }
@@ -907,8 +931,12 @@ function loadPhotoClickCount() {
     .then(r => r.json())
     .then(d => {
       if (!d || !d.ok) return;
-      const el = document.getElementById("photoClickCount");
-      if (el) el.textContent = d.count;
+
+      const el = document.getElementById("photoCounter"); // ✅ FIXED ID
+      if (el) {
+        el.textContent = d.count;
+        showPhotoCounterTemporarily(); // ✅ SHOW THEN FADE
+      }
     })
     .catch(() => {});
 }
