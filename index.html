@@ -384,9 +384,11 @@ ul li {
   justify-content: center;
 }
 
-  .photo-wrap {
+.photo-wrap {
   position: relative;
-  display: inline-block;
+  display: block;     /* ✅ was inline-block */
+  width: 100%;        /* ✅ makes % sizing stable */
+  text-align: center; /* ✅ keeps image centered */
 }
 
   .photo-counter {
@@ -404,10 +406,7 @@ ul li {
 
 .photo-popup {
   position: absolute;
-  left: 50px;
-  top: 50px;
-  width: 90px;          /* not too big */
-  max-width: 38%;       /* keeps it small on phones */
+  width: clamp(110px, 18vw, 180px);  /* ✅ good: phone ~110–140, desktop up to ~180 */
   height: auto;
   pointer-events: none;
   transform: translate(-50%, -50%);
