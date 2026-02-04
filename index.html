@@ -502,7 +502,7 @@ ul li {
   <!-- MAIN IMAGE -->
   <!-- MAIN IMAGE (click for popups) -->
 <div id="photoWrap" class="photo-wrap">
-  <img id="mainPhoto" src="photos/photo1.jpg" class="wedding-img" alt="Wedding Photos">
+  <img id="mainPhoto" src="" class="wedding-img" alt="Wedding Photos">
   <div id="photoCounter" class="photo-counter">0</div>
 </div>
 
@@ -845,9 +845,23 @@ const POPUP_IMAGES = [
 // =============================
 // PHOTO SLIDESHOW (MAIN IMAGE)
 // =============================
-const PHOTO_SLIDES = Array.from({ length: 10 }, (_, i) => `photos/photo${i+1}.jpg`);
-let currentPhotoIndex = 0;
+const PHOTO_SLIDES_RAW = [
+  "photos/wedding-(16 of 43).jpg",
+  "photos/wedding-(17 of 43).jpg",
+  "photos/wedding-(20 of 43).jpg",
+  "photos/wedding-(23 of 43).jpg",
+  "photos/wedding-(24 of 43).jpg",
+  "photos/wedding-(26 of 43).jpg",
+  "photos/wedding-(28 of 43).jpg",
+  "photos/wedding-(29 of 43).jpg",
+  "photos/wedding-(31 of 43).jpg",
+  "photos/wedding-(35 of 43).jpg"
+];
 
+// Encode spaces/parentheses safely for URLs
+const PHOTO_SLIDES = PHOTO_SLIDES_RAW.map(p => encodeURI(p));
+
+let currentPhotoIndex = 0;
 let slideshowTimer = null;
 let slideshowPausedUntil = 0;
 
@@ -855,11 +869,11 @@ function startPhotoSlideshow() {
   const img = document.getElementById("mainPhoto");
   if (!img) return;
 
+  // set first image immediately
+  img.src = PHOTO_SLIDES[0];
+
   // preload for smooth transitions
-  PHOTO_SLIDES.forEach(src => {
-    const pre = new Image();
-    pre.src = src;
-  });
+  PHOTO_SLIDES.forEach(src => { const pre = new Image(); pre.src = src; });
 
   function step() {
     const now = Date.now();
