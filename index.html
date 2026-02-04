@@ -842,11 +842,14 @@ const POPUP_IMAGES = [
   "text6.png","text7.png","text8.png","text9.png","text10.png"
 ];
 
-    // =============================
+// =============================
 // PHOTO SLIDESHOW (MAIN IMAGE)
 // =============================
 const PHOTO_SLIDES = Array.from({ length: 10 }, (_, i) => `photos/photo${i+1}.jpg`);
 let currentPhotoIndex = 0;
+
+let slideshowTimer = null;
+let slideshowPausedUntil = 0;
 
 function startPhotoSlideshow() {
   const img = document.getElementById("mainPhoto");
@@ -854,35 +857,30 @@ function startPhotoSlideshow() {
 
   // preload for smooth transitions
   PHOTO_SLIDES.forEach(src => {
-    const i = new Image();
-    i.src = src;
+    const pre = new Image();
+    pre.src = src;
   });
 
-  setInterval(() => {
+  function step() {
+    const now = Date.now();
+    if (now < slideshowPausedUntil) {
+      slideshowTimer = setTimeout(step, 250);
+      return;
+    }
+
     currentPhotoIndex = (currentPhotoIndex + 1) % PHOTO_SLIDES.length;
 
-    // fade out
     img.style.opacity = "0";
-
     setTimeout(() => {
       img.src = PHOTO_SLIDES[currentPhotoIndex];
       img.style.opacity = "1";
     }, 300);
-  }, 2000);
-}
 
-    let counterHideTimer = null;
+    slideshowTimer = setTimeout(step, 2000);
+  }
 
-function showPhotoCounterTemporarily() {
-  const el = document.getElementById("photoCounter");
-  if (!el) return;
-
-  el.classList.add("show");
-
-  if (counterHideTimer) clearTimeout(counterHideTimer);
-  counterHideTimer = setTimeout(() => {
-    el.classList.remove("show");
-  }, 1500);
+  if (slideshowTimer) clearTimeout(slideshowTimer);
+  slideshowTimer = setTimeout(step, 2000);
 }
     
 // =============================
@@ -902,56 +900,51 @@ return d.count;
     })
     .catch(() => null);
 }
-    function initPhotoPopups() {
+function initPhotoPopups() {
   const wrap = document.getElementById("photoWrap");
   const img = document.getElementById("mainPhoto");
   const counter = document.getElementById("photoCounter");
   if (!wrap || !img || !counter) return;
 
-  // preload so they appear instantly
+  // preload popup pngs
   POPUP_IMAGES.forEach(src => { const i = new Image(); i.src = src; });
 
   function handleTap(e) {
     const rect = img.getBoundingClientRect();
 
-    // support touch + mouse
-    const clientX = (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX;
-    const clientY = (e.touches && e.touches[0]) ? e.touches[0].clientY : e.clientY;
+    const clientX = e.clientX;
+    const clientY = e.clientY;
 
-    // click position inside image
     let x = clientX - rect.left;
     let y = clientY - rect.top;
 
-    // clamp so popup stays inside image area
-    const pad = 45; // roughly half of popup width
+    const pad = 45;
     x = Math.max(pad, Math.min(rect.width - pad, x));
     y = Math.max(pad, Math.min(rect.height - pad, y));
 
-    // update GLOBAL counter (shared by all viewers)
+    // pause slideshow for 2.5 seconds after tap
+    slideshowPausedUntil = Date.now() + 2500;
+
+    // increment global count
     incPhotoClickCount();
 
-    // random popup image
     const src = POPUP_IMAGES[Math.floor(Math.random() * POPUP_IMAGES.length)];
-
-    // create popup
     const pop = document.createElement("img");
     pop.className = "photo-popup";
     pop.src = src;
 
-    // position relative to wrapper (which contains the image)
     pop.style.left = x + "px";
     pop.style.top = y + "px";
 
     wrap.appendChild(pop);
 
-    // remove after animation
     setTimeout(() => {
       if (pop && pop.parentNode) pop.remove();
     }, 2000);
   }
 
-  img.addEventListener("click", handleTap);
-  img.addEventListener("touchstart", handleTap, { passive: true });
+  // Use ONE event only (prevents iPhone double count)
+  img.addEventListener("pointerdown", handleTap);
 }
 
 function loadPhotoClickCount() {
