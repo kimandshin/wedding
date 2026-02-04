@@ -125,6 +125,7 @@ img.wedding-img {
   border-radius: 12px;
   margin: 30px auto;
   display: block;
+  transition: opacity 0.35s ease;
 }
 
 /* BUTTONS */
@@ -501,7 +502,7 @@ ul li {
   <!-- MAIN IMAGE -->
   <!-- MAIN IMAGE (click for popups) -->
 <div id="photoWrap" class="photo-wrap">
-  <img id="mainPhoto" src="hyesoo_david.png" class="wedding-img" alt="Wedding Illustration">
+  <img id="mainPhoto" src="photos/photo1.jpg" class="wedding-img" alt="Wedding Photos">
   <div id="photoCounter" class="photo-counter">0</div>
 </div>
 
@@ -841,6 +842,34 @@ const POPUP_IMAGES = [
   "text6.png","text7.png","text8.png","text9.png","text10.png"
 ];
 
+    // =============================
+// PHOTO SLIDESHOW (MAIN IMAGE)
+// =============================
+const PHOTO_SLIDES = Array.from({ length: 10 }, (_, i) => `photos/photo${i+1}.jpg`);
+let currentPhotoIndex = 0;
+
+function startPhotoSlideshow() {
+  const img = document.getElementById("mainPhoto");
+  if (!img) return;
+
+  // preload for smooth transitions
+  PHOTO_SLIDES.forEach(src => {
+    const i = new Image();
+    i.src = src;
+  });
+
+  setInterval(() => {
+    currentPhotoIndex = (currentPhotoIndex + 1) % PHOTO_SLIDES.length;
+
+    // fade out
+    img.style.opacity = "0";
+
+    setTimeout(() => {
+      img.src = PHOTO_SLIDES[currentPhotoIndex];
+      img.style.opacity = "1";
+    }, 300);
+  }, 2000);
+}
 
     let counterHideTimer = null;
 
@@ -1353,6 +1382,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadScoreboard();
    initPhotoPopups();
   loadPhotoClickCount();
+  startPhotoSlideshow();
 });
 </script>
 
